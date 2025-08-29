@@ -1,0 +1,61 @@
+.main-container {
+  display: flex;
+  height: 100%;
+  background: rgb(196, 200, 199);
+  place-content: center;
+  margin: 0;
+  padding: 0;
+}
+.login-container {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+  background-color: rgb(247, 251, 250);
+}
+.input-field {
+  width: 100%;
+  margin-left: 28px;
+  margin-top: 10px;
+}
+.full-width {
+  width: 80%;
+}
+.button-row {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+.action-buttons {
+  display: flex;
+  flex-direction: row;
+  gap: 15px;
+  width: 100%;
+}
+
+.submit-button {
+  font-size: 18px;
+  padding: 15px;
+  width: 100%;
+  max-width: 170px;
+  margin: 0 auto;
+}
+
+.image-container {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: rgb(196, 200, 199);
+}
+
+.image-container img {
+  max-width: 100%;
+  height: 100%;
+  -o-object-fit: cover;
+     object-fit: cover;
+}

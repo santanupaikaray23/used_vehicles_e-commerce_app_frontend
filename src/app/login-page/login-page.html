@@ -1,0 +1,49 @@
+<div class="main-container">
+  <div class="login-container">
+    <mat-card appearance="outlined">
+      <section class="login-form-section">
+        <form class="login-form-container">
+          <div class="input-field">
+            <mat-form-field class="full-width">
+              <mat-label>Email</mat-label>
+              <input matInput placeholder="Email" formControlName="email" type="text" />
+            
+              <mat-error> Email is Required </mat-error>
+    
+            </mat-form-field>
+          </div>
+ <div class="input-field">
+            <mat-form-field class="full-width">
+              <mat-label>Password</mat-label>
+              <input matInput formControlName="password" 
+                placeholder="Password" />
+  <button mat-icon-button matSuffix type="button">
+             
+              </button>
+             
+              <mat-error> Password is Required </mat-error>
+              
+            </mat-form-field>
+          </div>
+  <div class="button-row">
+            <mat-checkbox formControlName="rememberMe">Remember Me</mat-checkbox>
+            <button type="button" mat-button routerLink="/app-forgot-password" color="warn" class="forgot-password">
+              Forgot Password?
+            </button>
+             <div class="action-buttons">
+              <button mat-flat-button color="primary" type="submit" class="submit-button">
+                Login
+              </button>
+              <button mat-flat-button routerLink="/register" color="accent" type="button" class="submit-button">
+                Register
+              </button>
+            </div>
+          </div>
+        </form>
+      </section>
+    </mat-card>
+  </div>
+  <div class="image-container">
+    <img src="https://i.ibb.co/dwjS2ycz/used-car.jpg" alt="Background Image" />
+  </div>
+</div>
