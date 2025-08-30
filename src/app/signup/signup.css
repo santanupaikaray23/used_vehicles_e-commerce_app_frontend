@@ -1,0 +1,30 @@
+.signup-container{
+  display: flex;
+  justify-content: center;
+  padding: 60px;
+  background-color: rgb(247, 251, 250);
+}
+h2{
+   margin-left: 130px; 
+}
+.signup-form-section{
+  width: 350px;
+}
+.input-field {
+  width: 100%;
+  margin-top: 15px;
+}
+.full-width {
+  width: 100%;
+}
+.button-row {
+  display: flex;
+  margin-left: 15px;
+  gap:5px;
+}
+.signup-button {
+  font-size: 15px;
+  padding: 12px;
+  flex: 1; 
+  max-width: 160px;
+}

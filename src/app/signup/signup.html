@@ -1,0 +1,58 @@
+<div class="main-container">
+    <div class="signup-container">
+        <mat-card appearance="outlined">
+            <section class="signup-form-section">
+                <div class="text-center">
+                    <h2>Sign Up</h2>
+                </div>
+                <form class="signup-form-section">
+                    <div class="input-field">
+                        <mat-form-field class="full-width">
+                            <mat-label>Name</mat-label>
+                            <input matInput placeholder="Name" type="text" formControlName="name"/>
+                            <mat-error>Name is Required</mat-error>
+                        </mat-form-field>
+                    </div>
+                    <div class="input-field">
+                        <mat-form-field class="full-width">
+                            <mat-label>Email</mat-label>
+                            <input matInput placeholder="Email" type="email" formControlName="email">
+                            <mat-error>Email is Required</mat-error>
+                            <mat-error>Enter a valid email address</mat-error>
+                        </mat-form-field>
+                    </div>
+                    <div class="input-field">
+                        <mat-form-field class="full-width">
+                            <mat-label>Set Password</mat-label>
+                            <input matInput placeholder="Password" type="password" formControlName="password" />
+                            <mat-error>Password is Required</mat-error>
+                            <mat-error>
+                                 Password must be at least 8 chars with 1 number and 1 letter
+                            </mat-error>
+
+                        </mat-form-field>
+                    </div>
+                    <div class="input-field">
+                        <mat-form-field class="full-width">
+                            <mat-label>Phone</mat-label>
+                            <input matInput placeholder="Phone" type="text" formControlName="phone">
+                            <mat-error>Phone number is required</mat-error>
+                                 <mat-error>
+                                 Phone number must be at least 10-13 digits.
+                            </mat-error>
+                        </mat-form-field>
+                    </div>
+                    <div class="button-row">
+                         <button mat-flat-button routerLink="/login" color="accent" class="signup-button">
+                            Back
+                            </button>
+                        <button mat-flat-button color="accent" type="submit" class="signup-button">
+                            Submit
+                            </button>
+                            
+                    </div>
+                    </form>
+            </section>
+        </mat-card>
+    </div>
+</div>

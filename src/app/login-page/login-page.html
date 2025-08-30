@@ -7,25 +7,20 @@
             <mat-form-field class="full-width">
               <mat-label>Email</mat-label>
               <input matInput placeholder="Email" formControlName="email" type="text" />
-            
-              <mat-error> Email is Required </mat-error>
-    
+            <mat-error> Email is Required </mat-error>
             </mat-form-field>
           </div>
- <div class="input-field">
+           <div class="input-field">
             <mat-form-field class="full-width">
               <mat-label>Password</mat-label>
               <input matInput formControlName="password" 
                 placeholder="Password" />
-  <button mat-icon-button matSuffix type="button">
-             
-              </button>
-             
-              <mat-error> Password is Required </mat-error>
-              
-            </mat-form-field>
+              <button mat-icon-button matSuffix type="button">
+             </button>
+            <mat-error> Password is Required </mat-error>
+               </mat-form-field>
           </div>
-  <div class="button-row">
+          <div class="button-row">
             <mat-checkbox formControlName="rememberMe">Remember Me</mat-checkbox>
             <button type="button" mat-button routerLink="/app-forgot-password" color="warn" class="forgot-password">
               Forgot Password?
