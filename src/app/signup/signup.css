@@ -4,22 +4,23 @@
   padding: 60px;
   background-color: rgb(247, 251, 250);
 }
-h2{
-   margin-left: 130px; 
+.text-center {
+   margin-left: 150px; 
 }
 .signup-form-section{
-  width: 350px;
+  width: 390px;
 }
 .input-field {
   width: 100%;
   margin-top: 15px;
+  
 }
 .full-width {
   width: 100%;
 }
 .button-row {
   display: flex;
-  margin-left: 15px;
+  margin-left: 32px;
   gap:5px;
 }
 .signup-button {
