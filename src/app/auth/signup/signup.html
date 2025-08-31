@@ -8,13 +8,6 @@
                 <form class="signup-form-section">
                     <div class="input-field">
                         <mat-form-field class="full-width">
-                            <mat-label>Name</mat-label>
-                            <input matInput placeholder="Name" type="text" formControlName="name"/>
-                            <mat-error>Name is Required</mat-error>
-                        </mat-form-field>
-                    </div>
-                    <div class="input-field">
-                        <mat-form-field class="full-width">
                             <mat-label>Email</mat-label>
                             <input matInput placeholder="Email" type="email" formControlName="email">
                             <mat-error>Email is Required</mat-error>
@@ -32,6 +25,22 @@
 
                         </mat-form-field>
                     </div>
+                           <div class="input-field">
+                        <mat-form-field class="full-width">
+                            <mat-label>Role</mat-label>
+                            <input matInput placeholder="Role" type="role" formControlName="role" />
+                            <mat-error>Role is Required</mat-error>
+                          
+
+                        </mat-form-field>
+                    </div>
+                       <div class="input-field">
+                        <mat-form-field class="full-width">
+                            <mat-label>Name</mat-label>
+                            <input matInput placeholder="Name" type="text" formControlName="name"/>
+                            <mat-error>Name is Required</mat-error>
+                        </mat-form-field>
+                    </div>
                     <div class="input-field">
                         <mat-form-field class="full-width">
                             <mat-label>Phone</mat-label>
@@ -40,6 +49,13 @@
                                  <mat-error>
                                  Phone number must be at least 10-13 digits.
                             </mat-error>
+                        </mat-form-field>
+                    </div>
+                        <div class="input-field">
+                        <mat-form-field class="full-width">
+                            <mat-label>City</mat-label>
+                            <input matInput placeholder="City" type="city" formControlName="city" />
+                            <mat-error>City is Required</mat-error>
                         </mat-form-field>
                     </div>
                     <div class="button-row">
