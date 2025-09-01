@@ -1,4 +1,4 @@
-.signup-container{
+.signup-container {
   display: flex;
   justify-content: center;
   padding: 50px;
@@ -8,7 +8,7 @@
   margin-top: -15px;
    margin-left: 150px; 
 }
-.signup-form-section{
+.signup-form-section {
   width: 390px;
 }
 .input-field {
@@ -20,13 +20,7 @@
   width: 100%;
 }
 .button-row {
-  display: flex;
-  margin-left: 32px;
-  gap:5px;
+  margin-left: 110px;
+  
 }
-.signup-button {
-  font-size: 15px;
-  padding: 12px;
-  flex: 1; 
-  max-width: 160px;
-}
+

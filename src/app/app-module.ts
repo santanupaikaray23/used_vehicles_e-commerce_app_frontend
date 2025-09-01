@@ -14,7 +14,7 @@ import { CommonModule } from '@angular/common';
 import {MatToolbar} from '@angular/material/toolbar'
 import { MainLayoutModule } from './main-layout/main-layout-module';
 // import { ForgotPassword } from './forgot-password/forgot-password';
-
+import { HttpClientModule, provideHttpClient, withFetch } from '@angular/common/http';
 
 @NgModule({
   declarations: [
@@ -37,15 +37,15 @@ import { MainLayoutModule } from './main-layout/main-layout-module';
     MatIconModule,
     CommonModule,
     MatToolbar,
-     MainLayoutModule 
+     MainLayoutModule,
+     HttpClientModule,
       
     
 
     
   ],
   providers: [
-    provideBrowserGlobalErrorListeners(),
-    provideClientHydration(withEventReplay())
+     provideHttpClient(withFetch()) 
   ],
   bootstrap: [App]
 })

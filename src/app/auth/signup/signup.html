@@ -1,74 +1,114 @@
 <div class="main-container">
-    <div class="signup-container">
-        <mat-card appearance="outlined">
-            <section class="signup-form-section">
+  <div class="signup-container">
+    <mat-card appearance="outlined">
+      <section class="signup-form-section">
                 <div class="text-center">
-                    <h2>Sign Up</h2>
-                </div>
-                <form class="signup-form-section">
-                    <div class="input-field">
-                        <mat-form-field class="full-width">
-                            <mat-label>Email</mat-label>
-                            <input matInput placeholder="Email" type="email" formControlName="email">
-                            <mat-error>Email is Required</mat-error>
-                            <mat-error>Enter a valid email address</mat-error>
-                        </mat-form-field>
-                    </div>
-                    <div class="input-field">
-                        <mat-form-field class="full-width">
-                            <mat-label>Set Password</mat-label>
-                            <input matInput placeholder="Password" type="password" formControlName="password" />
-                            <mat-error>Password is Required</mat-error>
-                            <mat-error>
-                                 Password must be at least 8 chars with 1 number and 1 letter
-                            </mat-error>
-
-                        </mat-form-field>
-                    </div>
-                           <div class="input-field">
-                        <mat-form-field class="full-width">
-                            <mat-label>Role</mat-label>
-                            <input matInput placeholder="Role" type="role" formControlName="role" />
-                            <mat-error>Role is Required</mat-error>
-                          
-
-                        </mat-form-field>
-                    </div>
-                       <div class="input-field">
-                        <mat-form-field class="full-width">
-                            <mat-label>Name</mat-label>
-                            <input matInput placeholder="Name" type="text" formControlName="name"/>
-                            <mat-error>Name is Required</mat-error>
-                        </mat-form-field>
-                    </div>
-                    <div class="input-field">
-                        <mat-form-field class="full-width">
-                            <mat-label>Phone</mat-label>
-                            <input matInput placeholder="Phone" type="text" formControlName="phone">
-                            <mat-error>Phone number is required</mat-error>
-                                 <mat-error>
-                                 Phone number must be at least 10-13 digits.
-                            </mat-error>
-                        </mat-form-field>
-                    </div>
-                        <div class="input-field">
-                        <mat-form-field class="full-width">
-                            <mat-label>City</mat-label>
-                            <input matInput placeholder="City" type="city" formControlName="city" />
-                            <mat-error>City is Required</mat-error>
-                        </mat-form-field>
-                    </div>
-                    <div class="button-row">
-                         <button mat-flat-button routerLink="/login" color="accent" class="signup-button">
-                            Back
-                            </button>
-                        <button mat-flat-button color="accent" type="submit" class="signup-button">
-                            Submit
-                            </button>
-                            
-                    </div>
-                    </form>
-            </section>
-        </mat-card>
-    </div>
+          <h2>Sign up</h2>
+        </div>
+        <div *ngIf="serverError" class="error-message">
+          <mat-error>{{ serverError }}</mat-error>
+        </div>
+        <form [formGroup]="signupForm" class="signup-form-container" (ngSubmit)="onSubmit()">
+          <div class="input-field">
+            <mat-form-field class="full-width">
+              <mat-label>Email</mat-label>
+              <input matInput placeholder="Email" type="email" formControlName="email" />
+              <mat-error *ngIf="signupForm.get('email')?.hasError('required')">
+                Email is required
+              </mat-error>
+              <mat-error *ngIf="signupForm.get('email')?.hasError('email')">
+                Enter a valid email address
+              </mat-error>
+            </mat-form-field>
+          </div>
+          <div class="input-field">
+            <mat-form-field class="full-width">
+              <mat-label>Password</mat-label>
+              <input
+                matInput
+                formControlName="password"
+                [type]="hidePassword ? 'password' : 'text'"
+                placeholder="Password"
+              />
+              <button
+                mat-icon-button
+                matSuffix
+                type="button"
+                (click)="hidePassword = !hidePassword"
+              >
+                <mat-icon>{{ hidePassword ? "visibility_off" : "visibility" }}</mat-icon>
+              </button>
+              <mat-error *ngIf="signupForm.get('password')?.hasError('required')">
+                Password is required
+              </mat-error>
+              <mat-error *ngIf="signupForm.get('password')?.hasError('pattern')">
+                Password must be at least 8 chars with 1 number and 1 letter
+              </mat-error>
+            </mat-form-field>
+          </div>
+          <div class="input-field">
+            <mat-form-field class="full-width">
+              <mat-label>Role</mat-label>
+              <input matInput placeholder="Role" type="text" formControlName="role" />
+              <mat-error *ngIf="signupForm.get('role')?.hasError('required')">
+                Role is required
+              </mat-error>
+            </mat-form-field>
+          </div>
+          <div class="input-field">
+            <mat-form-field class="full-width">
+              <mat-label>Name</mat-label>
+              <input matInput placeholder="Name" type="text" formControlName="name" />
+              <mat-error *ngIf="signupForm.get('name')?.hasError('required')">
+                Name is required
+              </mat-error>
+            </mat-form-field>
+          </div>
+          <div class="input-field">
+            <mat-form-field class="full-width">
+              <mat-label>Phone</mat-label>
+              <input matInput placeholder="Phone" type="text" formControlName="phone" />
+              <mat-error *ngIf="signupForm.get('phone')?.hasError('required')">
+                Phone number is required
+              </mat-error>
+              <mat-error *ngIf="signupForm.get('phone')?.hasError('pattern')">
+                Phone number must be between 10–13 digits
+              </mat-error>
+            </mat-form-field>
+          </div>
+          <div class="input-field">
+            <mat-form-field class="full-width">
+              <mat-label>City</mat-label>
+              <input matInput placeholder="City" type="text" formControlName="city" />
+              <mat-error *ngIf="signupForm.get('city')?.hasError('required')">
+                City is required
+              </mat-error>
+            </mat-form-field>
+          </div>
+          <div class="button-row">
+            <div class="signup-buttons">
+              <button
+                mat-flat-button
+                routerLink="/login"
+                color="accent"
+                type="button"
+                class="backsubmit-button"
+              >
+                Back
+              </button>
+            &nbsp;
+              <button
+                mat-flat-button
+                color="primary"
+                type="submit"
+                class="submit-button"
+              >
+                {{ loading ? "Submitting..." : "Submit" }}
+              </button>
+            </div>
+          </div>
+        </form>
+      </section>
+    </mat-card>
+  </div>
 </div>

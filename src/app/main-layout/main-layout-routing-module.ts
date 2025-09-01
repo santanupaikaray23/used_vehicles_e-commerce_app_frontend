@@ -1,14 +1,14 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-// import { MainLayoutModule } from './main-layout-module';
+import { MainLayoutModule } from './main-layout-module';
 import { Dashboard } from './dashboard/dashboard';
 
-import { MainLayoutComponent } from './main-layout.component';
+// import { MainLayoutComponent } from './main-layout.component';
 
 const routes: Routes = [
     {
     path: '',
-    component: MainLayoutComponent,
+    component: MainLayoutModule,
     children: [
       {
         path: '',
@@ -21,11 +21,6 @@ const routes: Routes = [
       }
   
 ],
-  },
-  {
-    path: '',
-    redirectTo: '',
-    pathMatch: 'full',
   },
 ];
 

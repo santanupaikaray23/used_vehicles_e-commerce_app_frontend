@@ -18,8 +18,8 @@ import { MatSidenavContainer } from '@angular/material/sidenav';
 import { RouterModule } from '@angular/router';
 import { MatMenuModule } from '@angular/material/menu';
 import { LoginPage } from '../auth/login-page/login-page';
-
-
+import { FormsModule } from '@angular/forms';
+import { ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -48,7 +48,9 @@ import { LoginPage } from '../auth/login-page/login-page';
     MatSidenav,
     MatSidenavContainer,
      MatSidenavContainer,
-    MatMenuModule
+    MatMenuModule,
+    FormsModule,
+      ReactiveFormsModule,
       
    
      

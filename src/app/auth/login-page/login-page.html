@@ -2,30 +2,59 @@
   <div class="login-container">
     <mat-card appearance="outlined">
       <section class="login-form-section">
-        <form class="login-form-container">
+        <div *ngIf="serverError" class="error-message">
+          <mat-error>{{ serverError }}</mat-error>
+        </div>
+        <form [formGroup]="loginForm" class="login-form-container" (ngSubmit)="onSubmit()">
           <div class="input-field">
             <mat-form-field class="full-width">
               <mat-label>Email</mat-label>
               <input matInput placeholder="Email" formControlName="email" type="text" />
-            <mat-error> Email is Required </mat-error>
+              <mat-error *ngIf="loginForm.get('email')?.hasError('required')">
+                Email is required
+              </mat-error>
             </mat-form-field>
           </div>
-           <div class="input-field">
+          <div class="input-field">
             <mat-form-field class="full-width">
               <mat-label>Password</mat-label>
-              <input matInput formControlName="password" 
-                placeholder="Password" />
-              <button mat-icon-button matSuffix type="button">
-             </button>
-            <mat-error> Password is Required </mat-error>
-               </mat-form-field>
+              <input
+                matInput
+                formControlName="password"
+                [type]="hidePassword ? 'password' : 'text'"
+                placeholder="Password"
+              />
+              <button
+                mat-icon-button
+                matSuffix
+                type="button"
+                (click)="hidePassword = !hidePassword"
+              >
+                <mat-icon>{{ hidePassword ? "visibility_off" : "visibility" }}</mat-icon>
+              </button>
+              <mat-error *ngIf="loginForm.get('password')?.hasError('required')">
+                Password is required
+              </mat-error>
+            </mat-form-field>
           </div>
           <div class="button-row">
-             <div class="action-buttons">
-              <button mat-flat-button color="primary" type="submit" class="submit-button">
-                Login
+            <div class="action-buttons">
+              <button
+                mat-flat-button
+                color="primary"
+                type="submit"
+                class="submit-button"
+              >
+                {{ loading ? "Logging in..." : "Login" }}
               </button>
-              <button mat-flat-button routerLink="/singup" color="accent" type="button" class="submit-button">
+
+              <button
+                mat-flat-button
+                routerLink="/signup"
+                color="accent"
+                type="button"
+                class="submit-button"
+              >
                 Sign up
               </button>
             </div>
@@ -34,7 +63,11 @@
       </section>
     </mat-card>
   </div>
+
   <div class="image-container">
-    <img src="https://i.ibb.co/dwjS2ycz/used-car.jpg" alt="Background Image" />
+    <img
+      src="https://i.ibb.co/dwjS2ycz/used-car.jpg"
+      alt="Background Image"
+    />
   </div>
 </div>
