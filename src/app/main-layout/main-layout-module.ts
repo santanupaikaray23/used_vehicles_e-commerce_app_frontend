@@ -20,6 +20,11 @@ import { MatMenuModule } from '@angular/material/menu';
 import { LoginPage } from '../auth/login-page/login-page';
 import { FormsModule } from '@angular/forms';
 import { ReactiveFormsModule } from '@angular/forms';
+import { MatListModule } from '@angular/material/list';
+import { MatSidenavModule } from '@angular/material/sidenav';
+import { LayoutModule } from '@angular/cdk/layout';
+import { About } from './about/about';
+import { Contact } from './contact/contact';
 
 @NgModule({
   declarations: [
@@ -29,6 +34,8 @@ import { ReactiveFormsModule } from '@angular/forms';
    SideNav,
     MainLayoutComponent,
     LoginPage,
+    About,
+    Contact,
    
 
     
@@ -51,6 +58,9 @@ import { ReactiveFormsModule } from '@angular/forms';
     MatMenuModule,
     FormsModule,
       ReactiveFormsModule,
+      MatListModule,
+      MatSidenavModule,
+      LayoutModule 
       
    
      

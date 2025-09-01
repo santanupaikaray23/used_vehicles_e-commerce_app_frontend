@@ -4,16 +4,11 @@ import { authRoutesGuard } from './guards/auth-routes-guard';
 import { LoginPage} from './auth/login-page/login-page';
 import { Signup } from './auth/signup/signup';
 
-
-
 const routes: Routes = [
 {path: 'login', component: LoginPage},
 {path: 'signup', component: Signup},
 
-
-
   {
-    
 path: '',
     canActivate: [authRoutesGuard], 
     loadChildren: () =>

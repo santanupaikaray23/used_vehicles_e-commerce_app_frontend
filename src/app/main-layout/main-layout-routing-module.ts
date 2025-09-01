@@ -1,27 +1,37 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { MainLayoutModule } from './main-layout-module';
+// import { MainLayoutModule } from './main-layout-module';
 import { Dashboard } from './dashboard/dashboard';
-
-// import { MainLayoutComponent } from './main-layout.component';
+import { About } from './about/about';
+import { Contact } from './contact/contact';
+// import { SideNav } from './shareable/side-nav/side-nav';
+import { MainLayoutComponent } from './main-layout.component';
 
 const routes: Routes = [
     {
     path: '',
-    component: MainLayoutModule,
+    component: MainLayoutComponent,
     children: [
       {
-        path: '',
+        path:'',
         redirectTo: 'dashboard',
         pathMatch: 'full',
       },
       {
         path: 'dashboard',
         component: Dashboard,
-      }
+      },
+      {
+       path: 'about',
+       component: About,
+      },
+    {
+       path: 'contact',
+       component: Contact,
+       }
   
 ],
-  },
+  }
 ];
 
 @NgModule({

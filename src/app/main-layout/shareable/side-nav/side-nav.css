@@ -1,0 +1,36 @@
+.sidenav {
+  width: 240px;
+  background-color: #fff; 
+  border-right: 1px solid #e0e0e0;
+}
+.side-nav-logo {
+  justify-content: center;
+  height: 64px;
+  background-color: #1976d2; 
+  color: #fff;
+}
+.menu-items {
+  display: flex;
+  gap: 12px;
+  padding: 8px 0;
+}
+.side-nav-menu-icon {
+  width: 24px;
+  color: #555;
+}
+.side-nav-menu-text {
+  font-size: 14px;
+  font-weight: 500;
+  color: #333;
+}
+a.active-route .side-nav-menu-text {
+  font-weight: 600;
+  color: #1976d2;
+}
+.main-header {
+  position: sticky;
+  top: 0;
+  z-index: 2;
+  align-items: center;
+  padding: 16px;
+}

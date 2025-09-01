@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Auth } from '../../services/auth';
-import { SignupDto } from '../../models/signup.model';
+import { SignupDto } from '../../models/signup.model.dto';
 
 
 @Component({

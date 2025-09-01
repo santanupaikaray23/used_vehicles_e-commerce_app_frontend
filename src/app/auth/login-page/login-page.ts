@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { LoginDto } from '../../models/login.model';
+import { LoginDto } from '../../models/login.model.dto';
 import { Router } from '@angular/router';
 import { Auth } from '../../services/auth';
 
