@@ -35,15 +35,11 @@ import { Contact } from './contact/contact';
     MainLayoutComponent,
     LoginPage,
     About,
-    Contact,
-   
-
-    
+    Contact
   ],
   imports: [
     CommonModule,
-  RouterModule,
-
+    RouterModule,
     MainLayoutRoutingModule,
     MatButtonModule,
     MatCheckboxModule,
@@ -60,11 +56,7 @@ import { Contact } from './contact/contact';
       ReactiveFormsModule,
       MatListModule,
       MatSidenavModule,
-      LayoutModule 
-      
-   
-     
-     
+      LayoutModule    
 ],
 
 })

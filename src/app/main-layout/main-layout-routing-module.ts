@@ -6,6 +6,8 @@ import { About } from './about/about';
 import { Contact } from './contact/contact';
 // import { SideNav } from './shareable/side-nav/side-nav';
 import { MainLayoutComponent } from './main-layout.component';
+import { Authguard } from '../services/authguard';
+
 
 const routes: Routes = [
     {
@@ -20,16 +22,18 @@ const routes: Routes = [
       {
         path: 'dashboard',
         component: Dashboard,
+        canActivate: [Authguard]
       },
       {
        path: 'about',
        component: About,
+       canActivate: [Authguard]
       },
     {
        path: 'contact',
        component: Contact,
+       canActivate: [Authguard]
        }
-  
 ],
   }
 ];

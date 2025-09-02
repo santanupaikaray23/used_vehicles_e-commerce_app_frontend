@@ -57,7 +57,8 @@ export class Signup {
 
     this.auth.signup(formData).subscribe({
       next: (res) => {
-        console.log('Signup success:', res);
+        console.log('Signup success');
+        alert("Signup Success!!")
         this.loading = false;
         this.router.navigate(['/login']);
       },

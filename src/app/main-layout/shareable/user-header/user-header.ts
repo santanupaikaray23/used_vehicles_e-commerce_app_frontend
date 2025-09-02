@@ -15,12 +15,16 @@ router = inject(Router);
 
   constructor(private auth: Auth) {}
 
-  logout() {
-    const tokenKey = 'authToken'; 
-    // this.auth.clearToken(tokenKey); 
-    this.router.navigate(['/login']); 
-  }
-
-
-
+ onLogout() {
+  this.auth.logout().subscribe({
+    next: (res) => {
+      console.log('Logged out');
+      localStorage.removeItem('token');  
+      this.router.navigate(['/login']);
+    },
+    error: (err) => {
+      console.error('Logout failed');
+    }
+  });
+}
 }

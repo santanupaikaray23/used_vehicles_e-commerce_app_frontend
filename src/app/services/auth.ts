@@ -3,28 +3,26 @@ import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { LoginDto } from '../models/login.model.dto';
 import { SignupDto } from '../models/signup.model.dto';
-// import { isPlatformBrowser } from '@angular/common';
+import { Storage } from './storage';
 
 @Injectable({
   providedIn: 'root'
 })
 export class Auth {
-  constructor(private http:HttpClient){}
-
-  //  setToken(key: string, token: string): void {
-  //   localStorage.setItem(key, token);
-  // }
-
-  // getToken(p0: string) {
-  //   if (isPlatformBrowser(this.platformId)) {
-  //     return localStorage.getItem('authToken');
-  //   }
-  //   return null; 
-  // }
  
-  // clearToken(key: string): void {
-  //   localStorage.removeItem(key);
-  // }
+  constructor(private http:HttpClient,private storage: Storage){}
+
+isLoggedIn(): boolean {
+    return !!this.storage.getItem('token');
+  }
+
+  saveToken(token: string) {
+    this.storage.setItem('token', token);
+  }
+
+  getToken(): string | null {
+    return this.storage.getItem('token');
+  }
 
   private apiUrl = 'http://localhost:5001/api/auth/login';
 
@@ -37,5 +35,11 @@ export class Auth {
   signup(data:SignupDto): Observable<any> {
     return this.http.post(this.apiUrl1, data)
   }
+
+private apiUrlLogout = 'http://localhost:5001/api/auth/logout';
+
+logout(): Observable<any> {
+  return this.http.post(this.apiUrlLogout, {}); 
+}
   
 }

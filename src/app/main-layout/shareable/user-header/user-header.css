@@ -4,7 +4,7 @@
   justify-content: space-between;
   align-items: center;
 }
-.user-header .menu-text {
+.menu-text {
   display: flex;
   gap: 6px;
   align-items: center;

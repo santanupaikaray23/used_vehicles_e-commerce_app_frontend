@@ -3,7 +3,6 @@ import { BrowserModule, provideClientHydration, withEventReplay } from '@angular
 import {MatCardModule} from '@angular/material/card';
 import { AppRoutingModule } from './app-routing-module';
 import { App } from './app';
-// import { LoginPage } from './login-page/login-page';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import {MatCheckboxModule} from '@angular/material/checkbox';
@@ -13,15 +12,11 @@ import {MatIconModule} from '@angular/material/icon';
 import { CommonModule } from '@angular/common';
 import {MatToolbar} from '@angular/material/toolbar'
 import { MainLayoutModule } from './main-layout/main-layout-module';
-// import { ForgotPassword } from './forgot-password/forgot-password';
 import { HttpClientModule, provideHttpClient, withFetch } from '@angular/common/http';
 
 @NgModule({
   declarations: [
-    App
-    
-     
-      
+    App   
    
   ],
   imports: [
@@ -38,10 +33,7 @@ import { HttpClientModule, provideHttpClient, withFetch } from '@angular/common/
     CommonModule,
     MatToolbar,
      MainLayoutModule,
-     HttpClientModule,
-      
-    
-
+     HttpClientModule
     
   ],
   providers: [
