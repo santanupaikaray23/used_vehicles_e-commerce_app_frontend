@@ -41,12 +41,12 @@ export class LoginPage {
 
         if (res.token) {
           localStorage.setItem('token', res.token);
-          this.router.navigate(['/dashboard']);  
+          this.router.navigate(['/profile']);  
         }
       },
       error: (err) => {
         this.loading = false;
-        this.serverError = err.error?.token || 'Login failed. Please try again.';
+        this.serverError = err.error?.token;
       }
     });
   }

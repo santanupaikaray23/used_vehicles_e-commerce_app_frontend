@@ -4,6 +4,8 @@ import { Observable } from 'rxjs';
 import { LoginDto } from '../models/login.model.dto';
 import { SignupDto } from '../models/signup.model.dto';
 import { Storage } from './storage';
+import { userInfoDto } from '../models/userinfo.model.dto';
+import { HttpHeaders } from '@angular/common/http';
 
 @Injectable({
   providedIn: 'root'
@@ -41,5 +43,15 @@ private apiUrlLogout = 'http://localhost:5001/api/auth/logout';
 logout(): Observable<any> {
   return this.http.post(this.apiUrlLogout, {}); 
 }
-  
+
+private apiUrlProfile = 'http://localhost:5001/api/auth/userInfo';
+
+ getUserinfo(): Observable<userInfoDto> {
+    const token = localStorage.getItem('token');
+
+    const headers = new HttpHeaders().set('x-access-token', token || '');
+
+    return this.http.get<userInfoDto>(this.apiUrlProfile, { headers });
+  }
+
 }

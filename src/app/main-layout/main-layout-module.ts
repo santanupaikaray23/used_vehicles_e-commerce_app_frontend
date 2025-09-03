@@ -3,7 +3,6 @@ import { CommonModule } from '@angular/common';
 import { MainLayoutRoutingModule } from './main-layout-routing-module';
 import { MainLayoutComponent } from './main-layout.component';
 import { UserHeader } from './shareable/user-header/user-header';
-import { Dashboard } from './dashboard/dashboard';
 import { Signup } from '../auth/signup/signup';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import {MatCheckboxModule} from '@angular/material/checkbox';
@@ -25,17 +24,20 @@ import { MatSidenavModule } from '@angular/material/sidenav';
 import { LayoutModule } from '@angular/cdk/layout';
 import { About } from './about/about';
 import { Contact } from './contact/contact';
+import { Profile } from './profile/profile';
+
 
 @NgModule({
   declarations: [
     UserHeader,
-    Dashboard,
     Signup,
    SideNav,
     MainLayoutComponent,
     LoginPage,
     About,
-    Contact
+    Contact,
+    Profile,
+   
   ],
   imports: [
     CommonModule,

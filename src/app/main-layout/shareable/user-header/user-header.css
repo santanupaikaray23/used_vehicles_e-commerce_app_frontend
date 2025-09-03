@@ -4,6 +4,21 @@
   justify-content: space-between;
   align-items: center;
 }
+.profile-avatar {
+  width: 10px;
+  height: 10px;
+  background: #16a085;
+  border-radius: 50%;
+}
+.panel {
+  background: transparent;
+  box-shadow: none;
+}
+.panel-body {
+  font-size: 1.2rem;
+  margin-right: 800px;
+  color: #2c3e50;
+}
 .menu-text {
   display: flex;
   gap: 6px;

@@ -1,5 +1,5 @@
-import { NgModule, provideBrowserGlobalErrorListeners } from '@angular/core';
-import { BrowserModule, provideClientHydration, withEventReplay } from '@angular/platform-browser';
+import { NgModule} from '@angular/core';
+import { BrowserModule} from '@angular/platform-browser';
 import {MatCardModule} from '@angular/material/card';
 import { AppRoutingModule } from './app-routing-module';
 import { App } from './app';

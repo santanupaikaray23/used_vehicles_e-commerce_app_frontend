@@ -1,12 +1,11 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-// import { MainLayoutModule } from './main-layout-module';
-import { Dashboard } from './dashboard/dashboard';
 import { About } from './about/about';
 import { Contact } from './contact/contact';
-// import { SideNav } from './shareable/side-nav/side-nav';
 import { MainLayoutComponent } from './main-layout.component';
 import { Authguard } from '../services/authguard';
+import { Profile } from './profile/profile';
+// import { Profile } from './profile/profile';
 
 
 const routes: Routes = [
@@ -16,14 +15,15 @@ const routes: Routes = [
     children: [
       {
         path:'',
-        redirectTo: 'dashboard',
+        redirectTo: 'profile',
         pathMatch: 'full',
       },
       {
-        path: 'dashboard',
-        component: Dashboard,
-        canActivate: [Authguard]
-      },
+       path: 'profile',
+       component: Profile,
+       canActivate: [Authguard]
+      }
+      ,
       {
        path: 'about',
        component: About,
@@ -33,7 +33,7 @@ const routes: Routes = [
        path: 'contact',
        component: Contact,
        canActivate: [Authguard]
-       }
+       },
 ],
   }
 ];
