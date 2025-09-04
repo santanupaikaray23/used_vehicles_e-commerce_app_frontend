@@ -16,8 +16,7 @@ import { HttpClientModule, provideHttpClient, withFetch } from '@angular/common/
 
 @NgModule({
   declarations: [
-    App   
-   
+    App    
   ],
   imports: [
     BrowserModule,

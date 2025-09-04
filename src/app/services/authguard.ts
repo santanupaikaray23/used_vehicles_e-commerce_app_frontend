@@ -7,8 +7,7 @@ import { Auth } from './auth';
 })
 export class Authguard {
   constructor(private auth: Auth, private router: Router){}
-
-  canActivate(): boolean {
+ canActivate(): boolean {
     if (this.auth.isLoggedIn()){
       return true;
     }else{

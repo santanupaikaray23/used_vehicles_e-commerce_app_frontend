@@ -8,16 +8,20 @@
     </mat-toolbar>
     <mat-nav-list>
             <mat-divider></mat-divider>
-      <a disableRipple="true" mat-list-item routerLinkActive="active-route" [routerLink]="['/profile']">
-        <div class="menu-items">
-          <svg xmlns="http://www.w3.org/2000/svg" class="side-nav-menu-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+    <a 
+  disableRipple="true" 
+  mat-list-item 
+  routerLinkActive="active-route" 
+  [routerLink]="['/' + userRole]">
+  <div class="menu-items">
+ <svg xmlns="http://www.w3.org/2000/svg" class="side-nav-menu-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
   <circle cx="12" cy="12" r="10" />
   <line x1="12" y1="8" x2="12" y2="8" />
   <line x1="12" y1="12" x2="12" y2="16" />
 </svg>
-<p class="side-nav-menu-text">Profile</p>
-        </div>
-      </a>
+    <p class="side-nav-menu-text">Profile</p>
+  </div>
+</a>
       <mat-divider></mat-divider>
   <a disableRipple="true" mat-list-item routerLinkActive="active-route" [routerLink]="['/about']">
         <div class="menu-items">

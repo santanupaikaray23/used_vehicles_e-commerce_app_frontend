@@ -11,14 +11,14 @@ import { map, shareReplay } from 'rxjs/operators';
 })
 export class SideNav {
  isHandset$!: Observable<boolean>;
-
-  constructor(private breakpointObserver: BreakpointObserver) {}
-
-  ngOnInit(): void {
-    this.isHandset$ = this.breakpointObserver.observe(Breakpoints.Handset)
-      .pipe(
-        map(result => result.matches),
-        shareReplay()
-      );
-  }
+ userRole: string = '';
+constructor(private breakpointObserver: BreakpointObserver) {}
+ngOnInit(): void {
+  this.isHandset$ = this.breakpointObserver.observe(Breakpoints.Handset).pipe(
+    map(result => result.matches),
+    shareReplay()
+  );
+  const user = JSON.parse(localStorage.getItem('user') || '{}');
+  this.userRole = user.role?.toLowerCase() || 'user'; 
+}
 }

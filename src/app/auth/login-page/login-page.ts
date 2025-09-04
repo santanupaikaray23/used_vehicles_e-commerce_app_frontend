@@ -1,17 +1,17 @@
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { LoginDto } from '../../models/login.model.dto';
 import { Router } from '@angular/router';
-import { Auth } from '../../services/auth';
+import { Auth } from '../../services/auth';   
+import { LoginDto } from '../../models/login.model.dto';
 
 @Component({
-  selector: 'app-login-page',
+ selector: 'app-login-page',
   standalone: false,
   templateUrl: './login-page.html',
   styleUrls: ['./login-page.css']
 })
 export class LoginPage {
-  loginForm: FormGroup;
+ loginForm: FormGroup;
   serverError: string | null = null;
   hidePassword = true;
   loading = false;
@@ -22,7 +22,7 @@ export class LoginPage {
     private router: Router
   ) {
     this.loginForm = this.fb.group({
-      email: ['', [Validators.required, Validators.email]], 
+      email: ['', [Validators.required, Validators.email]],
       password: ['', Validators.required]
     });
   }
@@ -34,20 +34,27 @@ export class LoginPage {
     this.loading = true;
 
     const loginData: LoginDto = this.loginForm.value;
-    this.auth.login(loginData).subscribe({
-      next: (res) => {
-        this.loading = false;
-        console.log('Login successful');
 
-        if (res.token) {
-          localStorage.setItem('token', res.token);
-          this.router.navigate(['/profile']);  
-        }
-      },
-      error: (err) => {
-        this.loading = false;
-        this.serverError = err.error?.token;
+   this.auth.login(loginData).subscribe({
+  next: (res) => {
+    this.loading = false;
+    console.log('Login successful');
+
+    if (res.token) {
+      localStorage.setItem('token', res.token);
+      const role = res.role || res.user?.role; 
+      if (role) {
+        this.auth.navigateByRole(role);
+      } else {
+        console.error('Role not found in response');
+        this.router.navigate(['/login']); 
       }
-    });
+    }
+  },
+  error: (err) => {
+    this.loading = false;
+    this.serverError = err.error?.message;
+  }
+});
   }
 }

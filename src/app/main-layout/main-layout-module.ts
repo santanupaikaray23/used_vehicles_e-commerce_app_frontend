@@ -25,18 +25,25 @@ import { LayoutModule } from '@angular/cdk/layout';
 import { About } from './about/about';
 import { Contact } from './contact/contact';
 import { Profile } from './profile/profile';
-
+import { Admindashboard } from './admindashboard/admindashboard';
+import { Buyerdashboard } from './buyerdashboard/buyerdashboard';
+import { Sellerdashboard } from './sellerdashboard/sellerdashboard';
+import { Userdashboard } from './userdashboard/userdashboard';
 
 @NgModule({
   declarations: [
     UserHeader,
     Signup,
-   SideNav,
+    SideNav,
     MainLayoutComponent,
     LoginPage,
     About,
     Contact,
-    Profile,
+    Admindashboard,
+    Buyerdashboard,
+    Sellerdashboard,
+    Userdashboard,
+    Profile
    
   ],
   imports: [
@@ -52,13 +59,13 @@ import { Profile } from './profile/profile';
     MatToolbar,
     MatSidenav,
     MatSidenavContainer,
-     MatSidenavContainer,
+    MatSidenavContainer,
     MatMenuModule,
     FormsModule,
-      ReactiveFormsModule,
-      MatListModule,
-      MatSidenavModule,
-      LayoutModule    
+    ReactiveFormsModule,
+    MatListModule,
+    MatSidenavModule,
+    LayoutModule    
 ],
 
 })

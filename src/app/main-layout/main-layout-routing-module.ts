@@ -4,9 +4,12 @@ import { About } from './about/about';
 import { Contact } from './contact/contact';
 import { MainLayoutComponent } from './main-layout.component';
 import { Authguard } from '../services/authguard';
-import { Profile } from './profile/profile';
-// import { Profile } from './profile/profile';
 
+import { Profile } from './profile/profile';
+// import { Admindashboard } from './admindashboard/admindashboard';
+// import { Buyerdashboard } from './buyerdashboard/buyerdashboard';
+// import { Userdashboard } from './userdashboard/userdashboard';
+// import { Sellerdashboard } from './sellerdashboard/sellerdashboard';
 
 const routes: Routes = [
     {
@@ -18,12 +21,24 @@ const routes: Routes = [
         redirectTo: 'profile',
         pathMatch: 'full',
       },
+       { path: 'admin', 
+        component: Profile , 
+        canActivate: [Authguard]
+      },
+        { path: 'buyer', 
+        component: Profile, 
+        canActivate: [Authguard]
+      },
       {
-       path: 'profile',
-       component: Profile,
-       canActivate: [Authguard]
-      }
-      ,
+        path: 'user',
+        component: Profile,
+        canActivate: [Authguard]
+      },
+      {
+        path: 'seller',
+        component: Profile,
+        canActivate: [Authguard]
+      },
       {
        path: 'about',
        component: About,

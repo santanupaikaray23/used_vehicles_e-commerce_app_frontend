@@ -63,7 +63,7 @@ export class Signup {
         this.router.navigate(['/login']);
       },
       error: (err) => {
-        console.error('Signup failed:', err);
+        console.error('Signup failed.');
         this.loading = false;
         this.serverError = err.error?.message || 'Signup failed. Please try again.';
       }
