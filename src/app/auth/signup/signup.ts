@@ -58,14 +58,14 @@ export class Signup {
     this.auth.signup(formData).subscribe({
       next: (res) => {
         console.log('Signup success');
-        alert("Signup Success!!")
+        alert(res.message); 
         this.loading = false;
         this.router.navigate(['/login']);
       },
       error: (err) => {
         console.error('Signup failed.');
         this.loading = false;
-        this.serverError = err.error?.message || 'Signup failed. Please try again.';
+        this.serverError = err.error?.message;
       }
     });
   }
