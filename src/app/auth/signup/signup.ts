@@ -31,7 +31,7 @@ export class Signup {
           Validators.pattern(/^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/) // min 8 chars, 1 number, 1 letter
         ]
       ],
-      role: ['', Validators.required],
+      role: [''],
       name: ['', Validators.required],
       phone: [
         '',

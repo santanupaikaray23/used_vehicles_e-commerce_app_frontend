@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { SignupDto } from '../models/signup.model.dto';
 import { Storage } from './storage';
@@ -7,6 +7,7 @@ import { userInfoDto } from '../models/userinfo.model.dto';
 import { HttpHeaders } from '@angular/common/http';
 import { Router} from '@angular/router';
 import { LoginDto } from '../models/login.model.dto';
+import { Product } from '../models/product.dto';
 
 @Injectable({
   providedIn: 'root'
@@ -59,5 +60,18 @@ getUserinfo(): Observable<userInfoDto> {
     const token = localStorage.getItem('token');
 const headers = new HttpHeaders().set('x-access-token', token || '');
 return this.http.get<userInfoDto>(this.apiUrlProfile, { headers });
+  }
+
+  private apiUrl3 = 'http://localhost:5001/api/auth/vehicledetails';
+  getProducts(params?: { [key: string]: any }): Observable<Product[]> {
+    let httpParams = new HttpParams();
+    if (params) {
+      Object.keys(params).forEach(k => {
+        if (params[k] !== null && params[k] !== undefined && params[k] !== '') {
+          httpParams = httpParams.set(k, params[k].toString());
+        }
+      });
+    }
+    return this.http.get<Product[]>(this.apiUrl3, { params: httpParams });
   }
 }
