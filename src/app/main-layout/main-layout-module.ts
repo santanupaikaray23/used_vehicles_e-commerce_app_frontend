@@ -9,7 +9,7 @@ import {MatCheckboxModule} from '@angular/material/checkbox';
 import {MatInputModule} from '@angular/material/input';
 import {MatButtonModule} from '@angular/material/button';
 import {MatIconModule} from '@angular/material/icon';
-import { MatCard } from '@angular/material/card';
+import { MatCard, MatCardContent, MatCardHeader, MatCardSubtitle, MatCardTitle } from '@angular/material/card';
 import { SideNav } from './shareable/side-nav/side-nav';
 import { MatToolbar } from '@angular/material/toolbar';
 import {MatSidenav} from '@angular/material/sidenav'
@@ -29,6 +29,7 @@ import { Admindashboard } from './admindashboard/admindashboard';
 import { Buyerdashboard } from './buyerdashboard/buyerdashboard';
 import { Sellerdashboard } from './sellerdashboard/sellerdashboard';
 import { Userdashboard } from './userdashboard/userdashboard';
+import { MatSelectModule } from '@angular/material/select';
 
 @NgModule({
   declarations: [
@@ -65,7 +66,13 @@ import { Userdashboard } from './userdashboard/userdashboard';
     ReactiveFormsModule,
     MatListModule,
     MatSidenavModule,
-    LayoutModule    
+    LayoutModule,
+    MatSelectModule,
+    MatCardHeader,
+    MatCardTitle,
+   MatCardContent,
+   MatCardSubtitle
+
 ],
 
 })

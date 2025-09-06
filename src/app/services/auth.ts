@@ -66,9 +66,9 @@ return this.http.get<userInfoDto>(this.apiUrlProfile, { headers });
   getProducts(params?: { [key: string]: any }): Observable<Product[]> {
     let httpParams = new HttpParams();
     if (params) {
-      Object.keys(params).forEach(k => {
-        if (params[k] !== null && params[k] !== undefined && params[k] !== '') {
-          httpParams = httpParams.set(k, params[k].toString());
+      Object.keys(params).forEach(key => {
+        if (params[key] !== null && params[key] !== undefined && params[key] !== '') {
+          httpParams = httpParams.set(key, params[key].toString());
         }
       });
     }

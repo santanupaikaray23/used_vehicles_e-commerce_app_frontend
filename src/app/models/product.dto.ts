@@ -9,7 +9,7 @@ export class Product {
     transmission!:String;
     ownercount!:Number;
     registrationstate!:String;
-    price!:Number;
+    price!:number;
     description!:String;
     locationcity!:String;
     localpincode!:Number;
@@ -18,6 +18,5 @@ export class Product {
     statushistory!:String;
 imageUrl!:String;
 mileage!:Number;
-
-
+  
 }
