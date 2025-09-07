@@ -5,86 +5,86 @@
         <mat-label>Search</mat-label>
         <input
           matInput
-          placeholder="Search make, model, keywords..."
-          [formControl]="filters.controls.search" />
+          placeholder="Search make, model, keywords..." />
       </mat-form-field>
     </div>
     <div class="controls">
-      <label>
-  Fueltype
-  <select [formControl]="filters.controls.fueltype">
-    <option value="">All</option>
-    <option *ngFor="let ft of fueltype" [value]="ft">{{ ft }}</option>
-  </select>
-</label>
       <mat-form-field appearance="outline">
         <mat-label>Price (Min)</mat-label>
-        <input matInput type="number" [formControl]="filters.controls.minPrice" placeholder="Min" />
+        <input matInput type="number" placeholder="Min" />
       </mat-form-field>
       <span>-</span>
       <mat-form-field appearance="outline">
         <mat-label>Price (Max)</mat-label>
-        <input matInput type="number" [formControl]="filters.controls.maxPrice" placeholder="Max" />
+        <input matInput type="number" placeholder="Max" />
       </mat-form-field>
 
       <mat-form-field appearance="outline">
         <mat-label>Year (From)</mat-label>
-        <input matInput type="number" [formControl]="filters.controls.minYear" placeholder="From" />
+        <input matInput type="number" placeholder="From" />
       </mat-form-field>
       <span>-</span>
       <mat-form-field appearance="outline">
         <mat-label>Year (To)</mat-label>
-        <input matInput type="number" [formControl]="filters.controls.maxYear" placeholder="To" />
+        <input matInput type="number" placeholder="To" />
       </mat-form-field>
        <mat-form-field appearance="outline">
-        <mat-label>Mileage (Max)</mat-label>
-        <input matInput type="number" [formControl]="filters.controls.minMileage" placeholder="Min Mileage" />
+        <mat-label>Mileage (Min)</mat-label>
+        <input matInput type="number" placeholder="Min Mileage" />
       </mat-form-field>
       <span>-</span>
       <mat-form-field appearance="outline">
-        <mat-label>Mileage (Min)</mat-label>
-        <input matInput type="number" [formControl]="filters.controls.maxMileage" placeholder="Max Mileage" />
+        <mat-label>Mileage (Max)</mat-label>
+        <input matInput type="number" placeholder="Max Mileage" />
       </mat-form-field>
+        <mat-form-field appearance="fill">
+  <mat-label>Fuel type</mat-label>
+  <mat-select>
+    <mat-option>All</mat-option>
+    <mat-option>
+      <!-- {{ ft }} -->
+    </mat-option>
+  </mat-select>
+</mat-form-field>
+ <mat-form-field appearance="fill">
+  <mat-label>Transmission</mat-label>
+  <mat-select>
+    <mat-option>All</mat-option>
+    <mat-option>
+      <!-- {{  }} -->
+    </mat-option>
+  </mat-select>
+</mat-form-field>
+ <mat-form-field appearance="fill">
+  <mat-label>City/State</mat-label>
+  <mat-select>
+    <mat-option>All</mat-option>
+    <mat-option>
+      <!-- {{ ft }} -->
+    </mat-option>
+  </mat-select>
+</mat-form-field>
       <button
         mat-raised-button
-        color="primary"
-        (click)="filters.reset({ search: '', minPrice: null, maxPrice: null, minYear: null, maxYear: null })">
+        color="primary">
         Clear Filters
       </button>
     </div>
   </div>
   <div class="grid">
-    <ng-container *ngIf="paged$ | async as products">
-      <div *ngIf="products.length === 0" class="no-results">No matching products.</div>
-      <mat-card *ngFor="let product of products" class="card">
+    <ng-container>
+      <div class="no-results">No matching products.</div>
+      <mat-card class="card">
         <mat-card-header>
-          <mat-card-title>{{ product.title}}</mat-card-title>
-          <mat-card-subtitle>{{ product.year }}</mat-card-subtitle>
+          <mat-card-title></mat-card-title>
+          <mat-card-subtitle></mat-card-subtitle>
         </mat-card-header>
-        <img mat-card-image [src]="product.images" [alt]="product.title" />
+        <img mat-card-image />
         <mat-card-content>
-          <p class="desc">{{ product.description }}</p>
-          <div class="price">Price: {{ product.price | currency }}</div>
+          <p class="desc"></p>
+          <div class="price"></div>
         </mat-card-content>
       </mat-card>
-    </ng-container>
-  </div>
-  <div class="pagination" *ngIf="total$ | async as tot">
-    <ng-container *ngIf="getPageNumbers(tot).length > 0">
-      <button mat-button [disabled]="pageIndex === 0" (click)="goToPage(pageIndex - 1)">Prev</button>
-      <button
-        mat-button
-        *ngFor="let i of getPageNumbers(tot)"
-        (click)="goToPage(i)"
-        [color]="i === pageIndex ? 'primary' : ''">
-        {{ i + 1 }}
-      </button>
-      <button
-        mat-button
-        [disabled]="pageIndex >= getPageNumbers(tot).length - 1"
-        (click)="goToPage(pageIndex + 1)">
-        Next
-      </button>
     </ng-container>
   </div>
 </div>
