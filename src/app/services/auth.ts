@@ -62,16 +62,17 @@ const headers = new HttpHeaders().set('x-access-token', token || '');
 return this.http.get<userInfoDto>(this.apiUrlProfile, { headers });
   }
 
-  private apiUrl3 = 'http://localhost:5001/api/auth/vehicledetails';
-  getProducts(params?: { [key: string]: any }): Observable<Product[]> {
-    let httpParams = new HttpParams();
-    if (params) {
-      Object.keys(params).forEach(key => {
-        if (params[key] !== null && params[key] !== undefined && params[key] !== '') {
-          httpParams = httpParams.set(key, params[key].toString());
-        }
-      });
-    }
-    return this.http.get<Product[]>(this.apiUrl3, { params: httpParams });
+ private apiUrl3 = 'http://localhost:5001/api/auth/vehicledetails';
+
+getProducts(params?: { [key: string]: any }): Observable<{ data: Product[], total: number }> {
+  let httpParams = new HttpParams();
+  if (params) {
+    Object.keys(params).forEach(key => {
+      if (params[key] !== null && params[key] !== undefined && params[key] !== '') {
+        httpParams = httpParams.set(key, params[key].toString());
+      }
+    });
   }
+  return this.http.get<{ data: Product[], total: number }>(this.apiUrl3, { params: httpParams });
+}
 }

@@ -1,66 +1,102 @@
 .listing-root {
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 16px;
-  font-family: Arial, sans-serif;
-  color: #333;
-}
-.toolbar {
   display: flex;
   flex-direction: column;
-  gap: 26px;
-  margin-bottom: 20px;
+  gap: 1.5rem;
+  padding: 1rem;
+  background: #fafafa;
 }
-.search input {
-  width: 100%;
-  padding: 5px;
-  font-size: 14px;
-  border: 1px solid #ccc;
-  border-radius: 6px;
+.toolbar {
+  gap: 1rem;
+}
+.search {
+  max-width: 800px;
 }
 .controls {
   display: flex;
   flex-wrap: wrap;
-  gap: 16px;
-  align-items: center;
+  gap: 1rem;
+  align-items: flex-end;
 }
-.controls label {
-  display: flex;
-  flex-direction: column;
-  font-size: 13px;
-  gap: 6px;
+.toolbar button {
+  height: 40px;
+  align-self: center;
+}
+.results-info {
+  font-size: 14px;
+  color: #555;
 }
 .grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
   gap: 1.5rem;
-  padding: 1rem;
-}
-.no-results {
-  grid-column: 1 ; 
-  text-align: center;
-  font-size: 1.1rem;
-  color: #666;
-  margin: 2rem 0;
 }
 .card {
+  background: #fff;
+  border-radius: 8px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
+  overflow: hidden;
   display: flex;
   flex-direction: column;
-  height: 100%;
-  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  transition: transform 0.2s ease;
 }
 .card:hover {
-  transform: translateY(-4px);
-  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+  transform: translateY(-3px);
+}
+.card img {
+  width: 100%;
+  height: 180px;
+  object-fit: cover;
+}
+.info {
+  padding: 1rem;
+}
+.meta {
+  font-size: 13px;
+  color: #777;
+  margin-bottom: 0.5rem;
 }
 .desc {
-  font-size: 0.9rem;
+  font-size: 14px;
   color: #555;
-  flex-grow: 1;
+  margin-bottom: 0.5rem;
+  height: 40px;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 .price {
-  font-weight: 600;
-  font-size: 1rem;
-  color: #2e7d32; 
+  font-size: 16px;
+  font-weight: bold;
+  color: black;
 }
-
+.pagination {
+  display: flex;
+  justify-content: center;
+  gap: 0.5rem;
+}
+.button {
+  min-width: 40px;
+  padding: 0.5rem 1rem;
+  border: 1px solid #ccc;
+  background: #fff;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background 0.2s ease, color 0.2s ease;
+}
+.pagination button.active {
+  background: #1976d2;
+  color: #fff;
+  border-color: #1976d2;
+}
+.pagination button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+.no-results {
+  text-align: center;
+  color: #888;
+  font-style: italic;
+  padding: 2rem 0;
+}
+.one {
+  margin-bottom: 40px;
+}
