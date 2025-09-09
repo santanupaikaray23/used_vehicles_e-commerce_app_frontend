@@ -14,6 +14,7 @@ import { Product } from '../models/product.dto';
 })
 export class Auth {
 
+
  constructor(private http:HttpClient,private storage: Storage, private router: Router){}
 
 isLoggedIn(): boolean {
@@ -44,7 +45,7 @@ navigateByRole(role: string): void {
         this.router.navigate(['/seller']);
         break;
       default:
-        this.router.navigate(['/login']); // fallback
+        this.router.navigate(['/login']); 
     }
   }
 private apiUrl1 = 'http://localhost:5001/api/auth/signup';
@@ -74,5 +75,10 @@ getProducts(params?: { [key: string]: any }): Observable<{ data: Product[], tota
     });
   }
   return this.http.get<{ data: Product[], total: number }>(this.apiUrl3, { params: httpParams });
+}
+getTotal() {
+  return this.http.get<number | { total: number }>(
+    "http://localhost:5001/api/auth/vehicledetails/total"
+  );
 }
 }

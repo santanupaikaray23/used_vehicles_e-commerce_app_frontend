@@ -13,7 +13,7 @@ import { Observable } from 'rxjs';
 })
 export class Profile {
   products: Product[] = [];
-  total = 0;
+  total = 0; 
   pageSize = 6;
   pageIndex = 0;
 
@@ -27,8 +27,8 @@ export class Profile {
     minMileage: new FormControl(null),
     maxMileage: new FormControl(null),
     transmissions: new FormControl(''),
-    locationcity: new FormControl('')
-    
+    locationcity: new FormControl(''),
+    sort: new FormControl('newest')
   });
 
   filtered$!: Observable<Product[]>;
@@ -37,17 +37,18 @@ export class Profile {
 
   fueltype: string[] = [];
   transmissions: string[] = [];
-   locationcity: string[] = [];
+  locationcity: string[] = [];
 
   constructor(private svc: Auth) {}
 
   ngOnInit(): void {
     this.loadProducts();
+    this.loadTotal();
 
-    // Trigger filtering with debounce
     this.filters.valueChanges.pipe(debounceTime(300)).subscribe(() => {
       this.pageIndex = 0;
       this.loadProducts();
+      this.loadTotal(); 
     });
   }
 
@@ -61,38 +62,46 @@ export class Profile {
     this.svc.getProducts(params).subscribe({
       next: (res) => {
         this.products = res.data;
-        this.total = res.total;
+
         this.fueltype = Array.from(
           new Set(res.data.map(product => String(product.fueltype)))
         ).filter(f => !!f) as string[];
+
         this.transmissions = Array.from(
           new Set(res.data.map(product => String((product as any).transmission)))
         ).filter(t => !!t) as string[];
 
-
-        this. locationcity= Array.from(
-          new Set(res.data.map(product => String((product as any). locationcity)))
+        this.locationcity = Array.from(
+          new Set(res.data.map(product => String((product as any).locationcity)))
         ).filter(s => !!s) as string[];
       },
-      error: (err) => console.error('API error:', err)
+      error: (err) => console.error('Products API error:', err)
     });
   }
 
-  goToPage(index: number) {
-    const totalPages = Math.ceil(this.total / this.pageSize);
-    if (index < 0 || index >= totalPages) return;
-    this.pageIndex = index;
-    this.loadProducts();
+  loadTotal() {
+    this.svc.getTotal().subscribe({
+      next: (res: any) => {
+        this.total = res.total ?? res;
+      },
+      error: (err) => console.error('Total API error:', err)
+    });
   }
-
+getValue(){
+  return Math.ceil(this.total/this.pageSize)
+}
   changePageSize(size: number) {
     this.pageSize = +size;
-    this.pageIndex = 0; // reset
+    this.pageIndex = 0; 
     this.loadProducts();
   }
+onPageChange(pageIndex: number){
+  this.pageIndex = pageIndex;
+  this.loadProducts();
 
-  getPageNumbers(): number[] {
-    const pages = Math.ceil(this.total / this.pageSize);
-    return Array.from({ length: pages }, (_, i) => i);
+}
+  getPageNumbers(){
+  const totalPages = Math.ceil(this.total/this.pageSize)
+  return Array(totalPages).fill(0).map((x,i)=> i+1)
   }
 }

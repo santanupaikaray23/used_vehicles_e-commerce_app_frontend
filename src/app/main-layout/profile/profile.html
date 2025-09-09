@@ -61,9 +61,28 @@
           <mat-option *ngFor="let locationcity of  locationcity" [value]="locationcity">{{ locationcity }}</mat-option>
         </mat-select>
       </mat-form-field>
+      <div class="sort-section">
+  <label class="sort">Sort by:</label>
+  <select id="sort" [formControl]="filters.controls.sort">
+    <option value="newest">Newest</option>
+    <option value="price_low">Price: Low → High</option>
+    <option value="price_high">Price: High → Low</option>
+    <option value="year">Year (New → Old)</option>
+  </select>
+</div>
       <button mat-button color="warn" (click)="filters.reset()">Clear Filters</button>
     </div>
   </div>
+   <div class="page-size-control">
+  <mat-form-field appearance="outline">
+    <mat-label>Items per page</mat-label>
+    <mat-select [value]="pageSize" (selectionChange)="changePageSize($event.value)">
+      <mat-option *ngFor="let size of [6, 12, 24, 48]" [value]="size">
+        {{ size }}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
+</div>
   <div class="results-info">
     <span>{{ total }} result{{ total === 1 ? '' : 's' }} found</span>
   </div>
@@ -86,24 +105,16 @@
       </div>
     </div>
   </div>
-  <div class="pagination" *ngIf="total > pageSize">
-    <button [disabled]="pageIndex === 0" (click)="goToPage(pageIndex - 1)">
-      Prev
-    </button>
-
-    <button
-      *ngFor="let input of getPageNumbers()"
-      (click)="goToPage(input)"
-      [class.active]="input === pageIndex"
-    >
-      {{ input + 1 }}
-    </button>
-
-    <button
-      [disabled]="pageIndex >= getPageNumbers().length - 1"
-      (click)="goToPage(pageIndex + 1)"
-    >
-      Next
-    </button>
-  </div>
+  <ul class="pagination">
+    <li class="page-item" [class.disabled]="pageIndex ==0">
+      <a class="page-link" (click)="onPageChange(pageIndex-1)">Previous</a>
+    </li>
+    <li class="page-item" [class.active]="page == pageIndex" *ngFor="let page of getPageNumbers()">
+      <a class="page-link" (click)="onPageChange(page)">{{page}}</a>
+    </li>
+   
+    <li class="page-item" [class.disabled]="pageIndex ==getValue()">
+      <a class="page-link" (click)="onPageChange(pageIndex+1)">Next</a>
+    </li>
+  </ul>
 </div>
