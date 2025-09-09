@@ -14,7 +14,7 @@ import { Observable } from 'rxjs';
 export class Profile {
   products: Product[] = [];
   total = 0;
-  pageSize = 14;
+  pageSize = 6;
   pageIndex = 0;
 
   filters = new FormGroup({

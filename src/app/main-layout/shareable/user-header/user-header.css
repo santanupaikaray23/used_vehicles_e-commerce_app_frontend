@@ -1,11 +1,16 @@
 .user-header {
   width: 100%;
   display: flex;
-  justify-content: space-between;
+  justify-content: space-between; 
   align-items: center;
 }
+.user-info {
+  display: flex;
+  align-items: center;
+  gap: 12px; 
+}
 .profile-avatar {
-  width: 10px;
+  width: 10px;  
   height: 10px;
   background: #16a085;
   border-radius: 50%;
@@ -14,10 +19,10 @@
   background: transparent;
   box-shadow: none;
 }
-.panel-body {
+.panel-body h1 {
   font-size: 1.2rem;
-  margin-right: 800px;
   color: #2c3e50;
+  margin: 0;
 }
 .menu-text {
   display: flex;

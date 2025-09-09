@@ -1,9 +1,11 @@
 <div class="user-header">
-  <div class="profile-avatar" mat-mini-fab [matMenuTriggerFor]="menu"></div>
-  <div class="panel panel-success" *ngIf="user">
-    <div class="panel-body">
-      <h1>{{ user.name }}</h1>
-      <!-- <h4>{{ user.role }}</h4> -->
+  <div class="user-info">
+    <div class="profile-avatar" mat-mini-fab [matMenuTriggerFor]="menu"></div>
+    <div class="panel panel-success" *ngIf="user">
+      <div class="panel-body">
+        <h1>{{ user.name }}</h1>
+        <!-- <h4>{{ user.role }}</h4> -->
+      </div>
     </div>
   </div>
   <button mat-menu-item (click)="onLogout()">
