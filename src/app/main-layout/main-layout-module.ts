@@ -31,6 +31,7 @@ import { Sellerdashboard } from './sellerdashboard/sellerdashboard';
 import { Userdashboard } from './userdashboard/userdashboard';
 import { MatSelectModule } from '@angular/material/select';
 
+
 @NgModule({
   declarations: [
     UserHeader,
@@ -44,7 +45,8 @@ import { MatSelectModule } from '@angular/material/select';
     Buyerdashboard,
     Sellerdashboard,
     Userdashboard,
-    Profile
+    Profile,
+
    
   ],
   imports: [

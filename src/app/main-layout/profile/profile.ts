@@ -15,7 +15,7 @@ export class Profile {
   products: Product[] = [];
   total = 0; 
   pageSize = 6;
-  pageIndex = 0;
+  pageIndex = 1;
 
   filters = new FormGroup({
     search: new FormControl(''),
@@ -54,7 +54,7 @@ export class Profile {
 
   loadProducts() {
     const params: any = {
-      page: this.pageIndex + 1,
+      page: this.pageIndex + 0,
       limit: this.pageSize,
       ...this.filters.value
     };

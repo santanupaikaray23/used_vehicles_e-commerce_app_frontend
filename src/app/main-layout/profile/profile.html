@@ -106,7 +106,7 @@
     </div>
   </div>
   <ul class="pagination">
-    <li class="page-item" [class.disabled]="pageIndex ==0">
+    <li class="page-item" [class.disabled]="pageIndex ==1">
       <a class="page-link" (click)="onPageChange(pageIndex-1)">Previous</a>
     </li>
     <li class="page-item" [class.active]="page == pageIndex" *ngFor="let page of getPageNumbers()">
