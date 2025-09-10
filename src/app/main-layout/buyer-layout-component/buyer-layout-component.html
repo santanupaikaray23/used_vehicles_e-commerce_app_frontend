@@ -1,0 +1,48 @@
+<mat-sidenav-container class="sidenav-container">
+  <mat-sidenav #drawer class="sidenav" fixedInViewport
+    [attr.role]="(isHandset$ | async) ? 'dialog' : 'navigation'"
+    [mode]="(isHandset$ | async) ? 'over' : 'side'"
+    [opened]="(isHandset$ | async) === false">
+    <mat-toolbar class="side-nav-logo">
+      <a [routerLink]="['/profile']">
+        <img src="detail/gallery/clipart-motors-car-sales-7.jpg"
+             alt="vehicle-logo" height="45px" width="75px" />
+      </a>
+    </mat-toolbar>
+    <mat-nav-list>
+      <a mat-list-item routerLink="/buyer/dashboard" routerLinkActive="active-route">
+      <div class="menu-items">
+          <mat-icon class="side-nav-menu-icon">person</mat-icon>
+          <hr>
+          <p class="side-nav-menu-text">Profile</p>
+        </div>
+      </a>
+<mat-divider></mat-divider>
+      <a mat-list-item routerLink="/buyer/about" routerLinkActive="active-route">
+        <div class="menu-items">
+          <mat-icon class="side-nav-menu-icon">info</mat-icon>
+          <p class="side-nav-menu-text">About</p>
+        </div>
+      </a>
+  <mat-divider></mat-divider>
+      <a mat-list-item routerLink="/buyer/contact" routerLinkActive="active-route">
+        <div class="menu-items">
+          <mat-icon class="side-nav-menu-icon">contact_mail</mat-icon>
+          <p class="side-nav-menu-text">Contact</p>
+        </div>
+      </a>
+    </mat-nav-list>
+  </mat-sidenav>
+  <mat-sidenav-content>
+    <mat-toolbar class="main-header" color="primary">
+      @if (isHandset$ | async) {
+        <button type="button" aria-label="Toggle sidenav"
+                mat-icon-button (click)="drawer.toggle()">
+          <mat-icon aria-label="Side nav toggle icon">menu</mat-icon>
+        </button>
+      }
+      <app-user-header style="flex: 1;"></app-user-header>
+    </mat-toolbar>
+    <router-outlet></router-outlet>
+  </mat-sidenav-content>
+</mat-sidenav-container>

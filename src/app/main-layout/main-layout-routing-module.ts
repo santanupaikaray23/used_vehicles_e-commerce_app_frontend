@@ -3,53 +3,43 @@ import { RouterModule, Routes } from '@angular/router';
 import { About } from './about/about';
 import { Contact } from './contact/contact';
 import { MainLayoutComponent } from './main-layout.component';
-import { Authguard } from '../services/authguard';
-
+// import { Authguard } from '../services/authguard';
+// import { BuyerLayoutComponent } from './buyer-layout-component/buyer-layout-component';
 import { Profile } from './profile/profile';
 // import { Admindashboard } from './admindashboard/admindashboard';
 // import { Buyerdashboard } from './buyerdashboard/buyerdashboard';
 // import { Userdashboard } from './userdashboard/userdashboard';
-// import { Sellerdashboard } from './sellerdashboard/sellerdashboard';
+import { Sellerdashboard } from './sellerdashboard/sellerdashboard';
+import { SellerLayoutComponent } from './seller-layout-component/seller-layout-component';
+import { BuyerLayoutComponent } from './buyer-layout-component/buyer-layout-component';
+import { Buyerdashboard } from './buyerdashboard/buyerdashboard';
 
 const routes: Routes = [
-    {
+  {
     path: '',
     component: MainLayoutComponent,
     children: [
       {
-        path:'',
-        redirectTo: 'profile',
-        pathMatch: 'full',
-      },
-       { path: 'admin', 
-        component: Profile , 
-        canActivate: [Authguard]
-      },
-        { path: 'buyer', 
-        component: Profile, 
-        canActivate: [Authguard]
-      },
-      {
-        path: 'user',
-        component: Profile,
-        canActivate: [Authguard]
-      },
-      {
         path: 'seller',
-        component: Profile,
-        canActivate: [Authguard]
+        component: SellerLayoutComponent,
+        children: [
+          { path: 'dashboard', component: Sellerdashboard },
+                  { path: 'profile', component: Profile },
+      { path: 'about', component: About },
+      { path: 'contact', component: Contact },
+        ]
       },
       {
-       path: 'about',
-       component: About,
-       canActivate: [Authguard]
+        path: 'buyer',
+        component: BuyerLayoutComponent,
+        children: [
+          { path: 'dashboard', component: Buyerdashboard },
+           { path: 'profile', component: Profile },
+      { path: 'about', component: About },
+      { path: 'contact', component: Contact },
+        ]
       },
-    {
-       path: 'contact',
-       component: Contact,
-       canActivate: [Authguard]
-       },
-],
+    ]
   }
 ];
 

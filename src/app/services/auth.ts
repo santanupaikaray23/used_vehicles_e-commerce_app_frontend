@@ -13,8 +13,7 @@ import { Product } from '../models/product.dto';
   providedIn: 'root'
 })
 export class Auth {
-
-
+ 
  constructor(private http:HttpClient,private storage: Storage, private router: Router){}
 
 isLoggedIn(): boolean {

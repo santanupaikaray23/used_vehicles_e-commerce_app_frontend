@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { SideNav } from './side-nav';
+import { BuyerLayoutComponent } from './buyer-layout-component';
 
-describe('SideNav', () => {
-  let component: SideNav;
-  let fixture: ComponentFixture<SideNav>;
+describe('BuyerLayoutComponent', () => {
+  let component: BuyerLayoutComponent;
+  let fixture: ComponentFixture<BuyerLayoutComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [SideNav]
+      declarations: [BuyerLayoutComponent]
     })
     .compileComponents();
 
-    fixture = TestBed.createComponent(SideNav);
+    fixture = TestBed.createComponent(BuyerLayoutComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
