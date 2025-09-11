@@ -4,32 +4,33 @@
     [mode]="(isHandset$ | async) ? 'over' : 'side'"
     [opened]="(isHandset$ | async) === false">
     <mat-toolbar class="side-nav-logo">
-      <a [routerLink]="['/profile']">
+      <a [routerLink]="['/sellerdashboard']">
         <img src="detail/gallery/clipart-motors-car-sales-7.jpg"
              alt="vehicle-logo" height="45px" width="75px" />
       </a>
     </mat-toolbar>
     <mat-nav-list>
-      <a mat-list-item routerLink="/seller/dashboard" routerLinkActive="active-route">
+      <mat-divider></mat-divider>
+      <a mat-list-item routerLink="/sellerdashboard" routerLinkActive="active-route2">
         <mat-icon>store</mat-icon>
         <span>Seller Dashboard</span>
       </a>
       <mat-divider></mat-divider>
-      <a mat-list-item routerLink="/seller/profile" routerLinkActive="active-route">
+      <a mat-list-item routerLink="/sellerdashboard/profile" routerLinkActive="active-route2">
         <div class="menu-items">
           <mat-icon class="side-nav-menu-icon">person</mat-icon>
           <p class="side-nav-menu-text">Profile</p>
         </div>
       </a>
   <mat-divider></mat-divider>
-      <a mat-list-item routerLink="/seller/about" routerLinkActive="active-route">
+      <a mat-list-item routerLink="/sellerdashboard/about" routerLinkActive="active-route2">
         <div class="menu-items">
           <mat-icon class="side-nav-menu-icon">info</mat-icon>
           <p class="side-nav-menu-text">About</p>
         </div>
       </a>
   <mat-divider></mat-divider>
-      <a mat-list-item routerLink="/seller/contact" routerLinkActive="active-route">
+      <a mat-list-item routerLink="/sellerdashboard/contact" routerLinkActive="active-route2">
         <div class="menu-items">
           <mat-icon class="side-nav-menu-icon">contact_mail</mat-icon>
           <p class="side-nav-menu-text">Contact</p>

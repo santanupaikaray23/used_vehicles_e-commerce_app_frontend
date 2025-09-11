@@ -6,13 +6,14 @@ import { MainLayoutComponent } from './main-layout.component';
 // import { Authguard } from '../services/authguard';
 // import { BuyerLayoutComponent } from './buyer-layout-component/buyer-layout-component';
 import { Profile } from './profile/profile';
-// import { Admindashboard } from './admindashboard/admindashboard';
 // import { Buyerdashboard } from './buyerdashboard/buyerdashboard';
 // import { Userdashboard } from './userdashboard/userdashboard';
 import { Sellerdashboard } from './sellerdashboard/sellerdashboard';
 import { SellerLayoutComponent } from './seller-layout-component/seller-layout-component';
 import { BuyerLayoutComponent } from './buyer-layout-component/buyer-layout-component';
-import { Buyerdashboard } from './buyerdashboard/buyerdashboard';
+import { AdminLayoutComponent } from './admin-layout-component/admin-layout-component';
+import { Admindashboard } from './admindashboard/admindashboard';
+
 
 const routes: Routes = [
   {
@@ -20,23 +21,33 @@ const routes: Routes = [
     component: MainLayoutComponent,
     children: [
       {
-        path: 'seller',
+        path: 'sellerdashboard',
         component: SellerLayoutComponent,
         children: [
-          { path: 'dashboard', component: Sellerdashboard },
-                  { path: 'profile', component: Profile },
-      { path: 'about', component: About },
-      { path: 'contact', component: Contact },
+          { path: '', component: Sellerdashboard }, 
+          { path: 'profile', component: Profile },
+          { path: 'about', component: About },
+          { path: 'contact', component: Contact },
         ]
       },
       {
-        path: 'buyer',
+        path: 'buyerdashboard',
         component: BuyerLayoutComponent,
         children: [
-          { path: 'dashboard', component: Buyerdashboard },
-           { path: 'profile', component: Profile },
-      { path: 'about', component: About },
-      { path: 'contact', component: Contact },
+          { path: '', component: Profile }, 
+          { path: 'profile', component: Profile },
+          { path: 'about', component: About },
+          { path: 'contact', component: Contact },
+        ]
+      },
+      {
+        path: 'admindashboard',
+        component: AdminLayoutComponent,
+        children: [
+          { path: '', component: Admindashboard }, 
+          { path: 'profile', component: Profile },
+          { path: 'about', component: About },
+          { path: 'contact', component: Contact },
         ]
       },
     ]

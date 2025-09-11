@@ -9,6 +9,9 @@ import { Router} from '@angular/router';
 import { LoginDto } from '../models/login.model.dto';
 import { Product } from '../models/product.dto';
 
+
+
+
 @Injectable({
   providedIn: 'root'
 })
@@ -32,16 +35,16 @@ login(credentials: LoginDto): Observable<any> {
 navigateByRole(role: string): void {
     switch (role.toLowerCase()) {
       case 'admin':
-        this.router.navigate(['/admin']);
+        this.router.navigate(['/admindashboard']);
         break;
       case 'user':
         this.router.navigate(['/user']);
         break;
       case 'buyer':
-        this.router.navigate(['/buyer']);
+        this.router.navigate(['/buyerdashboard']);
         break;
       case 'seller':
-        this.router.navigate(['/seller']);
+        this.router.navigate(['/sellerdashboard']);
         break;
       default:
         this.router.navigate(['/login']); 
@@ -57,7 +60,7 @@ logout(): Observable<any> {
 }
 private apiUrlProfile = 'http://localhost:5001/api/auth/userInfo';
 getUserinfo(): Observable<userInfoDto> {
-    const token = localStorage.getItem('token');
+    const token = this.storage.getItem('token');
 const headers = new HttpHeaders().set('x-access-token', token || '');
 return this.http.get<userInfoDto>(this.apiUrlProfile, { headers });
   }
@@ -80,4 +83,5 @@ getTotal() {
     "http://localhost:5001/api/auth/vehicledetails/total"
   );
 }
+
 }

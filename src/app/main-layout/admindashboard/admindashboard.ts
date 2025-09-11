@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+
 
 @Component({
   selector: 'app-admindashboard',
@@ -6,6 +7,7 @@ import { Component } from '@angular/core';
   templateUrl: './admindashboard.html',
   styleUrl: './admindashboard.css'
 })
-export class Admindashboard {
+export class Admindashboard{
+ 
 
 }
