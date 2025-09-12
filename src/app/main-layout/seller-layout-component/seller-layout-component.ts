@@ -18,7 +18,6 @@ ngOnInit(): void {
     map(result => result.matches),
     shareReplay()
   );
- const userInfo = this.storage.getItem('userInfo');
-    console.log('User Info:', userInfo);
+
 }
 }

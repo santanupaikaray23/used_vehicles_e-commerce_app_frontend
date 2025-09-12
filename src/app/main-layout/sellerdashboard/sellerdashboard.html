@@ -1,1 +1,98 @@
-<p>sellerdashboard works!</p>
+<div class="container">
+  <mat-form-field appearance="outline" class="form-field">
+    <mat-label>Title</mat-label>
+    <input matInput [(ngModel)]="title">
+  </mat-form-field>&nbsp;
+  <mat-form-field appearance="outline" class="form-field">
+    <mat-label>Make</mat-label>
+    <input matInput [(ngModel)]="make">
+  </mat-form-field>&nbsp;
+  <mat-form-field appearance="outline" class="form-field">
+    <mat-label>Model</mat-label>
+    <input matInput [(ngModel)]="model">
+  </mat-form-field>&nbsp;
+  <mat-form-field appearance="outline" class="form-field">
+    <mat-label>Variant</mat-label>
+    <input matInput [(ngModel)]="variant">
+  </mat-form-field>&nbsp;
+  <mat-form-field appearance="outline" class="form-field">
+    <mat-label>Year</mat-label>
+    <input matInput type="number" [(ngModel)]="year">
+  </mat-form-field>&nbsp;
+  <mat-form-field appearance="outline" class="form-field">
+    <mat-label>Fuel Type</mat-label>
+    <input matInput [(ngModel)]="fueltype">
+  </mat-form-field>&nbsp;
+  <mat-form-field appearance="outline" class="form-field">
+    <mat-label>Transmission</mat-label>
+    <input matInput [(ngModel)]="transmission">
+  </mat-form-field>&nbsp;
+  <mat-form-field appearance="outline" class="form-field">
+    <mat-label>Owner Count</mat-label>
+    <input matInput type="number" [(ngModel)]="ownercount">
+  </mat-form-field>&nbsp;
+  <mat-form-field appearance="outline" class="form-field">
+    <mat-label>Registration State</mat-label>
+    <input matInput [(ngModel)]="registrationstate">
+  </mat-form-field>&nbsp;
+  <mat-form-field appearance="outline" class="form-field">
+    <mat-label>Price</mat-label>
+    <input matInput type="number" [(ngModel)]="price">
+  </mat-form-field>&nbsp;
+  <mat-form-field appearance="outline" class="form-field">
+    <mat-label>Description</mat-label>
+    <textarea matInput [(ngModel)]="description"></textarea>
+  </mat-form-field>&nbsp;
+  <mat-form-field appearance="outline" class="form-field">
+    <mat-label>Location City</mat-label>
+    <input matInput [(ngModel)]="locationcity">
+  </mat-form-field>&nbsp;
+  <mat-form-field appearance="outline" class="form-field">
+    <mat-label>Pincode</mat-label>
+    <input matInput type="number" [(ngModel)]="localpincode">
+  </mat-form-field>&nbsp;
+  <mat-form-field appearance="outline" class="form-field">
+    <mat-label>Images</mat-label>
+    <input matInput [(ngModel)]="images">
+  </mat-form-field>&nbsp;
+  <mat-form-field appearance="outline" class="form-field">
+    <mat-label>Status</mat-label>
+    <input matInput [(ngModel)]="status">
+  </mat-form-field>&nbsp;
+  <mat-form-field appearance="outline" class="form-field">
+    <mat-label>Status History</mat-label>
+    <input matInput [(ngModel)]="statushistory">
+  </mat-form-field>&nbsp;
+  <div class="action-buttons">
+    <button mat-raised-button color="primary" (click)="createVehicles()">Submit</button> 
+  </div>
+  <table mat-table [dataSource]="products" class="mat-elevation-z8 full-width-table">
+    <ng-container matColumnDef="_id">
+      <th mat-header-cell *matHeaderCellDef> Id </th>
+      <td mat-cell *matCellDef="let vehicle"> {{vehicle._id}} </td>
+    </ng-container>
+    <ng-container matColumnDef="title">
+      <th mat-header-cell *matHeaderCellDef> Title </th>
+      <td mat-cell *matCellDef="let vehicle"> {{vehicle.title}} </td>
+    </ng-container>
+    <ng-container matColumnDef="make">
+      <th mat-header-cell *matHeaderCellDef> Make </th>
+      <td mat-cell *matCellDef="let vehicle"> {{vehicle.make}} </td>
+    </ng-container>
+    <ng-container matColumnDef="images">
+      <th mat-header-cell *matHeaderCellDef> Images </th>
+      <td mat-cell *matCellDef="let vehicle">
+        <img [src]="vehicle.images" alt="car image" width="100">
+      </td>
+    </ng-container>
+    <ng-container matColumnDef="action">
+      <th mat-header-cell *matHeaderCellDef> Action </th>
+      <td mat-cell *matCellDef="let vehicle">
+          <button mat-raised-button color="warn" (click)="updateVehicles()">Update</button> &nbsp;
+        <button mat-raised-button color="warn" (click)="deleteVehicles(vehicle._id)">Delete</button> 
+      </td>
+    </ng-container>
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+  </table>
+</div>

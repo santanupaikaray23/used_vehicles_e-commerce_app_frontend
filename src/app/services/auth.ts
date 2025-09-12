@@ -8,6 +8,7 @@ import { HttpHeaders } from '@angular/common/http';
 import { Router} from '@angular/router';
 import { LoginDto } from '../models/login.model.dto';
 import { Product } from '../models/product.dto';
+import { VehicleDto } from '../models/vehicle-dto.dto';
 
 
 
@@ -16,6 +17,7 @@ import { Product } from '../models/product.dto';
   providedIn: 'root'
 })
 export class Auth {
+
  
  constructor(private http:HttpClient,private storage: Storage, private router: Router){}
 
@@ -83,5 +85,22 @@ getTotal() {
     "http://localhost:5001/api/auth/vehicledetails/total"
   );
 }
+// readVehicles(){
+//   return this.http.get("http://localhost:5001/api/auth/vehicledetails")
 
+// }
+createVehicles(vehicle: VehicleDto){
+const header = {'content-type':'application/json'}
+const body = JSON.stringify(vehicle)
+return this.http.post("http://localhost:5001/api/auth/addvehicledetail",body,{headers:header})
+}
+updateVehicles(vehicle: VehicleDto){
+  const header = {'content-type': 'application/json'}
+  const body = JSON.stringify(vehicle)
+  return this.http.put(`http://localhost:5001/api/auth/vehicledetails`, body, {headers:header})
+}
+deleteVehicle(id: number){
+  console.log('I am inside delete vehicle - service method')
+  return this.http.delete(`http://localhost:5001/api/auth/deletevehicledetail`)
+}
 }

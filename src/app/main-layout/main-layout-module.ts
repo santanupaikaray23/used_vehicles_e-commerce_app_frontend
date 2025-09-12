@@ -33,7 +33,9 @@ import { MatSelectModule } from '@angular/material/select';
 import { BuyerLayoutComponent } from './buyer-layout-component/buyer-layout-component';
 import { SellerLayoutComponent } from './seller-layout-component/seller-layout-component';
 import { AdminLayoutComponent } from './admin-layout-component/admin-layout-component';
-
+import { MatTableModule } from '@angular/material/table';
+import { MatPaginatorModule } from '@angular/material/paginator';
+import { MatSortModule } from '@angular/material/sort';
 
 @NgModule({
   declarations: [
@@ -79,7 +81,10 @@ import { AdminLayoutComponent } from './admin-layout-component/admin-layout-comp
     MatCardHeader,
     MatCardTitle,
    MatCardContent,
-   MatCardSubtitle
+   MatCardSubtitle,
+   MatTableModule,
+   MatPaginatorModule,
+MatSortModule
 
 ],
 
