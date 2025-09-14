@@ -20,12 +20,20 @@
     <input matInput type="number" [(ngModel)]="year">
   </mat-form-field>&nbsp;
   <mat-form-field appearance="outline" class="form-field">
-    <mat-label>Fuel Type</mat-label>
-    <input matInput [(ngModel)]="fueltype">
-  </mat-form-field>&nbsp;
+  <mat-label>Fuel Type</mat-label>
+  <mat-select [(ngModel)]="fueltype">
+    <mat-option value="Petrol">Petrol</mat-option>
+    <mat-option value="Diesel">Diesel</mat-option>
+    <mat-option value="Electric">Electric</mat-option>
+  </mat-select>
+</mat-form-field>
   <mat-form-field appearance="outline" class="form-field">
     <mat-label>Transmission</mat-label>
-    <input matInput [(ngModel)]="transmission">
+    <mat-select [(ngModel)]="transmission">
+    <mat-option value="Automatic">Automatic</mat-option>
+    <mat-option value="Manual">Manual</mat-option>
+    <mat-option value="Electric">Electric</mat-option>
+  </mat-select>
   </mat-form-field>&nbsp;
   <mat-form-field appearance="outline" class="form-field">
     <mat-label>Owner Count</mat-label>
@@ -51,10 +59,33 @@
     <mat-label>Pincode</mat-label>
     <input matInput type="number" [(ngModel)]="localpincode">
   </mat-form-field>&nbsp;
-  <mat-form-field appearance="outline" class="form-field">
-    <mat-label>Images</mat-label>
-    <input matInput [(ngModel)]="images">
-  </mat-form-field>&nbsp;
+  <div class="file-upload">
+  <button mat-raised-button color="primary" (click)="fileInput.click()">
+    Upload Images
+  </button>
+  <input 
+    #fileInput
+    type="file" 
+    accept="image/*" 
+    multiple 
+    (change)="onFileSelected($event)" 
+    hidden
+  />
+</div>
+
+<div *ngIf="errorMessage" style="color:red; margin-top:8px;">
+  {{ errorMessage }}
+</div>
+
+<div *ngIf="selectedFiles.length > 0" style="margin-top:12px;">
+  <p><strong>Selected Files:</strong></p>
+  <ul>
+    <li *ngFor="let file of selectedFiles">
+      {{ file.name }} ({{ file.size / 1024 | number:'1.0-0' }} KB)
+    </li>
+  </ul>
+</div>
+
   <mat-form-field appearance="outline" class="form-field">
     <mat-label>Status</mat-label>
     <input matInput [(ngModel)]="status">
@@ -88,7 +119,7 @@
     <ng-container matColumnDef="action">
       <th mat-header-cell *matHeaderCellDef> Action </th>
       <td mat-cell *matCellDef="let vehicle">
-          <button mat-raised-button color="warn" (click)="updateVehicles()">Update</button> &nbsp;
+         <button mat-raised-button color="warn" (click)="updateVehicles(vehicle)">Update</button> &nbsp;
         <button mat-raised-button color="warn" (click)="deleteVehicles(vehicle._id)">Delete</button> 
       </td>
     </ng-container>

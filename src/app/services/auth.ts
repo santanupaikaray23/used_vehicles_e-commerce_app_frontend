@@ -94,13 +94,16 @@ const header = {'content-type':'application/json'}
 const body = JSON.stringify(vehicle)
 return this.http.post("http://localhost:5001/api/auth/addvehicledetail",body,{headers:header})
 }
-updateVehicles(vehicle: VehicleDto){
-  const header = {'content-type': 'application/json'}
-  const body = JSON.stringify(vehicle)
-  return this.http.put(`http://localhost:5001/api/auth/vehicledetails`, body, {headers:header})
+updateVehicles(id: number, vehicle: VehicleDto) {
+  const headers = { 'Content-Type': 'application/json' };
+  return this.http.put(
+    `http://localhost:5001/api/auth/updatevehicledetail/${id}`,
+    vehicle,
+    { headers }
+  );
 }
-deleteVehicle(id: number){
-  console.log('I am inside delete vehicle - service method')
-  return this.http.delete(`http://localhost:5001/api/auth/deletevehicledetail`)
+deleteVehicle(id: number) {
+  console.log('Deleting vehicle with id:', id);
+  return this.http.delete(`http://localhost:5001/api/auth/deletevehicledetail/${id}`);
 }
 }

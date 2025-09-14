@@ -15,9 +15,10 @@ import { MainLayoutModule } from './main-layout/main-layout-module';
 import { HttpClientModule, provideHttpClient, withFetch } from '@angular/common/http';
 
 
+
 @NgModule({
   declarations: [
-    App,
+    App
  
   ],
   imports: [

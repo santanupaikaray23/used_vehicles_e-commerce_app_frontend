@@ -37,6 +37,8 @@ import { MatTableModule } from '@angular/material/table';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatSortModule } from '@angular/material/sort';
 
+
+
 @NgModule({
   declarations: [
     UserHeader,
@@ -54,6 +56,7 @@ import { MatSortModule } from '@angular/material/sort';
     BuyerLayoutComponent,
     SellerLayoutComponent,
     AdminLayoutComponent,
+  
 
    
   ],
