@@ -89,10 +89,8 @@ getTotal() {
 //   return this.http.get("http://localhost:5001/api/auth/vehicledetails")
 
 // }
-createVehicles(vehicle: VehicleDto){
-const header = {'content-type':'application/json'}
-const body = JSON.stringify(vehicle)
-return this.http.post("http://localhost:5001/api/auth/addvehicledetail",body,{headers:header})
+createVehicles(vehicle: FormData) {
+  return this.http.post("http://localhost:5001/api/auth/addvehicledetail", vehicle);
 }
 updateVehicles(id: number, vehicle: VehicleDto) {
   const headers = { 'Content-Type': 'application/json' };
