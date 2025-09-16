@@ -5,5 +5,7 @@ export class SignupDto {
     name!:string;
     phone!:number;
     city!:string;
+   created_at?: string;
+   updated_at?: string;
 
 }

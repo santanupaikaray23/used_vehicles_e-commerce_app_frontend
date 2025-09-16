@@ -13,10 +13,11 @@ export class Product {
     description!:String;
     locationcity!:String;
     localpincode!:Number;
-    images!:String;
+    images!:any[];
     status!:String;
     statushistory!:String;
 imageUrl!:String;
 mileage!:Number;
+
   
 }

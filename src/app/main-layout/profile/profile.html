@@ -90,14 +90,31 @@
     <div *ngIf="products.length === 0" class="no-results">
       No matching products.
     </div>
-    <div *ngFor="let product of products" class="card">
+    <div *ngFor="let product of products" class="card"> 
+      
       <div class="thumb">
-        <img [src]="product.images" alt="product image" />
+        <!-- Main image -->
+        <!-- <img 
+          *ngIf="product.images?.length"
+          [src]="'data:' + product.images[0].mimetype + ';base64,' + product.images[0].data"
+          [alt]="product.images[0].filename"
+          class="main-img"
+        /> -->
+
+        <!-- Thumbnails -->
+        <div class="image-list" *ngIf="product.images.length > 0">
+          <img 
+            *ngFor="let img of product.images.slice(0)" 
+            [src]="'data:' + img.mimetype + ';base64,' + img.data" 
+            [alt]="img.filename" 
+            (click)="product.images[0] = img"
+          />
+        </div>
       </div>
       <div class="info">
         <h3>{{ product.title || (product.make + ' ' + product.model) }}</h3>
         <p class="meta">
-          {{ product.year }} •
+          {{ product.year }} 
           {{ product.mileage ? (product.mileage + ' km') : '' }}
         </p>
         <p class="desc">{{ product.description }}</p>

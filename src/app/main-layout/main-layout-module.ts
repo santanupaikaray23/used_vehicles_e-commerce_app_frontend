@@ -36,6 +36,7 @@ import { AdminLayoutComponent } from './admin-layout-component/admin-layout-comp
 import { MatTableModule } from '@angular/material/table';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatSortModule } from '@angular/material/sort';
+// import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 
 
@@ -87,7 +88,8 @@ import { MatSortModule } from '@angular/material/sort';
    MatCardSubtitle,
    MatTableModule,
    MatPaginatorModule,
-MatSortModule
+MatSortModule,
+//  NgbModule,
 
 ],
 

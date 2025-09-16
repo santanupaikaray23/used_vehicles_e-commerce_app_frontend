@@ -53,7 +53,11 @@ export class Signup {
     }
 
     this.loading = true;
-    const formData: SignupDto = this.signupForm.value;
+   const formData: SignupDto = {
+    ...this.signupForm.value,
+     created_at: new Date().toISOString(),
+     updated_at: new Date().toISOString()
+  };
 
     this.auth.signup(formData).subscribe({
       next: (res) => {

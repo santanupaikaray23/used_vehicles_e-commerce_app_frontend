@@ -28,7 +28,8 @@ export class Sellerdashboard {
   vehicles: any[] = [];
   vehicle: any;
   products: any[] = [];
-
+isEditMode: boolean = false;
+editVehicleId: string | null = null;
   displayedColumns: string[] = ['_id', 'title', 'make', 'images', 'action'];
 
   selectedFiles: File[] = [];
@@ -80,66 +81,146 @@ export class Sellerdashboard {
     });
   }
 
- createVehicles() {
-    this.errorMessage = '';
-    const formData = new FormData();
-    formData.append("title", this.title || '');
-    formData.append("make", this.make || '');
-    formData.append("model", this.model || '');
-    formData.append("variant", this.variant || '');
-    formData.append("year", String(this.year || ''));
-    formData.append("fueltype", this.fueltype || '');
-    formData.append("transmission", this.transmission || '');
-    formData.append("ownercount", String(this.ownercount || ''));
-    formData.append("registrationstate", this.registrationstate || '');
-    formData.append("price", String(this.price || ''));
-    formData.append("description", this.description || '');
-    formData.append("locationcity", this.locationcity || '');
-    formData.append("localpincode", String(this.localpincode || ''));
-    formData.append("status", this.status || '');
-    formData.append("statushistory", this.statushistory || '');
+//  createVehicles() {
+//     this.errorMessage = '';
+//     const formData = new FormData();
+//     formData.append("title", this.title || '');
+//     formData.append("make", this.make || '');
+//     formData.append("model", this.model || '');
+//     formData.append("variant", this.variant || '');
+//     formData.append("year", String(this.year || ''));
+//     formData.append("fueltype", this.fueltype || '');
+//     formData.append("transmission", this.transmission || '');
+//     formData.append("ownercount", String(this.ownercount || ''));
+//     formData.append("registrationstate", this.registrationstate || '');
+//     formData.append("price", String(this.price || ''));
+//     formData.append("description", this.description || '');
+//     formData.append("locationcity", this.locationcity || '');
+//     formData.append("localpincode", String(this.localpincode || ''));
+//     formData.append("status", this.status || '');
+//     formData.append("statushistory", this.statushistory || '');
 
-    this.selectedFiles.forEach(file => {
-      formData.append("images", file, file.name);
+//     this.selectedFiles.forEach(file => {
+//       formData.append("images", file, file.name);
+//     });
+
+//     this.auth.createVehicles(formData).subscribe({
+//       next: (data) => {
+//         console.log("Vehicle record Created", data);
+//         this.getProducts();
+//         this.errorMessage = '';
+//       },
+//       error: (err) => {
+//         console.error("Error creating vehicle:", err);
+//         if (err.error && err.error.error) {
+//           this.errorMessage = `${err.error.error}`;
+//         } else {
+//           this.errorMessage = 'Failed to create vehicle. Please try again.';
+//         }
+//       }
+//     });
+//   }
+
+updateVehicles(vehicle: any) {
+  this.isEditMode = true;
+  this.editVehicleId = vehicle._id;
+
+  this.title = vehicle.title;
+  this.make = vehicle.make;
+  this.model = vehicle.model;
+  this.variant = vehicle.variant;
+  this.year = vehicle.year;
+  this.fueltype = vehicle.fueltype;
+  this.transmission = vehicle.transmission;
+  this.ownercount = vehicle.ownercount;
+  this.registrationstate = vehicle.registrationstate;
+  this.price = vehicle.price;
+  this.description = vehicle.description;
+  this.locationcity = vehicle.locationcity;
+  this.localpincode = vehicle.localpincode;
+  this.status = vehicle.status;
+  this.statushistory = vehicle.statushistory;
+
+  this.selectedFiles = [];
+  this.photos = (vehicle.images || []).map((img: any) =>
+    img.data ? `data:${img.mimetype};base64,${img.data}` : null
+  );
+}
+
+saveVehicle() {
+  this.errorMessage = '';
+  const formData = new FormData();
+  formData.append("title", this.title || '');
+  formData.append("make", this.make || '');
+  formData.append("model", this.model || '');
+  formData.append("variant", this.variant || '');
+  formData.append("year", String(this.year || ''));
+  formData.append("fueltype", this.fueltype || '');
+  formData.append("transmission", this.transmission || '');
+  formData.append("ownercount", String(this.ownercount || ''));
+  formData.append("registrationstate", this.registrationstate || '');
+  formData.append("price", String(this.price || ''));
+  formData.append("description", this.description || '');
+  formData.append("locationcity", this.locationcity || '');
+  formData.append("localpincode", String(this.localpincode || ''));
+  formData.append("status", this.status || '');
+  formData.append("statushistory", this.statushistory || '');
+
+  this.selectedFiles.forEach(file => {
+    formData.append("images", file, file.name);
+  });
+
+  if (this.isEditMode && this.editVehicleId) {
+    // ✅ Update existing vehicle
+    this.auth.updateVehicles(this.editVehicleId, formData).subscribe({
+      next: (data) => {
+        console.log("Vehicle updated", data);
+        this.getProducts();
+        this.resetForm();
+      },
+      error: (err) => {
+        console.error("Error updating vehicle:", err);
+        this.errorMessage = 'Failed to update vehicle. Please try again.';
+      }
     });
-
+  } else {
+    // ✅ Create new vehicle
     this.auth.createVehicles(formData).subscribe({
       next: (data) => {
-        console.log("Vehicle record Created", data);
+        console.log("Vehicle created", data);
         this.getProducts();
-        this.errorMessage = '';
+        this.resetForm();
       },
       error: (err) => {
         console.error("Error creating vehicle:", err);
-        if (err.error && err.error.error) {
-          this.errorMessage = `${err.error.error}`;
-        } else {
-          this.errorMessage = 'Failed to create vehicle. Please try again.';
-        }
+        this.errorMessage = 'Failed to create vehicle. Please try again.';
       }
     });
   }
+}
 
-  updateVehicles(vehicle: any) {
-    this.title = vehicle.title;
-    this.make = vehicle.make;
-    this.model = vehicle.model;
-    this.variant = vehicle.variant;
-    this.year = vehicle.year;
-    this.fueltype = vehicle.fueltype;
-    this.transmission = vehicle.transmission;
-    this.ownercount = vehicle.ownercount;
-    this.registrationstate = vehicle.registrationstate;
-    this.price = vehicle.price;
-    this.description = vehicle.description;
-    this.locationcity = vehicle.locationcity;
-    this.localpincode = vehicle.localpincode;
-    this.status = vehicle.status;
-    this.statushistory = vehicle.statushistory;
+resetForm() {
+  this.isEditMode = false;
+  this.editVehicleId = null;
 
-    this.selectedFiles = [];
-    this.photos = vehicle.images || [];
-  }
+  this.title = '';
+  this.make = '';
+  this.model = '';
+  this.variant = '';
+  this.year = undefined;
+  this.fueltype = '';
+  this.transmission = '';
+  this.ownercount = undefined;
+  this.registrationstate = '';
+  this.price = undefined;
+  this.description = '';
+  this.locationcity = '';
+  this.localpincode = undefined;
+  this.status = '';
+  this.statushistory = '';
+  this.selectedFiles = [];
+  this.photos = Array(5).fill(null);
+}
 
   deleteVehicles(id: number) {
     this.auth.deleteVehicle(id).subscribe({

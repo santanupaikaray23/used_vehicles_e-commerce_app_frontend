@@ -13,6 +13,7 @@ import { Observable } from 'rxjs';
 })
 export class Profile {
   products: Product[] = [];
+  
   total = 0; 
   pageSize = 6;
   pageIndex = 1;
@@ -38,6 +39,7 @@ export class Profile {
   fueltype: string[] = [];
   transmissions: string[] = [];
   locationcity: string[] = [];
+
 
   constructor(private svc: Auth) {}
 

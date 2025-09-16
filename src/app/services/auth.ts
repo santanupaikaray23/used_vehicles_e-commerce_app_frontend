@@ -92,12 +92,10 @@ getTotal() {
 createVehicles(vehicle: FormData) {
   return this.http.post("http://localhost:5001/api/auth/addvehicledetail", vehicle);
 }
-updateVehicles(id: number, vehicle: VehicleDto) {
-  const headers = { 'Content-Type': 'application/json' };
+updateVehicles(id: string, formData: FormData) {
   return this.http.put(
     `http://localhost:5001/api/auth/updatevehicledetail/${id}`,
-    vehicle,
-    { headers }
+    formData
   );
 }
 deleteVehicle(id: number) {
