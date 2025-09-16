@@ -76,7 +76,8 @@ editVehicleId: string | null = null;
     this.auth.getProducts().subscribe((data: any) => {
       console.log('API response:', data);
       const allProducts = Array.isArray(data.data) ? data.data : [];
-      this.products = allProducts.length > 0 ? [allProducts[allProducts.length - 1]] : [];
+      // this.products = allProducts.length > 0 ? [allProducts[allProducts.length - 1]] : [];
+       this.products = allProducts;
       console.log('Latest product for table:', this.products);
     });
   }
@@ -171,7 +172,6 @@ saveVehicle() {
   });
 
   if (this.isEditMode && this.editVehicleId) {
-    // ✅ Update existing vehicle
     this.auth.updateVehicles(this.editVehicleId, formData).subscribe({
       next: (data) => {
         console.log("Vehicle updated", data);
@@ -184,7 +184,6 @@ saveVehicle() {
       }
     });
   } else {
-    // ✅ Create new vehicle
     this.auth.createVehicles(formData).subscribe({
       next: (data) => {
         console.log("Vehicle created", data);
