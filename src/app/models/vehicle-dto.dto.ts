@@ -15,6 +15,7 @@ locationcity?: String;
 localpincode?: Number;
 images?: String;
 status?: String;
+isActive?: String;
 
 
 }

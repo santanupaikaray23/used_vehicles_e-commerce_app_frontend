@@ -1,5 +1,6 @@
 import { Component, ElementRef, QueryList, ViewChildren } from '@angular/core';
 import { Auth } from '../../services/auth';
+import { Router } from '@angular/router'; 
 
 @Component({
   selector: 'app-sellerdashboard',
@@ -8,7 +9,7 @@ import { Auth } from '../../services/auth';
   styleUrl: './sellerdashboard.css'
 })
 export class Sellerdashboard {
-  title: string | undefined;
+   title: string | undefined;
   make: string | undefined;
   model: string | undefined;
   variant: string | undefined;
@@ -28,8 +29,8 @@ export class Sellerdashboard {
   vehicles: any[] = [];
   vehicle: any;
   products: any[] = [];
-isEditMode: boolean = false;
-editVehicleId: string | null = null;
+  isEditMode: boolean = false;
+  editVehicleId: string | null = null;
   displayedColumns: string[] = ['_id', 'title', 'make', 'images', 'action'];
 
   selectedFiles: File[] = [];
@@ -41,7 +42,7 @@ editVehicleId: string | null = null;
 
   @ViewChildren('fileInput') fileInputs!: QueryList<ElementRef<HTMLInputElement>>;
 
-  constructor(private auth: Auth) {}
+  constructor(private auth: Auth, private router: Router) {} 
 
   ngOnInit() {
     this.getProducts();
@@ -76,81 +77,42 @@ editVehicleId: string | null = null;
     this.auth.getProducts().subscribe((data: any) => {
       console.log('API response:', data);
       const allProducts = Array.isArray(data.data) ? data.data : [];
-      // this.products = allProducts.length > 0 ? [allProducts[allProducts.length - 1]] : [];
-       this.products = allProducts;
+      this.products = allProducts;
       console.log('Latest product for table:', this.products);
     });
   }
 
-//  createVehicles() {
-//     this.errorMessage = '';
-//     const formData = new FormData();
-//     formData.append("title", this.title || '');
-//     formData.append("make", this.make || '');
-//     formData.append("model", this.model || '');
-//     formData.append("variant", this.variant || '');
-//     formData.append("year", String(this.year || ''));
-//     formData.append("fueltype", this.fueltype || '');
-//     formData.append("transmission", this.transmission || '');
-//     formData.append("ownercount", String(this.ownercount || ''));
-//     formData.append("registrationstate", this.registrationstate || '');
-//     formData.append("price", String(this.price || ''));
-//     formData.append("description", this.description || '');
-//     formData.append("locationcity", this.locationcity || '');
-//     formData.append("localpincode", String(this.localpincode || ''));
-//     formData.append("status", this.status || '');
-//     formData.append("statushistory", this.statushistory || '');
+  updateVehicles(vehicle: any) {
+    this.isEditMode = true;
+    this.editVehicleId = vehicle._id;
 
-//     this.selectedFiles.forEach(file => {
-//       formData.append("images", file, file.name);
-//     });
+    this.title = vehicle.title;
+    this.make = vehicle.make;
+    this.model = vehicle.model;
+    this.variant = vehicle.variant;
+    this.year = vehicle.year;
+    this.fueltype = vehicle.fueltype;
+    this.transmission = vehicle.transmission;
+    this.ownercount = vehicle.ownercount;
+    this.registrationstate = vehicle.registrationstate;
+    this.price = vehicle.price;
+    this.description = vehicle.description;
+    this.locationcity = vehicle.locationcity;
+    this.localpincode = vehicle.localpincode;
+    this.status = vehicle.status;
+    this.statushistory = vehicle.statushistory;
 
-//     this.auth.createVehicles(formData).subscribe({
-//       next: (data) => {
-//         console.log("Vehicle record Created", data);
-//         this.getProducts();
-//         this.errorMessage = '';
-//       },
-//       error: (err) => {
-//         console.error("Error creating vehicle:", err);
-//         if (err.error && err.error.error) {
-//           this.errorMessage = `${err.error.error}`;
-//         } else {
-//           this.errorMessage = 'Failed to create vehicle. Please try again.';
-//         }
-//       }
-//     });
-//   }
-
-updateVehicles(vehicle: any) {
-  this.isEditMode = true;
-  this.editVehicleId = vehicle._id;
-
-  this.title = vehicle.title;
-  this.make = vehicle.make;
-  this.model = vehicle.model;
-  this.variant = vehicle.variant;
-  this.year = vehicle.year;
-  this.fueltype = vehicle.fueltype;
-  this.transmission = vehicle.transmission;
-  this.ownercount = vehicle.ownercount;
-  this.registrationstate = vehicle.registrationstate;
-  this.price = vehicle.price;
-  this.description = vehicle.description;
-  this.locationcity = vehicle.locationcity;
-  this.localpincode = vehicle.localpincode;
-  this.status = vehicle.status;
-  this.statushistory = vehicle.statushistory;
-
-  this.selectedFiles = [];
-  this.photos = (vehicle.images || []).map((img: any) =>
-    img.data ? `data:${img.mimetype};base64,${img.data}` : null
-  );
-}
+    this.selectedFiles = [];
+    this.photos = (vehicle.images || []).map((img: any) =>
+      img.data ? `data:${img.mimetype};base64,${img.data}` : null
+    );
+  }
 
 saveVehicle() {
   this.errorMessage = '';
   const formData = new FormData();
+
+  // append text fields
   formData.append("title", this.title || '');
   formData.append("make", this.make || '');
   formData.append("model", this.model || '');
@@ -166,10 +128,18 @@ saveVehicle() {
   formData.append("localpincode", String(this.localpincode || ''));
   formData.append("status", this.status || '');
   formData.append("statushistory", this.statushistory || '');
-
-  this.selectedFiles.forEach(file => {
-    formData.append("images", file, file.name);
+  formData.append("isActive", "true");
+  // Track indexes for updated images
+  const imageIndexes: number[] = [];
+  this.selectedFiles.forEach((file, index) => {
+    if (file) {
+      formData.append("images", file, file.name);
+      imageIndexes.push(index); // which slot this file belongs to
+    }
   });
+
+  // send indexes as JSON string
+  formData.append("imageIndexes", JSON.stringify(imageIndexes));
 
   if (this.isEditMode && this.editVehicleId) {
     this.auth.updateVehicles(this.editVehicleId, formData).subscribe({
@@ -198,28 +168,28 @@ saveVehicle() {
   }
 }
 
-resetForm() {
-  this.isEditMode = false;
-  this.editVehicleId = null;
+  resetForm() {
+    this.isEditMode = false;
+    this.editVehicleId = null;
 
-  this.title = '';
-  this.make = '';
-  this.model = '';
-  this.variant = '';
-  this.year = undefined;
-  this.fueltype = '';
-  this.transmission = '';
-  this.ownercount = undefined;
-  this.registrationstate = '';
-  this.price = undefined;
-  this.description = '';
-  this.locationcity = '';
-  this.localpincode = undefined;
-  this.status = '';
-  this.statushistory = '';
-  this.selectedFiles = [];
-  this.photos = Array(5).fill(null);
-}
+    this.title = '';
+    this.make = '';
+    this.model = '';
+    this.variant = '';
+    this.year = undefined;
+    this.fueltype = '';
+    this.transmission = '';
+    this.ownercount = undefined;
+    this.registrationstate = '';
+    this.price = undefined;
+    this.description = '';
+    this.locationcity = '';
+    this.localpincode = undefined;
+    this.status = '';
+    this.statushistory = '';
+    this.selectedFiles = [];
+    this.photos = Array(5).fill(null);
+  }
 
   deleteVehicles(id: number) {
     this.auth.deleteVehicle(id).subscribe({
@@ -231,5 +201,10 @@ resetForm() {
         console.error('Error deleting vehicle:', err);
       }
     });
+  }
+
+  cancel() {
+    this.resetForm();  
+    this.router.navigate(['/vehicles']); 
   }
 }
