@@ -128,7 +128,7 @@ saveVehicle() {
   formData.append("localpincode", String(this.localpincode || ''));
   formData.append("status", this.status || '');
   formData.append("statushistory", this.statushistory || '');
-  formData.append("isActive", "true");
+  formData.append("isActive", "false");
   // Track indexes for updated images
   const imageIndexes: number[] = [];
   this.selectedFiles.forEach((file, index) => {

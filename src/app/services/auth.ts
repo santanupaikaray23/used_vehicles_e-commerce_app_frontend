@@ -8,7 +8,7 @@ import { HttpHeaders } from '@angular/common/http';
 import { Router} from '@angular/router';
 import { LoginDto } from '../models/login.model.dto';
 import { Product } from '../models/product.dto';
-import { VehicleDto } from '../models/vehicle-dto.dto';
+// import { VehicleDto } from '../models/vehicle-dto.dto';
 
 
 
@@ -66,6 +66,18 @@ getUserinfo(): Observable<userInfoDto> {
 const headers = new HttpHeaders().set('x-access-token', token || '');
 return this.http.get<userInfoDto>(this.apiUrlProfile, { headers });
   }
+private apiUrl0 = 'http://localhost:5001/api/auth/vehicledetailsbuyer';
+readVehicles(params?: { [key: string]: any }): Observable<{ data: Product[], total: number }> {
+  let httpParams = new HttpParams();
+  if (params) {
+    Object.keys(params).forEach(key => {
+      if (params[key] !== null && params[key] !== undefined && params[key] !== '') {
+        httpParams = httpParams.set(key, params[key].toString());
+      }
+    });
+  }
+  return this.http.get<{ data: Product[], total: number }>(this.apiUrl0, { params: httpParams });
+}
 
  private apiUrl3 = 'http://localhost:5001/api/auth/vehicledetails';
 
@@ -101,5 +113,12 @@ updateVehicles(id: string, formData: FormData) {
 deleteVehicle(id: number) {
   console.log('Deleting vehicle with id:', id);
   return this.http.delete(`http://localhost:5001/api/auth/deletevehicledetail/${id}`);
+}
+activateVehicle(id: number) {
+  return this.http.put(`http://localhost:5001/api/auth/activatevehicledetail/${id}`, {});
+}
+
+deactivateVehicle(id: number) {
+  return this.http.put(`http://localhost:5001/api/auth/deactivatevehicledetail/${id}`, {});
 }
 }
