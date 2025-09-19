@@ -121,4 +121,5 @@ activateVehicle(id: number) {
 deactivateVehicle(id: number) {
   return this.http.put(`http://localhost:5001/api/auth/deactivatevehicledetail/${id}`, {});
 }
+
 }

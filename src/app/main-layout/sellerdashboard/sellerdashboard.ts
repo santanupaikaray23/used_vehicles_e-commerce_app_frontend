@@ -23,8 +23,9 @@ export class Sellerdashboard {
   locationcity: string | undefined;
   localpincode: number | undefined;
   images: string | undefined;
-  status: string | undefined;
-  statushistory: string | undefined;
+  mileage_km: string | undefined;
+  // status: string | undefined;
+  // statushistory: string | undefined;
 
   vehicles: any[] = [];
   vehicle: any;
@@ -53,25 +54,18 @@ export class Sellerdashboard {
     input.click();
   }
 
-  onFileSelected(event: Event, index: number): void {
-    const input = event.target as HTMLInputElement;
-    if (input.files && input.files.length > 0) {
-      const file = input.files[0];
-
-      if (file.size > this.maxFileSize) {
-        this.errorMessage = 'File too large, max 2MB';
-        return;
-      }
-
-      this.selectedFiles[index] = file;
-
-      const reader = new FileReader();
-      reader.onload = (e: any) => {
-        this.photos[index] = e.target.result; 
-      };
-      reader.readAsDataURL(file);
+onFileSelected(event: any, index: number): void {
+  const file = event.target.files[0];
+  if (file) {
+    if (file.size > this.maxFileSize) {
+      this.errorMessage = 'File too large, max 2MB';
+      return;
     }
+    this.selectedFiles[index] = file;
+    this.photos[index] = URL.createObjectURL(file);
+    this.errorMessage = '';
   }
+}
 
   getProducts() {
     this.auth.getProducts().subscribe((data: any) => {
@@ -85,7 +79,6 @@ export class Sellerdashboard {
   updateVehicles(vehicle: any) {
     this.isEditMode = true;
     this.editVehicleId = vehicle._id;
-
     this.title = vehicle.title;
     this.make = vehicle.make;
     this.model = vehicle.model;
@@ -99,8 +92,9 @@ export class Sellerdashboard {
     this.description = vehicle.description;
     this.locationcity = vehicle.locationcity;
     this.localpincode = vehicle.localpincode;
-    this.status = vehicle.status;
-    this.statushistory = vehicle.statushistory;
+    this.mileage_km = vehicle.mileage_km;
+    // this.status = vehicle.status;
+    // this.statushistory = vehicle.statushistory;
 
     this.selectedFiles = [];
     this.photos = (vehicle.images || []).map((img: any) =>
@@ -110,9 +104,19 @@ export class Sellerdashboard {
 
 saveVehicle() {
   this.errorMessage = '';
-  const formData = new FormData();
+  const hasExistingPhotos = this.photos && this.photos.length > 0;
 
-  // append text fields
+  if (!this.isEditMode && this.selectedFiles.length === 0) {
+    this.errorMessage = 'At least one photo is required before submitting.';
+    return;
+  }
+
+  if (this.isEditMode && !hasExistingPhotos && this.selectedFiles.length === 0) {
+    this.errorMessage = 'Please upload at least one photo since none exist yet.';
+    return;
+  }
+
+  const formData = new FormData();
   formData.append("title", this.title || '');
   formData.append("make", this.make || '');
   formData.append("model", this.model || '');
@@ -126,21 +130,26 @@ saveVehicle() {
   formData.append("description", this.description || '');
   formData.append("locationcity", this.locationcity || '');
   formData.append("localpincode", String(this.localpincode || ''));
-  formData.append("status", this.status || '');
-  formData.append("statushistory", this.statushistory || '');
+  formData.append("mileage_km", String(this.mileage_km || ''));
   formData.append("isActive", "false");
-  // Track indexes for updated images
+
+  const now = new Date().toISOString();
+  if (this.isEditMode) {
+    formData.append("updated_at", now);
+  } else {
+    formData.append("created_at", now);
+    formData.append("updated_at", now);
+  }
+
   const imageIndexes: number[] = [];
   this.selectedFiles.forEach((file, index) => {
     if (file) {
       formData.append("images", file, file.name);
-      imageIndexes.push(index); // which slot this file belongs to
+      imageIndexes.push(index);
     }
   });
 
-  // send indexes as JSON string
   formData.append("imageIndexes", JSON.stringify(imageIndexes));
-
   if (this.isEditMode && this.editVehicleId) {
     this.auth.updateVehicles(this.editVehicleId, formData).subscribe({
       next: (data) => {
@@ -171,7 +180,6 @@ saveVehicle() {
   resetForm() {
     this.isEditMode = false;
     this.editVehicleId = null;
-
     this.title = '';
     this.make = '';
     this.model = '';
@@ -185,8 +193,9 @@ saveVehicle() {
     this.description = '';
     this.locationcity = '';
     this.localpincode = undefined;
-    this.status = '';
-    this.statushistory = '';
+    this.mileage_km = undefined;
+    // this.status = '';
+    // this.statushistory = '';
     this.selectedFiles = [];
     this.photos = Array(5).fill(null);
   }

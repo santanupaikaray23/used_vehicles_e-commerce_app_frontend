@@ -34,6 +34,13 @@
         Year is required.
      </mat-error>
   </mat-form-field>&nbsp;
+   <mat-form-field appearance="outline" class="form-field">
+    <mat-label>Mileage_KM</mat-label>
+    <input matInput type="number" [(ngModel)]="mileage_km" name="mileage_km" required #mileage_kmCtrl="ngModel">
+     <mat-error *ngIf="modelCtrl.errors?.['required'] && (mileage_kmCtrl.dirty || mileage_kmCtrl.touched)">
+        Year is required.
+     </mat-error>
+  </mat-form-field>&nbsp;
   <mat-form-field appearance="outline" class="form-field">
   <mat-label>Fuel Type</mat-label>
   <mat-select [(ngModel)]="fueltype" name="fueltype" required #fueltypeCtrl="ngModel">
@@ -97,7 +104,7 @@
   <mat-error *ngIf="cityCtrl.invalid && (cityCtrl.dirty || cityCtrl.touched)">
     Location City is required
   </mat-error>
-</mat-form-field>
+</mat-form-field>&nbsp;
 <mat-form-field appearance="outline" class="form-field">
   <mat-label>Pincode</mat-label>
   <input 
@@ -116,7 +123,7 @@
     Pincode must be exactly 6 digits
   </mat-error>
 </mat-form-field>&nbsp;
- <mat-form-field appearance="outline" class="form-field">
+ <!-- <mat-form-field appearance="outline" class="form-field">
   <mat-label>Status</mat-label>
   <input 
     matInput 
@@ -143,7 +150,7 @@
   <mat-error *ngIf="statusHistoryCtrl.hasError('required')">
     Status History is required
   </mat-error>
-</mat-form-field>
+</mat-form-field> -->
 <div class="upload-grid">
   <div
     class="upload-box"
@@ -181,9 +188,12 @@
   </ul>
 </div> &nbsp;
 <div class="action-buttons">
-  <button mat-raised-button color="primary" (click)="saveVehicle()">
-    {{ isEditMode ? 'Update' : 'Submit' }}
-  </button> &nbsp;
+ <button 
+  mat-raised-button 
+  color="primary" 
+  (click)="saveVehicle()">
+  {{ isEditMode ? 'Update' : 'Submit' }}
+</button>&nbsp;
     <button mat-raised-button color="warn" (click)="cancel()">
     Cancel
   </button>

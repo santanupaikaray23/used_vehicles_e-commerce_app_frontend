@@ -9,7 +9,7 @@ import { Router } from '@angular/router';
   styleUrl: './admindashboard.css'
 })
 export class Admindashboard{
- vehicles: any[] = [];
+  vehicles: any[] = [];
   products: any[] = [];
   errorMessage: string = '';
   displayedColumns: string[] = ['_id', 'title', 'make', 'images', 'status', 'action'];

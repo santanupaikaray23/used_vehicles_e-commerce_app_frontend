@@ -25,7 +25,7 @@ const routes: Routes = [
         component: SellerLayoutComponent,
         children: [
           { path: '', component: Sellerdashboard }, 
-          { path: 'profile', component: Profile },
+          { path: 'buyerdashboard', component: Buyerdashboard },
           { path: 'about', component: About },
           { path: 'contact', component: Contact },
         ]
@@ -35,7 +35,6 @@ const routes: Routes = [
         component: BuyerLayoutComponent,
         children: [
           { path: '', component: Buyerdashboard}, 
-          { path: 'profile', component: Profile },
           { path: 'about', component: About },
           { path: 'contact', component: Contact },
         ]
@@ -45,7 +44,7 @@ const routes: Routes = [
         component: AdminLayoutComponent,
         children: [
           { path: '', component: Admindashboard }, 
-          { path: 'profile', component: Profile },
+          { path: 'buyerdashboard', component: Buyerdashboard },
           { path: 'about', component: About },
           { path: 'contact', component: Contact },
         ]
