@@ -21,6 +21,7 @@ export class Admindashboard{
   ngOnInit() {
     this.getProducts();
   }
+
   getProducts() {
     this.auth.getProducts().subscribe({
       next: (data: any) => {
@@ -33,8 +34,10 @@ export class Admindashboard{
       }
     });
   }
+
   approveVehicle(id: number) {
-    this.auth.activateVehicle(id).subscribe({
+    const payload = { created_at: new Date().toISOString() };
+    this.auth.activateVehicle(id, payload).subscribe({
       next: (res) => {
         console.log('Vehicle approved:', res);
         this.getProducts(); 
@@ -45,8 +48,10 @@ export class Admindashboard{
       }
     });
   }
+
   deactivateVehicle(id: number) {
-    this.auth.deactivateVehicle(id).subscribe({
+    const payload = { created_at: new Date().toISOString() };
+    this.auth.deactivateVehicle(id, payload).subscribe({
       next: (res) => {
         console.log('Vehicle deactivated:', res);
         this.getProducts(); 
@@ -58,15 +63,17 @@ export class Admindashboard{
     });
   }
 
-  deleteVehicles(id: number) {
-    this.auth.deleteVehicle(id).subscribe({
-      next: (data) => {
-        console.log('Deleted:', data);
-        this.getProducts();
-      },
-      error: (err) => {
-        console.error('Error deleting vehicle:', err);
-      }
-    });
-  }
+  // deleteVehicles(id: number) {
+  //   const payload = { created_at: new Date().toISOString() };
+  //   this.auth.deleteVehicle(id, payload).subscribe({
+  //     next: (data) => {
+  //       console.log('Deleted:', data);
+  //       this.getProducts();s
+  //     },
+  //     error: (err) => {
+  //       console.error('Error deleting vehicle:', err);
+  //     }
+  //   });
+  // }
+
 }

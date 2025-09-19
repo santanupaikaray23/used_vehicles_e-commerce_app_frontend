@@ -114,12 +114,12 @@ deleteVehicle(id: number) {
   console.log('Deleting vehicle with id:', id);
   return this.http.delete(`http://localhost:5001/api/auth/deletevehicledetail/${id}`);
 }
-activateVehicle(id: number) {
-  return this.http.put(`http://localhost:5001/api/auth/activatevehicledetail/${id}`, {});
+activateVehicle(id: number, payload: { created_at: string; }) {
+  return this.http.put(`http://localhost:5001/api/auth/activatevehicledetail/${id}`, payload);
 }
 
-deactivateVehicle(id: number) {
-  return this.http.put(`http://localhost:5001/api/auth/deactivatevehicledetail/${id}`, {});
+deactivateVehicle(id: number, payload: { created_at: string; }) {
+  return this.http.put(`http://localhost:5001/api/auth/deactivatevehicledetail/${id}`, payload);
 }
 
 }
