@@ -35,33 +35,34 @@ export class Admindashboard{
     });
   }
 
-  approveVehicle(id: number) {
-    const payload = { created_at: new Date().toISOString() };
-    this.auth.activateVehicle(id, payload).subscribe({
-      next: (res) => {
-        console.log('Vehicle approved:', res);
-        this.getProducts(); 
-      },
-      error: (err) => {
-        console.error('Error approving vehicle:', err);
-        this.errorMessage = 'Failed to approve vehicle. Please try again.';
-      }
-    });
-  }
+approveVehicle(id: string, reason?: string) {
+  const payload = reason ? { reason } : {}; // only include if provided
+  this.auth.activateVehicle(id, payload).subscribe({
+    next: (res) => {
+      console.log('Vehicle approved:', res);
+      this.getProducts();
+    },
+    error: (err) => {
+      console.error('Error approving vehicle:', err);
+      this.errorMessage = 'Failed to approve vehicle. Please try again.';
+    }
+  });
+}
 
-  deactivateVehicle(id: number) {
-    const payload = { created_at: new Date().toISOString() };
-    this.auth.deactivateVehicle(id, payload).subscribe({
-      next: (res) => {
-        console.log('Vehicle deactivated:', res);
-        this.getProducts(); 
-      },
-      error: (err) => {
-        console.error('Error deactivating vehicle:', err);
-        this.errorMessage = 'Failed to deactivate vehicle. Please try again.';
-      }
-    });
-  }
+deactivateVehicle(id: string, reason?: string) {
+  const payload = reason ? { reason } : {};
+  this.auth.deactivateVehicle(id, payload).subscribe({
+    next: (res) => {
+      console.log('Vehicle deactivated:', res);
+      this.getProducts();
+    },
+    error: (err) => {
+      console.error('Error deactivating vehicle:', err);
+      this.errorMessage = 'Failed to deactivate vehicle. Please try again.';
+    }
+  });
+}
+
 
   // deleteVehicles(id: number) {
   //   const payload = { created_at: new Date().toISOString() };

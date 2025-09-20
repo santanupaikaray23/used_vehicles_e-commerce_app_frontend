@@ -114,12 +114,28 @@ deleteVehicle(id: number) {
   console.log('Deleting vehicle with id:', id);
   return this.http.delete(`http://localhost:5001/api/auth/deletevehicledetail/${id}`);
 }
-activateVehicle(id: number, payload: { created_at: string; }) {
-  return this.http.put(`http://localhost:5001/api/auth/activatevehicledetail/${id}`, payload);
-}
 
-deactivateVehicle(id: number, payload: { created_at: string; }) {
-  return this.http.put(`http://localhost:5001/api/auth/deactivatevehicledetail/${id}`, payload);
-}
+ private apiUrl4 = 'http://localhost:5001/api/auth';
+  activateVehicle(id: string, payload: { reason?: string }) {
+    return this.http.put<any>(
+      `${this.apiUrl4}/activatevehicledetail/${id}`,
+      payload,
+      { headers: this.getAuthHeaders() }
+    );
+  }
+  deactivateVehicle(id: string, payload: { reason?: string }) {
+    return this.http.put<any>(
+      `${this.apiUrl4}/deactivatevehicledetail/${id}`,
+      payload,
+      { headers: this.getAuthHeaders() }
+    );
+  }
+  private getAuthHeaders(): HttpHeaders {
+    const token = localStorage.getItem('token'); 
+    return new HttpHeaders({
+      Authorization: `Bearer ${token}`
+    });
+  }
+
 
 }

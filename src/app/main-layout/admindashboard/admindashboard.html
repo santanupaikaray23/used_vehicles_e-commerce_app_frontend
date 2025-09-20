@@ -4,7 +4,10 @@
       <th>ID</th>
       <th>Title</th>
       <th>Make</th>
-      <th>Status</th>
+      <th>Images</th>
+      &nbsp;
+      <th>Reason</th>
+      <th>Action</th>
     </tr>
   </thead>
   <tbody>
@@ -12,14 +15,38 @@
       <td>{{ product._id }}</td>
       <td>{{ product.title }}</td>
       <td>{{ product.make }}</td>
-  <td>
-  <button *ngIf="!product.isActive" (click)="approveVehicle(product._id)">
-    Approve
-  </button>
-  <button *ngIf="product.isActive" (click)="deactivateVehicle(product._id)">
-    Deactivate
-  </button>
-</td>
+      <td>
+        <img
+          *ngFor="let img of product.images"
+          [src]="'data:' + img.mimetype + ';base64,' + img.data"
+          [alt]="img.filename"
+          width="60"
+          height="60"
+        />
+      </td>
+      <td>{{ product.status }}</td>
+      <td>
+        <input
+          type="text"
+          [(ngModel)]="product.reason"
+          placeholder="Enter reason"
+        />
+      </td>
+      <td>
+        <button
+          *ngIf="!product.isActive"
+          (click)="approveVehicle(product._id, product.reason)"
+        >
+          Approve
+        </button>
+
+        <button
+          *ngIf="product.isActive"
+          (click)="deactivateVehicle(product._id, product.reason)"
+        >
+          Deactivate
+        </button>
+      </td>
     </tr>
   </tbody>
 </table>
