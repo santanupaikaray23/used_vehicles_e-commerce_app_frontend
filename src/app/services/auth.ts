@@ -19,22 +19,68 @@ import { Product } from '../models/product.dto';
 export class Auth {
 
  
- constructor(private http:HttpClient,private storage: Storage, private router: Router){}
+  private apiUrl = 'http://localhost:5001/api/auth/login';
+  private apiUrl1 = 'http://localhost:5001/api/auth/signup';
+  private apiUrlLogout = 'http://localhost:5001/api/auth/logout';
+  private apiUrlProfile = 'http://localhost:5001/api/auth/userInfo';
+  private apiUrl0 = 'http://localhost:5001/api/auth/vehicledetailsbuyer';
+  private apiUrl3 = 'http://localhost:5001/api/auth/vehicledetails';
+  private apiUrl4 = 'http://localhost:5001/api/auth';
 
-isLoggedIn(): boolean {
+  private sessionKey = 'userSession';   
+
+  constructor(
+    private http: HttpClient,
+    private storage: Storage,
+    private router: Router
+  ) {}
+
+  // ------------------ SESSION STORAGE ------------------
+
+  saveSession(userData: any) {
+    sessionStorage.setItem(this.sessionKey, JSON.stringify(userData));
+  }
+
+  clearSession() {
+    sessionStorage.removeItem(this.sessionKey);
+  }
+
+  isSessionActive(): boolean {
+    return sessionStorage.getItem(this.sessionKey) !== null;
+  }
+
+  // ------------------ TOKEN STORAGE ------------------
+
+  isLoggedIn(): boolean {
     return !!this.storage.getItem('token');
   }
- saveToken(token: string) {
+
+  saveToken(token: string) {
     this.storage.setItem('token', token);
   }
-getToken(): string | null {
+
+  getToken(): string | null {
     return this.storage.getItem('token');
   }
-private apiUrl = 'http://localhost:5001/api/auth/login';
-login(credentials: LoginDto): Observable<any> {
+
+  // ------------------ AUTH API ------------------
+
+  login(credentials: LoginDto): Observable<any> {
     return this.http.post<any>(this.apiUrl, credentials);
   }
-navigateByRole(role: string): void {
+
+  signup(data: SignupDto): Observable<any> {
+    return this.http.post(this.apiUrl1, data);
+  }
+
+  logout(): Observable<any> {
+    this.clearSession(); // <--- clear session
+    this.storage.removeItem('token'); // <--- clear token
+    this.router.navigate(['/login']); // <--- redirect
+    return this.http.post(this.apiUrlLogout, {}); 
+  }
+
+  navigateByRole(role: string): void {
     switch (role.toLowerCase()) {
       case 'admin':
         this.router.navigate(['/admindashboard']);
@@ -52,70 +98,62 @@ navigateByRole(role: string): void {
         this.router.navigate(['/login']); 
     }
   }
-private apiUrl1 = 'http://localhost:5001/api/auth/signup';
-signup(data:SignupDto): Observable<any> {
-    return this.http.post(this.apiUrl1, data)
-  }
-private apiUrlLogout = 'http://localhost:5001/api/auth/logout';
-logout(): Observable<any> {
-  return this.http.post(this.apiUrlLogout, {}); 
-}
-private apiUrlProfile = 'http://localhost:5001/api/auth/userInfo';
-getUserinfo(): Observable<userInfoDto> {
+
+  // ------------------ USER INFO ------------------
+
+  getUserinfo(): Observable<userInfoDto> {
     const token = this.storage.getItem('token');
-const headers = new HttpHeaders().set('x-access-token', token || '');
-return this.http.get<userInfoDto>(this.apiUrlProfile, { headers });
+    const headers = new HttpHeaders().set('x-access-token', token || '');
+    return this.http.get<userInfoDto>(this.apiUrlProfile, { headers });
   }
-private apiUrl0 = 'http://localhost:5001/api/auth/vehicledetailsbuyer';
-readVehicles(params?: { [key: string]: any }): Observable<{ data: Product[], total: number }> {
-  let httpParams = new HttpParams();
-  if (params) {
-    Object.keys(params).forEach(key => {
-      if (params[key] !== null && params[key] !== undefined && params[key] !== '') {
-        httpParams = httpParams.set(key, params[key].toString());
-      }
-    });
+
+  // ------------------ VEHICLE CRUD ------------------
+
+  readVehicles(params?: { [key: string]: any }): Observable<{ data: Product[], total: number }> {
+    let httpParams = new HttpParams();
+    if (params) {
+      Object.keys(params).forEach(key => {
+        if (params[key] !== null && params[key] !== undefined && params[key] !== '') {
+          httpParams = httpParams.set(key, params[key].toString());
+        }
+      });
+    }
+    return this.http.get<{ data: Product[], total: number }>(this.apiUrl0, { params: httpParams });
   }
-  return this.http.get<{ data: Product[], total: number }>(this.apiUrl0, { params: httpParams });
-}
 
- private apiUrl3 = 'http://localhost:5001/api/auth/vehicledetails';
-
-getProducts(params?: { [key: string]: any }): Observable<{ data: Product[], total: number }> {
-  let httpParams = new HttpParams();
-  if (params) {
-    Object.keys(params).forEach(key => {
-      if (params[key] !== null && params[key] !== undefined && params[key] !== '') {
-        httpParams = httpParams.set(key, params[key].toString());
-      }
-    });
+  getProducts(params?: { [key: string]: any }): Observable<{ data: Product[], total: number }> {
+    let httpParams = new HttpParams();
+    if (params) {
+      Object.keys(params).forEach(key => {
+        if (params[key] !== null && params[key] !== undefined && params[key] !== '') {
+          httpParams = httpParams.set(key, params[key].toString());
+        }
+      });
+    }
+    return this.http.get<{ data: Product[], total: number }>(this.apiUrl3, { params: httpParams });
   }
-  return this.http.get<{ data: Product[], total: number }>(this.apiUrl3, { params: httpParams });
-}
-getTotal() {
-  return this.http.get<number | { total: number }>(
-    "http://localhost:5001/api/auth/vehicledetails/total"
-  );
-}
-// readVehicles(){
-//   return this.http.get("http://localhost:5001/api/auth/vehicledetails")
 
-// }
-createVehicles(vehicle: FormData) {
-  return this.http.post("http://localhost:5001/api/auth/addvehicledetail", vehicle);
-}
-updateVehicles(id: string, formData: FormData) {
-  return this.http.put(
-    `http://localhost:5001/api/auth/updatevehicledetail/${id}`,
-    formData
-  );
-}
-deleteVehicle(id: number) {
-  console.log('Deleting vehicle with id:', id);
-  return this.http.delete(`http://localhost:5001/api/auth/deletevehicledetail/${id}`);
-}
+  getTotal() {
+    return this.http.get<number | { total: number }>(
+      "http://localhost:5001/api/auth/vehicledetails/total"
+    );
+  }
 
- private apiUrl4 = 'http://localhost:5001/api/auth';
+  createVehicles(vehicle: FormData) {
+    return this.http.post("http://localhost:5001/api/auth/addvehicledetail", vehicle);
+  }
+
+  updateVehicles(id: string, formData: FormData) {
+    return this.http.put(
+      `http://localhost:5001/api/auth/updatevehicledetail/${id}`,
+      formData
+    );
+  }
+
+  deleteVehicle(id: number) {
+    return this.http.delete(`http://localhost:5001/api/auth/deletevehicledetail/${id}`);
+  }
+
   activateVehicle(id: string, payload: { reason?: string }) {
     return this.http.put<any>(
       `${this.apiUrl4}/activatevehicledetail/${id}`,
@@ -123,6 +161,7 @@ deleteVehicle(id: number) {
       { headers: this.getAuthHeaders() }
     );
   }
+
   deactivateVehicle(id: string, payload: { reason?: string }) {
     return this.http.put<any>(
       `${this.apiUrl4}/deactivatevehicledetail/${id}`,
@@ -130,12 +169,12 @@ deleteVehicle(id: number) {
       { headers: this.getAuthHeaders() }
     );
   }
+
   private getAuthHeaders(): HttpHeaders {
     const token = localStorage.getItem('token'); 
     return new HttpHeaders({
       Authorization: `Bearer ${token}`
     });
   }
-
 
 }

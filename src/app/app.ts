@@ -1,4 +1,5 @@
 import { Component, signal } from '@angular/core';
+import { AutoLogoutService } from './services/auto-logout-service';
 
 @Component({
   selector: 'app-root',
@@ -7,6 +8,7 @@ import { Component, signal } from '@angular/core';
   styleUrl: './app.css'
 })
 export class App {
+  constructor(private autoLogoutService: AutoLogoutService) {}
   protected readonly title = signal('used_vehicles_e-commerce_app');
     isInitializing = true;
 }

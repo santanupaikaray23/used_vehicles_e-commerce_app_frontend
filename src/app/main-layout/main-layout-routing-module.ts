@@ -5,7 +5,7 @@ import { Contact } from './contact/contact';
 import { MainLayoutComponent } from './main-layout.component';
 // import { Authguard } from '../services/authguard';
 // import { BuyerLayoutComponent } from './buyer-layout-component/buyer-layout-component';
-import { Profile } from './profile/profile';
+// import { Profile } from './profile/profile';
 import { Buyerdashboard } from './buyerdashboard/buyerdashboard';
 // import { Userdashboard } from './userdashboard/userdashboard';
 import { Sellerdashboard } from './sellerdashboard/sellerdashboard';
@@ -13,6 +13,7 @@ import { SellerLayoutComponent } from './seller-layout-component/seller-layout-c
 import { BuyerLayoutComponent } from './buyer-layout-component/buyer-layout-component';
 import { AdminLayoutComponent } from './admin-layout-component/admin-layout-component';
 import { Admindashboard } from './admindashboard/admindashboard';
+import { AuthGuard } from '../services/authguard'; 
 
 
 const routes: Routes = [
@@ -23,8 +24,9 @@ const routes: Routes = [
       {
         path: 'sellerdashboard',
         component: SellerLayoutComponent,
+        canActivate: [AuthGuard],   
         children: [
-          { path: '', component: Sellerdashboard }, 
+          { path: '', component: Sellerdashboard },
           { path: 'buyerdashboard', component: Buyerdashboard },
           { path: 'about', component: About },
           { path: 'contact', component: Contact },
@@ -33,8 +35,9 @@ const routes: Routes = [
       {
         path: 'buyerdashboard',
         component: BuyerLayoutComponent,
+        canActivate: [AuthGuard],
         children: [
-          { path: '', component: Buyerdashboard}, 
+          { path: '', component: Buyerdashboard },
           { path: 'about', component: About },
           { path: 'contact', component: Contact },
         ]
@@ -42,8 +45,9 @@ const routes: Routes = [
       {
         path: 'admindashboard',
         component: AdminLayoutComponent,
+        canActivate: [AuthGuard],
         children: [
-          { path: '', component: Admindashboard }, 
+          { path: '', component: Admindashboard },
           { path: 'buyerdashboard', component: Buyerdashboard },
           { path: 'about', component: About },
           { path: 'contact', component: Contact },
@@ -52,6 +56,7 @@ const routes: Routes = [
     ]
   }
 ];
+
 
 @NgModule({
   imports: [RouterModule.forChild(routes)],
