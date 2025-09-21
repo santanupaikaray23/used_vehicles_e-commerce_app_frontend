@@ -40,7 +40,8 @@ export class Signup {
           Validators.pattern(/^[0-9]{10,13}$/) // 10–13 digits
         ]
       ],
-      city: ['', Validators.required]
+      city: ['', Validators.required],
+       
     });
   }
 

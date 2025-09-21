@@ -20,6 +20,8 @@ export class Auth {
   private apiUrl0 = 'http://localhost:5001/api/auth/vehicledetailsbuyer';
   private apiUrl3 = 'http://localhost:5001/api/auth/vehicledetails';
   private apiUrl4 = 'http://localhost:5001/api/auth';
+   private apiUrl5 = 'http://localhost:5001/api/auth';
+
   private sessionKey = 'userSession';   
 
   constructor(
@@ -161,5 +163,28 @@ export class Auth {
       Authorization: `Bearer ${token}`
     });
   }
+
+blockUser(id: string, reason?: string) {
+  return this.http.put<any>(
+    `${this.apiUrl5}/blockUser/${id}`,
+    { reason: reason || null }, // send reason if available
+    { headers: this.getAuthHeaders() }
+  );
+}
+
+unblockUser(id: string) {
+  return this.http.put<any>(
+    `${this.apiUrl5}/unblockUser/${id}`,
+    {},
+    { headers: this.getAuthHeaders() }
+  );
+}
+
+getUsers() {
+  return this.http.get<any>(
+    'http://localhost:5001/api/auth/users',
+    { headers: this.getAuthHeaders() } 
+  );
+}
 
 }

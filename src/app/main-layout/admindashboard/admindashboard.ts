@@ -11,15 +11,19 @@ import { Router } from '@angular/router';
 export class Admindashboard{
   vehicles: any[] = [];
   products: any[] = [];
+  users: any[] = [];
   errorMessage: string = '';
   displayedColumns: string[] = ['_id', 'title', 'make', 'images', 'status', 'action'];
+   error: string | null = null;
 
   @ViewChildren('fileInput') fileInputs!: QueryList<ElementRef<HTMLInputElement>>;
+
 
   constructor(private auth: Auth, private router: Router) {}
 
   ngOnInit() {
     this.getProducts();
+    this.getUsers();
   }
 
   getProducts() {
@@ -34,6 +38,18 @@ export class Admindashboard{
       }
     });
   }
+  getUsers() {
+  this.auth.getUsers().subscribe({
+    next: (res: any) => {
+      console.log('API response (users):', res);
+      const allUsers = Array.isArray(res.data) ? res.data : [];
+      this.users = allUsers;
+    },
+    error: (err) => {
+      console.error('Error fetching users:', err);
+    }
+  });
+}
 
 approveVehicle(id: string, reason?: string) {
   const payload = reason ? { reason } : {}; // only include if provided
@@ -62,19 +78,42 @@ deactivateVehicle(id: string, reason?: string) {
     }
   });
 }
+  deleteVehicles(id: number) {
+    const payload = { created_at: new Date().toISOString() };
+    this.auth.deleteVehicle(id).subscribe({
+      next: (data) => {
+        console.log('Deleted:', data);
+        this.getProducts();
+      },
+      error: (err) => {
+        console.error('Error deleting vehicle:', err);
+      }
+    });
+  }
+  
+blockUser(userId: string): void {
+  this.auth.blockUser(userId).subscribe({
+    next: (res) => {
+      alert(`User blocked (soft deleted): ${res.message || ''}`);
+      this.getUsers();
+    },
+    error: (err) => {
+      console.error('Error blocking user:', err);
+      this.error = err.error?.message || 'Failed to block user';
+    }
+  });
+}
 
-
-  // deleteVehicles(id: number) {
-  //   const payload = { created_at: new Date().toISOString() };
-  //   this.auth.deleteVehicle(id, payload).subscribe({
-  //     next: (data) => {
-  //       console.log('Deleted:', data);
-  //       this.getProducts();s
-  //     },
-  //     error: (err) => {
-  //       console.error('Error deleting vehicle:', err);
-  //     }
-  //   });
-  // }
-
+unblockUser(userId: string): void {
+  this.auth.unblockUser(userId).subscribe({
+    next: (res) => {
+      alert(`User unblocked: ${res.message || ''}`);
+      this.getUsers();
+    },
+    error: (err) => {
+      console.error('Error unblocking user:', err);
+      this.error = err.error?.message || 'Failed to unblock user';
+    }
+  });
+}
 }

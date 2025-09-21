@@ -7,5 +7,6 @@ export class SignupDto {
     city!:string;
    created_at?: string;
    updated_at?: string;
+   isActive?: string;
 
 }
