@@ -8,17 +8,11 @@ import { HttpHeaders } from '@angular/common/http';
 import { Router} from '@angular/router';
 import { LoginDto } from '../models/login.model.dto';
 import { Product } from '../models/product.dto';
-// import { VehicleDto } from '../models/vehicle-dto.dto';
-
-
-
 
 @Injectable({
   providedIn: 'root'
 })
 export class Auth {
-
- 
   private apiUrl = 'http://localhost:5001/api/auth/login';
   private apiUrl1 = 'http://localhost:5001/api/auth/signup';
   private apiUrlLogout = 'http://localhost:5001/api/auth/logout';
@@ -26,7 +20,6 @@ export class Auth {
   private apiUrl0 = 'http://localhost:5001/api/auth/vehicledetailsbuyer';
   private apiUrl3 = 'http://localhost:5001/api/auth/vehicledetails';
   private apiUrl4 = 'http://localhost:5001/api/auth';
-
   private sessionKey = 'userSession';   
 
   constructor(
@@ -34,8 +27,6 @@ export class Auth {
     private storage: Storage,
     private router: Router
   ) {}
-
-  // ------------------ SESSION STORAGE ------------------
 
   saveSession(userData: any) {
     sessionStorage.setItem(this.sessionKey, JSON.stringify(userData));
@@ -49,8 +40,6 @@ export class Auth {
     return sessionStorage.getItem(this.sessionKey) !== null;
   }
 
-  // ------------------ TOKEN STORAGE ------------------
-
   isLoggedIn(): boolean {
     return !!this.storage.getItem('token');
   }
@@ -63,7 +52,6 @@ export class Auth {
     return this.storage.getItem('token');
   }
 
-  // ------------------ AUTH API ------------------
 
   login(credentials: LoginDto): Observable<any> {
     return this.http.post<any>(this.apiUrl, credentials);
@@ -74,9 +62,9 @@ export class Auth {
   }
 
   logout(): Observable<any> {
-    this.clearSession(); // <--- clear session
-    this.storage.removeItem('token'); // <--- clear token
-    this.router.navigate(['/login']); // <--- redirect
+    this.clearSession(); 
+    this.storage.removeItem('token'); 
+    this.router.navigate(['/login']); 
     return this.http.post(this.apiUrlLogout, {}); 
   }
 
@@ -99,15 +87,12 @@ export class Auth {
     }
   }
 
-  // ------------------ USER INFO ------------------
-
   getUserinfo(): Observable<userInfoDto> {
     const token = this.storage.getItem('token');
     const headers = new HttpHeaders().set('x-access-token', token || '');
     return this.http.get<userInfoDto>(this.apiUrlProfile, { headers });
   }
 
-  // ------------------ VEHICLE CRUD ------------------
 
   readVehicles(params?: { [key: string]: any }): Observable<{ data: Product[], total: number }> {
     let httpParams = new HttpParams();

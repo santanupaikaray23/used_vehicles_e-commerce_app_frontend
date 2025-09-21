@@ -3,10 +3,8 @@
     <tr>
       <th>ID</th>
       <th>Title</th>
-      <th>Make</th>
-      <th>Images</th>
-      &nbsp;
-      <th>Reason</th>
+      <th>Make</th>&nbsp;
+      <th>Images</th>&nbsp;
       <th>Action</th>
     </tr>
   </thead>
@@ -25,13 +23,18 @@
         />
       </td>
       <td>{{ product.status }}</td>
+
+      <!-- Show reason box only when deactivating -->
       <td>
         <input
+          *ngIf="product.showReason"
           type="text"
           [(ngModel)]="product.reason"
           placeholder="Enter reason"
+          required
         />
       </td>
+
       <td>
         <button
           *ngIf="!product.isActive"
@@ -40,11 +43,21 @@
           Approve
         </button>
 
+        <!-- Step 1: First click shows the input box -->
         <button
-          *ngIf="product.isActive"
-          (click)="deactivateVehicle(product._id, product.reason)"
+          *ngIf="product.isActive && !product.showReason"
+          (click)="product.showReason = true"
         >
           Deactivate
+        </button>
+
+        <!-- Step 2: When input box is shown, validate reason -->
+        <button
+          *ngIf="product.isActive && product.showReason"
+          [disabled]="!product.reason"
+          (click)="deactivateVehicle(product._id, product.reason)"
+        >
+          Confirm Deactivate
         </button>
       </td>
     </tr>

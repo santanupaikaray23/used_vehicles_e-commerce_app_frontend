@@ -7,7 +7,7 @@ import { Auth } from './auth';
 })
 export class AutoLogoutService {
   private timeoutId: any;
-  private readonly TIMEOUT = 1 * 60 * 1000; // 5 minutes
+  private readonly TIMEOUT = 20 * 60 * 1000; // 5 minutes
   private isBrowser: boolean;
 
   constructor(
