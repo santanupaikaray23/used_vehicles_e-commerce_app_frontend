@@ -156,7 +156,7 @@ export class Auth {
       { headers: this.getAuthHeaders() }
     );
   }
-
+  
   private getAuthHeaders(): HttpHeaders {
     const token = localStorage.getItem('token'); 
     return new HttpHeaders({

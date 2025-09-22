@@ -88,7 +88,9 @@
       </mat-select>
     </mat-form-field>
   </div>
-
+<div class="results-summary">
+  <p>Total Vehicles Found: <strong>{{ total }}</strong></p>
+</div>
   <div class="grid">
     <div *ngIf="vehicles.length === 0" class="no-results">
       No matching vehicles.

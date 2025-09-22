@@ -9,7 +9,7 @@ import { Router } from '@angular/router';
   styleUrl: './sellerdashboard.css'
 })
 export class Sellerdashboard {
-   title: string | undefined;
+  title: string | undefined;
   make: string | undefined;
   model: string | undefined;
   variant: string | undefined;

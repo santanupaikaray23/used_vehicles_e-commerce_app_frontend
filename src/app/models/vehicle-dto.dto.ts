@@ -14,8 +14,10 @@ description?: String;
 locationcity?: String;
 localpincode?: Number;
 images?: String;
-status?: String;
-isActive?: String;
+// status?: String;
+
+
+
 
 
 }
