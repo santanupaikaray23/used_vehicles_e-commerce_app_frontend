@@ -21,7 +21,5 @@ ngOnInit(): void {
   );
   const userInfo = this.storage.getItem('userInfo');
     console.log('User Info:', userInfo);
-
 }
-
 }

@@ -10,7 +10,6 @@ import {MatInputModule} from '@angular/material/input';
 import {MatButtonModule} from '@angular/material/button';
 import {MatIconModule} from '@angular/material/icon';
 import { MatCard, MatCardContent, MatCardHeader, MatCardSubtitle, MatCardTitle } from '@angular/material/card';
-// import { SideNav } from './shareable/side-nav/side-nav';
 import { MatToolbar } from '@angular/material/toolbar';
 import {MatSidenav} from '@angular/material/sidenav'
 import { MatSidenavContainer } from '@angular/material/sidenav';
@@ -24,7 +23,6 @@ import { MatSidenavModule } from '@angular/material/sidenav';
 import { LayoutModule } from '@angular/cdk/layout';
 import { About } from './about/about';
 import { Contact } from './contact/contact';
-import { Profile } from './profile/profile';
 import { Admindashboard } from './admindashboard/admindashboard';
 import { Buyerdashboard } from './buyerdashboard/buyerdashboard';
 import { Sellerdashboard } from './sellerdashboard/sellerdashboard';
@@ -36,15 +34,11 @@ import { AdminLayoutComponent } from './admin-layout-component/admin-layout-comp
 import { MatTableModule } from '@angular/material/table';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatSortModule } from '@angular/material/sort';
-// import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
-
-
 
 @NgModule({
   declarations: [
     UserHeader,
     Signup,
-    // SideNav,
     MainLayoutComponent,
     LoginPage,
     About,
@@ -53,13 +47,9 @@ import { MatSortModule } from '@angular/material/sort';
     Buyerdashboard,
     Sellerdashboard,
     Userdashboard,
-    Profile,
     BuyerLayoutComponent,
     SellerLayoutComponent,
-    AdminLayoutComponent,
-  
-
-   
+    AdminLayoutComponent, 
   ],
   imports: [
     CommonModule,
@@ -89,7 +79,6 @@ import { MatSortModule } from '@angular/material/sort';
    MatTableModule,
    MatPaginatorModule,
 MatSortModule,
-//  NgbModule,
 
 ],
 

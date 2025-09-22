@@ -134,10 +134,9 @@
 .image-list {
   display: flex;
   flex-wrap: wrap;
-  gap: 6px; /* space between thumbnails */
+  gap: 6px; 
   margin-top: 8px;
 }
-
 .image-list img {
   width: 100px;
   height: 100px;
@@ -147,8 +146,7 @@
   border: 2px solid transparent;
   transition: transform 0.2s ease, border-color 0.2s ease;
 }
-
 .image-list img:hover {
   transform: scale(1.05);
-  border-color: #007bff; /* highlight border on hover */
+  border-color: #007bff; 
 }

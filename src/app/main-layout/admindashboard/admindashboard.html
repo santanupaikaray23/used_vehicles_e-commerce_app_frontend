@@ -3,10 +3,8 @@
     <tr>
       <th>ID</th>
       <th>Title</th>
-      <th>Make</th>
-      <th>Images</th>
-      <th>Status</th>
-      <th>Reason</th>
+      <th>Make</th>&nbsp;
+      <th>Images</th>&nbsp;
       <th>Action</th>
     </tr>
   </thead>
@@ -25,8 +23,6 @@
         />
       </td>
       <td>{{ product.status }}</td>
-
-      <!-- Reason box only when deactivating -->
       <td>
         <input
           *ngIf="product.showReason"
@@ -36,19 +32,13 @@
           required
         />
       </td>
-
       <td>
-        <!-- Approve button -->
         <button *ngIf="!product.isActive" (click)="approveVehicle(product._id, product.reason)">
           Approve
         </button>
-
-        <!-- Step 1: First click shows the input box -->
         <button *ngIf="product.isActive && !product.showReason" (click)="product.showReason = true">
           Deactivate
         </button>
-
-        <!-- Step 2: Confirm with reason -->
         <button
           *ngIf="product.isActive && product.showReason"
           [disabled]="!product.reason"
@@ -63,8 +53,6 @@
     </tr>
   </tbody>
 </table>
-
-<!-- Users Table -->
 <h2>Users</h2>
 <table>
   <thead>
@@ -72,33 +60,28 @@
       <th>ID</th>
       <th>Email</th>
       <th>Phone</th>
-      <th>City</th>
-      <th>Status</th>
-      <th>Reason</th>
+      <th>Role</th> 
       <th>Action</th>
     </tr>
   </thead>
-  <tbody>
-    <tr *ngFor="let user of users">
-      <td>{{ user._id }}</td>
-      <td>{{ user.email }}</td>
-      <td>{{ user.phone }}</td>
-      <td>{{ user.city }}</td>
-      <td>{{ user.is_blocked}}</td>
-      <td>
-        <button *ngIf="!user.is_blocked && !user.showReason" (click)="user.showReason = true">
-          Block
-        </button>
-        <button
-          *ngIf="!user.is_blocked && user.showReason"
-          (click)="blockUser(user._id)"
-        >
-          Confirm Block
-        </button>
-        <button *ngIf="user.is_blocked" (click)="unblockUser(user._id)">
-          Unblock
-        </button>
-      </td>
-    </tr>
-  </tbody>
+ <tbody>
+  <tr *ngFor="let user of users">
+    <td>{{ user._id }}</td>
+    <td>{{ user.email }}</td>
+    <td>{{ user.phone }}</td>
+    <td>{{ user.role}}</td> 
+    <td>
+      <button 
+        *ngIf="user.is_blocked === 'false'" 
+        (click)="blockUser(user._id)">
+        Block
+      </button>
+      <button 
+        *ngIf="user.is_blocked === 'true'" 
+        (click)="unblockUser(user._id)">
+        Unblock
+      </button>
+    </td>
+  </tr>
+</tbody>
 </table>

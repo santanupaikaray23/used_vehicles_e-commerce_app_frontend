@@ -15,17 +15,12 @@ export class Admindashboard{
   errorMessage: string = '';
   displayedColumns: string[] = ['_id', 'title', 'make', 'images', 'status', 'action'];
    error: string | null = null;
-
   @ViewChildren('fileInput') fileInputs!: QueryList<ElementRef<HTMLInputElement>>;
-
-
   constructor(private auth: Auth, private router: Router) {}
-
   ngOnInit() {
     this.getProducts();
     this.getUsers();
   }
-
   getProducts() {
     this.auth.getProducts().subscribe({
       next: (data: any) => {
@@ -50,9 +45,8 @@ export class Admindashboard{
     }
   });
 }
-
 approveVehicle(id: string, reason?: string) {
-  const payload = reason ? { reason } : {}; // only include if provided
+  const payload = reason ? { reason } : {}; 
   this.auth.activateVehicle(id, payload).subscribe({
     next: (res) => {
       console.log('Vehicle approved:', res);
@@ -64,7 +58,6 @@ approveVehicle(id: string, reason?: string) {
     }
   });
 }
-
 deactivateVehicle(id: string, reason?: string) {
   const payload = reason ? { reason } : {};
   this.auth.deactivateVehicle(id, payload).subscribe({
@@ -90,30 +83,16 @@ deactivateVehicle(id: string, reason?: string) {
       }
     });
   }
-  
-blockUser(userId: string): void {
-  this.auth.blockUser(userId).subscribe({
-    next: (res) => {
-      alert(`User blocked (soft deleted): ${res.message || ''}`);
-      this.getUsers();
-    },
-    error: (err) => {
-      console.error('Error blocking user:', err);
-      this.error = err.error?.message || 'Failed to block user';
-    }
+blockUser(userId: string) {
+  this.auth.blockUser(userId).subscribe(() => {
+    const user = this.users.find(u => u._id === userId);
+    if (user) user.is_blocked = 'true';
   });
 }
-
-unblockUser(userId: string): void {
-  this.auth.unblockUser(userId).subscribe({
-    next: (res) => {
-      alert(`User unblocked: ${res.message || ''}`);
-      this.getUsers();
-    },
-    error: (err) => {
-      console.error('Error unblocking user:', err);
-      this.error = err.error?.message || 'Failed to unblock user';
-    }
+unblockUser(userId: string) {
+  this.auth.unblockUser(userId).subscribe(() => {
+    const user = this.users.find(u => u._id === userId);
+    if (user) user.is_blocked = 'false';
   });
 }
 }
