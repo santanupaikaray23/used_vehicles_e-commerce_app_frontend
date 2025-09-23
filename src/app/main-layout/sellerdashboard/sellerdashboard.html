@@ -199,6 +199,8 @@
   </button>
 </div>
   <table mat-table [dataSource]="products" class="mat-elevation-z8 full-width-table">
+    <!-- <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+<tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr> -->
     <ng-container matColumnDef="_id">
       <th mat-header-cell *matHeaderCellDef> Id </th>
       <td mat-cell *matCellDef="let vehicle"> {{vehicle._id}} </td>
@@ -230,11 +232,24 @@
     <ng-container matColumnDef="action">
       <th mat-header-cell *matHeaderCellDef> Action </th>
       <td mat-cell *matCellDef="let vehicle">
-         <button mat-raised-button color="warn" (click)="updateVehicles(vehicle)">Edit</button> &nbsp;
+         <button mat-raised-button color="warn" (click)="updateVehicles(vehicle)">Edit</button>
         <button mat-raised-button color="warn" (click)="deleteVehicles(vehicle._id)">Delete</button> 
       </td>
     </ng-container>
+    <ng-container matColumnDef="status">
+  <th mat-header-cell *matHeaderCellDef> Status </th>
+  <td mat-cell *matCellDef="let vehicle">
+     <mat-chip-grid>
+      <mat-chip 
+        [color]="vehicle.status === 'Approved' ? 'primary' : vehicle.status === 'Pending' ? 'accent' : 'warn'" 
+        selected>
+        {{ vehicle.status }}
+      </mat-chip>
+    </mat-chip-grid>
+  </td>
+</ng-container>
     <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
     <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
   </table>
+  
 </div>

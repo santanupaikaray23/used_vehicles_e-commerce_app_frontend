@@ -14,7 +14,7 @@ import { BuyerLayoutComponent } from './buyer-layout-component/buyer-layout-comp
 import { AdminLayoutComponent } from './admin-layout-component/admin-layout-component';
 import { Admindashboard } from './admindashboard/admindashboard';
 import { AuthGuard } from '../services/authguard'; 
-
+import {Inquire} from './inquire/inquire';
 
 const routes: Routes = [
   {
@@ -32,16 +32,17 @@ const routes: Routes = [
           { path: 'contact', component: Contact },
         ]
       },
-      {
-        path: 'buyerdashboard',
-        component: BuyerLayoutComponent,
-        canActivate: [AuthGuard],
-        children: [
-          { path: '', component: Buyerdashboard },
-          { path: 'about', component: About },
-          { path: 'contact', component: Contact },
-        ]
-      },
+     {
+  path: 'buyerdashboard',
+  component: BuyerLayoutComponent,
+  canActivate: [AuthGuard],
+  children: [
+    { path: '', component: Buyerdashboard },
+    { path: 'inquire/:id', component: Inquire },  // ✅ corrected
+    { path: 'about', component: About },
+    { path: 'contact', component: Contact },
+  ]
+},
       {
         path: 'admindashboard',
         component: AdminLayoutComponent,

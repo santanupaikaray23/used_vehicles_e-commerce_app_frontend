@@ -137,6 +137,7 @@ export class Auth {
     );
   }
 
+
   deleteVehicle(id: number) {
     return this.http.delete(`http://localhost:5001/api/auth/deletevehicledetail/${id}`);
   }
@@ -187,4 +188,15 @@ getUsers() {
   );
 }
 
+getStatus() {
+  return this.http.get<any>(
+    'http://localhost:5001/api/auth/adminAudit',
+    { headers: this.getAuthHeaders() }
+
+  );
+}
+
+getvehicleById(id: string): Observable<Product> {
+  return this.http.get<Product>(`http://localhost:5001/api/auth/vehicledetails/${id}`)
+}
 }

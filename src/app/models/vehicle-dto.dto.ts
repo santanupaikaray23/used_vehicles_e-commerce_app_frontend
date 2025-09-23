@@ -1,5 +1,5 @@
 export class VehicleDto {
-    id?:number
+    _id?:number
     title?:string
     make?: string;
 model?: String;
@@ -14,10 +14,6 @@ description?: String;
 locationcity?: String;
 localpincode?: Number;
 images?: String;
-// status?: String;
-
-
-
-
+status?: String;
 
 }

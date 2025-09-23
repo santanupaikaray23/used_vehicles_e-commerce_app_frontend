@@ -22,7 +22,6 @@
           height="60"
         />
       </td>
-      <td>{{ product.status }}</td>
       <td>
         <input
           *ngIf="product.showReason"
@@ -37,18 +36,18 @@
           Approve
         </button>
         <button *ngIf="product.isActive && !product.showReason" (click)="product.showReason = true">
-          Deactivate
+          Rejected
         </button>
         <button
           *ngIf="product.isActive && product.showReason"
           [disabled]="!product.reason"
           (click)="deactivateVehicle(product._id, product.reason)"
         >
-          Confirm Deactivate
+          Confirm Rejected
         </button>
-        <button (click)="deleteVehicles(product._id)">
+        <!-- <button (click)="deleteVehicles(product._id)">
           Delete Permanently
-        </button>
+        </button> -->
       </td>
     </tr>
   </tbody>

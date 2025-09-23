@@ -24,7 +24,7 @@ export class Sellerdashboard {
   localpincode: number | undefined;
   images: string | undefined;
   mileage_km: string | undefined;
-  // status: string | undefined;
+  status: string | undefined;
   // statushistory: string | undefined;
 
   vehicles: any[] = [];
@@ -32,8 +32,8 @@ export class Sellerdashboard {
   products: any[] = [];
   isEditMode: boolean = false;
   editVehicleId: string | null = null;
-  displayedColumns: string[] = ['_id', 'title', 'make', 'images', 'action'];
-
+  displayedColumns: string[] = ['_id', 'title', 'make', 'images', 'action','status'];
+statusData: any[] = []
   selectedFiles: File[] = [];
   errorMessage: string = '';
   maxFileSize = 2 * 1024 * 1024; 
@@ -47,6 +47,7 @@ export class Sellerdashboard {
 
   ngOnInit() {
     this.getProducts();
+     this.getStatus(); 
   }
 
   triggerFileInput(index: number) {
@@ -93,6 +94,7 @@ onFileSelected(event: any, index: number): void {
     this.locationcity = vehicle.locationcity;
     this.localpincode = vehicle.localpincode;
     this.mileage_km = vehicle.mileage_km;
+     this.status = vehicle.status; 
     // this.status = vehicle.status;
     // this.statushistory = vehicle.statushistory;
 
@@ -131,6 +133,7 @@ saveVehicle() {
   formData.append("locationcity", this.locationcity || '');
   formData.append("localpincode", String(this.localpincode || ''));
   formData.append("mileage_km", String(this.mileage_km || ''));
+  formData.append("status", this.status || 'draft');
   formData.append("isActive", "false");
 
   const now = new Date().toISOString();
@@ -215,5 +218,17 @@ saveVehicle() {
   cancel() {
     this.resetForm();  
     this.router.navigate(['/vehicles']); 
+  }
+
+  getStatus() {
+    this.auth.getStatus().subscribe({
+      next: (res: any) => {
+        console.log('Status API response:', res);
+        this.statusData = Array.isArray(res) ? res : [];
+      },
+      error: (err) => {
+        console.error('Error fetching status:', err);
+      }
+    });
   }
 }

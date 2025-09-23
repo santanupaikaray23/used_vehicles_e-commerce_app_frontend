@@ -115,6 +115,9 @@
         </p>
         <p class="desc">{{ vehicle.description }}</p>
         <div class="price">₹{{ vehicle.price | number }}</div>
+    <button mat-raised-button color="primary" [routerLink]="['/buyerdashboard/inquire', vehicle._id]">
+  Inquire Now
+</button>
       </div>
     </div>
   </div>

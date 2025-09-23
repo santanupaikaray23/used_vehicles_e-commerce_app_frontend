@@ -34,6 +34,9 @@ import { AdminLayoutComponent } from './admin-layout-component/admin-layout-comp
 import { MatTableModule } from '@angular/material/table';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatSortModule } from '@angular/material/sort';
+import { MatChipsModule } from '@angular/material/chips';
+
+
 
 @NgModule({
   declarations: [
@@ -49,7 +52,9 @@ import { MatSortModule } from '@angular/material/sort';
     Userdashboard,
     BuyerLayoutComponent,
     SellerLayoutComponent,
-    AdminLayoutComponent, 
+    AdminLayoutComponent
+    
+    
   ],
   imports: [
     CommonModule,
@@ -79,6 +84,7 @@ import { MatSortModule } from '@angular/material/sort';
    MatTableModule,
    MatPaginatorModule,
 MatSortModule,
+MatChipsModule
 
 ],
 

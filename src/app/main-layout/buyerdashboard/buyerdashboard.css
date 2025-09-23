@@ -150,3 +150,45 @@
   transform: scale(1.05);
   border-color: #007bff; 
 }
+.card {
+  display: flex;
+  flex-direction: column;
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+  overflow: hidden;
+  margin: 1rem auto;
+  width: 100%;
+  max-width: 900px;
+}
+
+/* Info section grows to fill space, pushing footer down */
+.info {
+  flex: 1;
+  padding: 1.2rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+}
+
+/* Price styling */
+.price {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #27ae60;
+  margin-top: auto; /* pushes price towards bottom of info */
+}
+
+/* Footer with button */
+.card-footer {
+  margin-top: auto;
+  border-top: 1px solid #eee;
+}
+
+.card-footer button {
+  width: 100%;
+  border-radius: 0; /* flush edges */
+  padding: 1rem;
+  font-size: 1.1rem;
+  font-weight: 600;
+}

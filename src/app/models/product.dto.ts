@@ -1,4 +1,5 @@
 export class Product {
+    _id!: string;  
     sellerid!:Number;
     title!:String;
     make!:String;

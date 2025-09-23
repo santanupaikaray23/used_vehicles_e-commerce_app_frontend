@@ -71,18 +71,18 @@ deactivateVehicle(id: string, reason?: string) {
     }
   });
 }
-  deleteVehicles(id: number) {
-    const payload = { created_at: new Date().toISOString() };
-    this.auth.deleteVehicle(id).subscribe({
-      next: (data) => {
-        console.log('Deleted:', data);
-        this.getProducts();
-      },
-      error: (err) => {
-        console.error('Error deleting vehicle:', err);
-      }
-    });
-  }
+  // deleteVehicles(id: number) {
+  //   const payload = { created_at: new Date().toISOString() };
+  //   this.auth.deleteVehicle(id).subscribe({
+  //     next: (data) => {
+  //       console.log('Deleted:', data);
+  //       this.getProducts();
+  //     },
+  //     error: (err) => {
+  //       console.error('Error deleting vehicle:', err);
+  //     }
+  //   });
+  // }
 blockUser(userId: string) {
   this.auth.blockUser(userId).subscribe(() => {
     const user = this.users.find(u => u._id === userId);
