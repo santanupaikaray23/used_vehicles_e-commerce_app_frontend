@@ -1,13 +1,14 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute,  RouterModule  } from '@angular/router';
 import { CommonModule } from '@angular/common'; 
 import { Auth } from '../../services/auth';
 import { Product } from '../../models/product.dto';
+import { Location } from '@angular/common';
 
 @Component({
   selector: 'app-inquire',
   standalone: true, // <-- Set to true
-  imports: [CommonModule], // <-- Add CommonModule
+  imports: [CommonModule, RouterModule], // <-- Add CommonModule
   templateUrl: './inquire.html',
   styleUrl: './inquire.css'
 })
@@ -17,6 +18,7 @@ export class Inquire implements OnInit {
     currentIndex = 0;
 
   constructor(
+    private location: Location,
     private route: ActivatedRoute,
     private auth: Auth
   ) {}
@@ -44,4 +46,7 @@ export class Inquire implements OnInit {
       });
     }
   }
+  goBack() {
+  this.location.back();
+}
 }

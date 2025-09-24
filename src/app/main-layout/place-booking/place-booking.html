@@ -1,0 +1,71 @@
+<form [formGroup]="bookingForm" (ngSubmit)="onSubmit()">
+  <div class="form-group">
+    <label>Vehicle Name:</label>
+<input
+  type="text"
+  class="form-control"
+  [value]="vehicle.title"
+  disabled />
+  </div>
+
+  <div class="form-group">
+    <label>Price:</label>
+    <input
+      type="text"
+      class="form-control"
+      [value]="'₹' + (vehicle.price || 0)"
+      disabled />
+  </div>
+
+  <div class="form-group">
+    <label>Message:</label>
+    <textarea
+      class="form-control"
+      formControlName="message"
+      placeholder="Enter your message to the seller">
+    </textarea>
+    <div
+      *ngIf="
+        bookingForm.get('message')?.touched &&
+        bookingForm.get('message')?.invalid
+      "
+      class="text-danger"
+    >
+      Message is required
+    </div>
+  </div>
+
+  <div class="form-group">
+    <label>Phone Number:</label>
+    <input
+      type="tel"
+      class="form-control"
+      formControlName="contact_phone"
+      placeholder="Enter 10-digit phone" />
+    <div
+      *ngIf="
+        bookingForm.get('contact_phone')?.touched &&
+        bookingForm.get('contact_phone')?.invalid
+      "
+      class="text-danger"
+    >
+      Enter a valid 10-digit phone number
+    </div>
+  </div>
+
+  <div class="form-group">
+    <label>Preferred Contact Time:</label>
+    <input
+      type="text"
+      class="form-control"
+      formControlName="preferred_contact_time"
+      placeholder="e.g. Morning / Evening" />
+  </div>
+
+  <button
+    type="submit"
+    class="btn btn-success"
+    [disabled]="bookingForm.invalid">
+    Submit
+  </button>
+</form>

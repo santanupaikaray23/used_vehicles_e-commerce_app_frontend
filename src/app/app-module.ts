@@ -13,6 +13,7 @@ import { CommonModule } from '@angular/common';
 import {MatToolbar} from '@angular/material/toolbar'
 import { MainLayoutModule } from './main-layout/main-layout-module';
 import { HttpClientModule, provideHttpClient, withFetch } from '@angular/common/http';
+import { ReactiveFormsModule } from '@angular/forms';
 
 
 @NgModule({
@@ -34,7 +35,8 @@ import { HttpClientModule, provideHttpClient, withFetch } from '@angular/common/
     CommonModule,
     MatToolbar,
      MainLayoutModule,
-     HttpClientModule
+     HttpClientModule,
+     ReactiveFormsModule
     
   ],
   providers: [

@@ -1,13 +1,13 @@
 .main-image {
   width: 100%;              
   max-width: 600px;        
-  height: 350px;           
+  height: 330px;           
   object-fit: cover;      
   border-radius: 8px;       
   box-shadow: 0 2px 6px rgba(0,0,0,0.2);
 }
 .vehicle-images img.thumbnail {
-  width: 120px;             
+  width: 100px;             
   height: 80px;
   object-fit: cover;       
   margin: 5px;
@@ -15,7 +15,7 @@
   cursor: pointer;
   transition: transform 0.2s ease;
 }
-.vehicle-images img.thumbnail:hover {
+.vehicle-image { 
   transform: scale(1.05);   
   box-shadow: 0 2px 8px rgba(0,0,0,0.3);
 }
@@ -27,7 +27,7 @@
   color: white;
   border: none;
   font-size: 24px;
-  padding: 8px 12px;
+  padding: 2px 12px;
   cursor: pointer;
   border-radius: 50%;
 }
@@ -36,7 +36,4 @@
 }
 .carousel-btn.right {
   right: 10px;
-}
-.vehicle-images img.thumbnail.active {
-  border: 2px solid #28a745; 
 }

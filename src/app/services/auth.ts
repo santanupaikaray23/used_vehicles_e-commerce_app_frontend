@@ -199,4 +199,9 @@ getStatus() {
 getvehicleById(id: string): Observable<Product> {
   return this.http.get<Product>(`http://localhost:5001/api/auth/vehicledetails/${id}`)
 }
+
+addExpressions(expression: any) {
+  return this.http.post("http://localhost:5001/api/auth/addexpressions", expression);
+}
+
 }

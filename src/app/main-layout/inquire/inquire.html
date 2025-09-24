@@ -21,9 +21,13 @@
         </div>
       </div>
       <div class="mt-4">
-        <button class="btn btn-danger">Back</button>
+        <button class="btn btn-danger" (click)="goBack()">Back</button>
         &nbsp;
-        <button class="btn btn-success">Proceed to Pay</button>
+  <a 
+  class="btn btn-success"
+  [routerLink]="['/buyerdashboard/place-booking', vehicle._id]">
+  Proceed
+</a>
       </div>
     </div>
   </div>

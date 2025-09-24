@@ -15,6 +15,8 @@ import { AdminLayoutComponent } from './admin-layout-component/admin-layout-comp
 import { Admindashboard } from './admindashboard/admindashboard';
 import { AuthGuard } from '../services/authguard'; 
 import {Inquire} from './inquire/inquire';
+import { PlaceBooking } from './place-booking/place-booking';
+
 
 const routes: Routes = [
   {
@@ -38,7 +40,8 @@ const routes: Routes = [
   canActivate: [AuthGuard],
   children: [
     { path: '', component: Buyerdashboard },
-    { path: 'inquire/:id', component: Inquire },  // ✅ corrected
+    { path: 'inquire/:id', component: Inquire }, 
+    { path: 'place-booking/:id', component: PlaceBooking },
     { path: 'about', component: About },
     { path: 'contact', component: Contact },
   ]
