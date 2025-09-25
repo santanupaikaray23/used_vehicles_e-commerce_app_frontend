@@ -1,71 +1,86 @@
-<form [formGroup]="bookingForm" (ngSubmit)="onSubmit()">
-  <div class="form-group">
-    <label>Vehicle Name:</label>
-<input
-  type="text"
-  class="form-control"
-  [value]="vehicle.title"
-  disabled />
-  </div>
-
-  <div class="form-group">
-    <label>Price:</label>
+<form [formGroup]="bookingForm" (ngSubmit)="onSubmit()" class="p-3 border rounded bg-light">
+  <!-- Vehicle Name -->
+  <div class="form-group mb-3">
+    <label for="vehicleName" class="form-label fw-bold">Vehicle Name:</label>
     <input
+      id="vehicleName"
       type="text"
       class="form-control"
-      [value]="'₹' + (vehicle.price || 0)"
-      disabled />
+      [value]="vehicle?.title ? vehicle.title : 'Loading...'"
+      disabled
+    />
   </div>
 
-  <div class="form-group">
-    <label>Message:</label>
+  <!-- Vehicle Price -->
+  <div class="form-group mb-3">
+    <label for="vehiclePrice" class="form-label fw-bold">Price:</label>
+    <input
+      id="vehiclePrice"
+      type="text"
+      class="form-control"
+      [value]="vehicle?.price ? ('₹' + vehicle.price) : '₹0'"
+      disabled
+    />
+  </div>
+
+  <!-- Message -->
+  <div class="form-group mb-3">
+    <label for="message" class="form-label fw-bold">Message:</label>
     <textarea
+      id="message"
+      rows="3"
       class="form-control"
       formControlName="message"
-      placeholder="Enter your message to the seller">
-    </textarea>
+      placeholder="Enter your message to the seller"
+    ></textarea>
     <div
-      *ngIf="
-        bookingForm.get('message')?.touched &&
-        bookingForm.get('message')?.invalid
-      "
-      class="text-danger"
+      *ngIf="bookingForm.get('message')?.touched && bookingForm.get('message')?.invalid"
+      class="text-danger mt-1"
     >
       Message is required
     </div>
   </div>
 
-  <div class="form-group">
-    <label>Phone Number:</label>
+  <!-- Contact Phone -->
+  <div class="form-group mb-3">
+    <label for="phone" class="form-label fw-bold">Phone Number:</label>
     <input
+      id="phone"
       type="tel"
+      maxlength="10"
       class="form-control"
       formControlName="contact_phone"
-      placeholder="Enter 10-digit phone" />
+      placeholder="Enter 10-digit phone"
+    />
     <div
-      *ngIf="
-        bookingForm.get('contact_phone')?.touched &&
-        bookingForm.get('contact_phone')?.invalid
-      "
-      class="text-danger"
+      *ngIf="bookingForm.get('contact_phone')?.touched && bookingForm.get('contact_phone')?.invalid"
+      class="text-danger mt-1"
     >
       Enter a valid 10-digit phone number
     </div>
   </div>
 
-  <div class="form-group">
-    <label>Preferred Contact Time:</label>
+  <!-- Preferred Contact Time -->
+  <div class="form-group mb-3">
+    <label for="preferredContactTime" class="form-label fw-bold">Preferred Contact Time:</label>
     <input
+      id="preferredContactTime"
       type="text"
       class="form-control"
       formControlName="preferred_contact_time"
-      placeholder="e.g. Morning / Evening" />
+      placeholder="e.g. Morning / Evening"
+    />
   </div>
 
-  <button
-    type="submit"
-    class="btn btn-success"
-    [disabled]="bookingForm.invalid">
-    Submit
-  </button>
+  <!-- Submit Button -->
+  <div class="d-grid">
+    <button
+      type="submit"
+      class="btn btn-success"
+      [disabled]="bookingForm.invalid"
+    >
+      Submit Booking
+    </button>
+  </div>
+
 </form>

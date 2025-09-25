@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component} from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Location } from '@angular/common';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
@@ -15,10 +15,10 @@ import { Product } from '../../models/product.dto';
   styleUrl: './place-booking.css'
 })
 export class PlaceBooking {
-  vehicle!: Product;
+   vehicle!: Product;
   bookingId!: string | null;
   bookingForm!: FormGroup;
-  buyerId!: string | null; // 👈 added buyerId field
+  buyerId!: string | null;
 
   constructor(
     private location: Location,
@@ -38,12 +38,11 @@ export class PlaceBooking {
       preferred_contact_time: ['']
     });
 
-    // get booking id
     this.bookingId = this.route.snapshot.paramMap.get('id');
     console.log('bookingId:', this.bookingId);
 
-    // get buyerId from localStorage (or Auth service)
-    this.buyerId = localStorage.getItem('buyerId'); 
+    // buyerId should be a MongoDB ObjectId string, not number
+    this.buyerId = localStorage.getItem('buyerId');
     console.log('buyerId:', this.buyerId);
 
     if (this.bookingId) {
@@ -55,27 +54,23 @@ export class PlaceBooking {
   }
 
   onSubmit(): void {
-    if (this.bookingForm.valid) {
-      const now = new Date().toISOString(); // ISO timestamp
-
+    if (this.bookingForm.valid && this.vehicle ) {
       const bookingData = {
-      ...this.bookingForm.value,
-  vehicle_id: Number(this.bookingId),   
-  buyer_id: Number(this.buyerId),       
-  createdAt: now,
-  updatedAt: now,
-  status: 'new'
+        ...this.bookingForm.value,
+        listing_id: this.vehicle._id,             // ✅ backend expects listing_id:number
+        vehicle_name: this.vehicle?.title || null,
+        vehicle_price: this.vehicle?.price ? Number(this.vehicle.price) : null,
+        status: 'new'
       };
 
-      console.log('Payload sending to backend:', bookingData);
 
       this.auth.addExpressions(bookingData).subscribe({
         next: (res) => {
-          console.log('Expression saved successfully:', res);
+          console.log('Expression created successfully:', res);
           this.location.back();
         },
         error: (err) => {
-          console.error('Error saving expression:', err);
+          console.error('Error creating expression:', err);
         }
       });
     } else {

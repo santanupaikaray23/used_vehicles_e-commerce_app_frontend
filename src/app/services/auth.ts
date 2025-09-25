@@ -21,6 +21,7 @@ export class Auth {
   private apiUrl3 = 'http://localhost:5001/api/auth/vehicledetails';
   private apiUrl4 = 'http://localhost:5001/api/auth';
    private apiUrl5 = 'http://localhost:5001/api/auth';
+    private apiUrl6 = 'http://localhost:5001/api/auth';
 
   private sessionKey = 'userSession';   
 
@@ -168,7 +169,7 @@ export class Auth {
 blockUser(id: string, reason?: string) {
   return this.http.put<any>(
     `${this.apiUrl5}/blockUser/${id}`,
-    { reason: reason || null }, // send reason if available
+    { reason: reason || null }, 
     { headers: this.getAuthHeaders() }
   );
 }
@@ -200,8 +201,25 @@ getvehicleById(id: string): Observable<Product> {
   return this.http.get<Product>(`http://localhost:5001/api/auth/vehicledetails/${id}`)
 }
 
-addExpressions(expression: any) {
-  return this.http.post("http://localhost:5001/api/auth/addexpressions", expression);
+// addExpressions(expression: any) {
+//   return this.http.post("http://localhost:5001/api/auth/addexpressions", expression);
+// }
+
+addExpressions(payload: {
+  buyer_id: string;       
+  listing_id: number;     
+  vehicle_name?: string;  
+  vehicle_price?: number; 
+  message: string;        
+  contact_phone: string;  
+  preferred_contact_time?: string;
+  status?: 'new' | 'contacted' | 'closed';
+}) {
+  return this.http.post<any>(
+    `${this.apiUrl6}/addExpressions`,
+    payload,
+    { headers: this.getAuthHeaders() }
+  );
 }
 
 }
