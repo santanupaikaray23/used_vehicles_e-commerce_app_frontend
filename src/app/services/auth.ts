@@ -222,4 +222,8 @@ addExpressions(payload: {
   );
 }
 
+getExpressionsById(id: string): Observable<Product> {
+  return this.http.get<Product>(`http://localhost:5001/api/auth/expressions/${id}`)
+}
+
 }

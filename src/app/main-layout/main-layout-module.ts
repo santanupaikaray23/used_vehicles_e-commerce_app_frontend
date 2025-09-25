@@ -36,6 +36,7 @@ import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatSortModule } from '@angular/material/sort';
 import { MatChipsModule } from '@angular/material/chips';
 import { PlaceBooking } from './place-booking/place-booking';
+import { Receipt } from './receipt/receipt';
 
 
 
@@ -55,6 +56,7 @@ import { PlaceBooking } from './place-booking/place-booking';
     SellerLayoutComponent,
     AdminLayoutComponent,
     PlaceBooking,
+    Receipt,
     
     
   ],
