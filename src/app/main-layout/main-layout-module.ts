@@ -37,6 +37,7 @@ import { MatSortModule } from '@angular/material/sort';
 import { MatChipsModule } from '@angular/material/chips';
 import { PlaceBooking } from './place-booking/place-booking';
 import { Receipt } from './receipt/receipt';
+import { Noaccess } from './noaccess/noaccess';
 
 
 
@@ -57,6 +58,7 @@ import { Receipt } from './receipt/receipt';
     AdminLayoutComponent,
     PlaceBooking,
     Receipt,
+    Noaccess,
     
     
   ],

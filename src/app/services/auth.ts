@@ -189,11 +189,10 @@ getUsers() {
   );
 }
 
-getStatus() {
+getStatusById(id: string) {
   return this.http.get<any>(
-    'http://localhost:5001/api/auth/adminAudit',
+    `http://localhost:5001/api/auth/adminAudit/${id}`,
     { headers: this.getAuthHeaders() }
-
   );
 }
 

@@ -5,14 +5,14 @@ import { Auth } from './auth';
 @Injectable({
   providedIn: 'root'
 })
-export class AuthGuard implements CanActivate {   // ✅ Capital G + implements CanActivate
+export class AuthGuard implements CanActivate {   
   constructor(private auth: Auth, private router: Router) {}
 
   canActivate(): boolean {
     if (this.auth.isLoggedIn()) {
-      return true; // ✅ allow navigation
+      return true; 
     } else {
-      this.router.navigate(['/login']); // ❌ block and redirect
+      this.router.navigate(['/login']); 
       return false;
     }
   }

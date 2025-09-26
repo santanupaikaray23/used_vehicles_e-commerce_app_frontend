@@ -1,129 +1,117 @@
 <div class="container">
-  <mat-form-field appearance="outline" class="form-field">
-  <mat-label>Title</mat-label>
-  <input matInput [(ngModel)]="title" name="title" required #titleCtrl="ngModel">
-  <mat-error *ngIf="titleCtrl.errors?.['required'] && (titleCtrl.dirty || titleCtrl.touched)">
-    Title is required.
-  </mat-error>
-</mat-form-field>&nbsp;
-  <mat-form-field appearance="outline" class="form-field">
-    <mat-label>Make</mat-label>
-    <input matInput [(ngModel)]="make" name="make" required #makeCtrl="ngModel">
+    <mat-form-field appearance="outline" class="form-field">
+        <mat-label>Title</mat-label>
+        <input matInput [(ngModel)]="title" name="title" required #titleCtrl="ngModel">
+        <mat-error *ngIf="titleCtrl.errors?.['required'] && (titleCtrl.dirty || titleCtrl.touched)">
+            Title is required.
+        </mat-error>
+    </mat-form-field>&nbsp;
+    <mat-form-field appearance="outline" class="form-field">
+        <mat-label>Make</mat-label>
+        <input matInput [(ngModel)]="make" name="make" required #makeCtrl="ngModel">
         <mat-error *ngIf="makeCtrl.errors?.['required'] && (makeCtrl.dirty || makeCtrl.touched)">
-    Title is required.
-  </mat-error>
-  </mat-form-field>&nbsp;
-  <mat-form-field appearance="outline" class="form-field">
-    <mat-label>Model</mat-label>
-    <input matInput [(ngModel)]="model" name="model" required #modelCtrl="ngModel">
-      <mat-error *ngIf="modelCtrl.errors?.['required'] && (modelCtrl.dirty || modelCtrl.touched)">
-    Title is required.
-    </mat-error>
-  </mat-form-field>&nbsp;
-  <mat-form-field appearance="outline" class="form-field">
-    <mat-label>Variant</mat-label>
-    <input matInput [(ngModel)]="variant" name="variant" required #variantCtrl="ngModel">
-     <mat-error *ngIf="modelCtrl.errors?.['required'] && (variantCtrl.dirty || variantCtrl.touched)">
-        Title is required.
-     </mat-error>
-  </mat-form-field>&nbsp;
-  <mat-form-field appearance="outline" class="form-field">
-    <mat-label>Year</mat-label>
-    <input matInput type="number" [(ngModel)]="year" name="year" required #yearCtrl="ngModel">
-     <mat-error *ngIf="modelCtrl.errors?.['required'] && (yearCtrl.dirty || yearCtrl.touched)">
-        Year is required.
-     </mat-error>
-  </mat-form-field>&nbsp;
-   <mat-form-field appearance="outline" class="form-field">
-    <mat-label>Mileage_KM</mat-label>
-    <input matInput type="number" [(ngModel)]="mileage_km" name="mileage_km" required #mileage_kmCtrl="ngModel">
-     <mat-error *ngIf="modelCtrl.errors?.['required'] && (mileage_kmCtrl.dirty || mileage_kmCtrl.touched)">
-        Year is required.
-     </mat-error>
-  </mat-form-field>&nbsp;
-  <mat-form-field appearance="outline" class="form-field">
-  <mat-label>Fuel Type</mat-label>
-  <mat-select [(ngModel)]="fueltype" name="fueltype" required #fueltypeCtrl="ngModel">
-    <mat-option value="Petrol">Petrol</mat-option>
-    <mat-option value="Diesel">Diesel</mat-option>
-    <mat-option value="Electric">Electric</mat-option>
-  </mat-select>
-  <mat-error *ngIf="fueltypeCtrl.errors?.['required'] && (fueltypeCtrl.dirty || fueltypeCtrl.touched)">
-    Fuel Type is required.
-  </mat-error>
-</mat-form-field>&nbsp;
- <mat-form-field appearance="outline" class="form-field">
-  <mat-label>Transmission</mat-label>
-  <mat-select [(ngModel)]="transmission" name="transmission" required #transmissionCtrl="ngModel">
-    <mat-option value="Automatic">Automatic</mat-option>
-    <mat-option value="Manual">Manual</mat-option>
-    <mat-option value="Electric">Electric</mat-option>
-  </mat-select>
-  <mat-error *ngIf="transmissionCtrl.errors?.['required'] && (transmissionCtrl.dirty || transmissionCtrl.touched)">
-    Transmission is required.
-  </mat-error>
-</mat-form-field>&nbsp;
-  <mat-form-field appearance="outline" class="form-field">
-    <mat-label>Owner Count</mat-label>
-    <input matInput [(ngModel)]="ownercount" name="ownercount" required #ownercountCtrl="ngModel">
-    <mat-error *ngIf="ownercountCtrl.errors?.['required'] && (ownercountCtrl.dirty || ownercountCtrl.touched)">
-        Ownercount is required.
-     </mat-error>
-  </mat-form-field>&nbsp;
-  <mat-form-field appearance="outline" class="form-field">
-    <mat-label>Registration State</mat-label>
-     <input matInput [(ngModel)]="registrationstate" name="registrationstate" required #registrationstateCtrl="ngModel">
-  <mat-error *ngIf="registrationstateCtrl.errors?.['required'] && (registrationstateCtrl.dirty || registrationstateCtrl.touched)">
-        Ownercount is required.
-     </mat-error>
-  </mat-form-field>&nbsp;
-  <mat-form-field appearance="outline" class="form-field">
-    <mat-label>Price</mat-label>
-    <input matInput [(ngModel)]="price" name="price" required #priceCtrl="ngModel">
-    <mat-error *ngIf="priceCtrl.errors?.['required'] && (priceCtrl.dirty || priceCtrl.touched)">
-      Price is required.
-      </mat-error>
-  </mat-form-field>&nbsp;
-  <mat-form-field appearance="outline" class="form-field">
-    <mat-label>Description</mat-label>
-    <input matInput [(ngModel)]="description" name="description" required #descriptionCtrl="ngModel">
-<mat-error *ngIf="descriptionCtrl.errors?.['required'] && (descriptionCtrl.dirty || descriptionCtrl.touched)">
-  Description is required
-</mat-error>
- 
-  </mat-form-field>&nbsp;
-<mat-form-field appearance="outline" class="form-field">
-  <mat-label>Location City</mat-label>
-  <input 
-    matInput 
-    [(ngModel)]="locationcity" 
-    name="locationcity" 
-    required 
-    #cityCtrl="ngModel">
-  
-  <mat-error *ngIf="cityCtrl.invalid && (cityCtrl.dirty || cityCtrl.touched)">
-    Location City is required
-  </mat-error>
-</mat-form-field>&nbsp;
-<mat-form-field appearance="outline" class="form-field">
-  <mat-label>Pincode</mat-label>
-  <input 
-    matInput 
-    type="text" 
-    [(ngModel)]="localpincode"
-    name="pincode"
-    required
-    pattern="^[0-9]{6}$"
-    #pincodeCtrl="ngModel">
-    
-  <mat-error *ngIf="pincodeCtrl.hasError('required')">
-    Pincode is required
-  </mat-error>
-  <mat-error *ngIf="pincodeCtrl.hasError('pattern')">
-    Pincode must be exactly 6 digits
-  </mat-error>
-</mat-form-field>&nbsp;
- <!-- <mat-form-field appearance="outline" class="form-field">
+            Title is required.
+        </mat-error>
+    </mat-form-field>&nbsp;
+    <mat-form-field appearance="outline" class="form-field">
+        <mat-label>Model</mat-label>
+        <input matInput [(ngModel)]="model" name="model" required #modelCtrl="ngModel">
+        <mat-error *ngIf="modelCtrl.errors?.['required'] && (modelCtrl.dirty || modelCtrl.touched)">
+            Title is required.
+        </mat-error>
+    </mat-form-field>&nbsp;
+    <mat-form-field appearance="outline" class="form-field">
+        <mat-label>Variant</mat-label>
+        <input matInput [(ngModel)]="variant" name="variant" required #variantCtrl="ngModel">
+        <mat-error *ngIf="modelCtrl.errors?.['required'] && (variantCtrl.dirty || variantCtrl.touched)">
+            Title is required.
+        </mat-error>
+    </mat-form-field>&nbsp;
+    <mat-form-field appearance="outline" class="form-field">
+        <mat-label>Year</mat-label>
+        <input matInput type="number" [(ngModel)]="year" name="year" required #yearCtrl="ngModel">
+        <mat-error *ngIf="modelCtrl.errors?.['required'] && (yearCtrl.dirty || yearCtrl.touched)">
+            Year is required.
+        </mat-error>
+    </mat-form-field>&nbsp;
+    <mat-form-field appearance="outline" class="form-field">
+        <mat-label>Mileage_KM</mat-label>
+        <input matInput type="number" [(ngModel)]="mileage_km" name="mileage_km" required #mileage_kmCtrl="ngModel">
+        <mat-error *ngIf="modelCtrl.errors?.['required'] && (mileage_kmCtrl.dirty || mileage_kmCtrl.touched)">
+            Year is required.
+        </mat-error>
+    </mat-form-field>&nbsp;
+    <mat-form-field appearance="outline" class="form-field">
+        <mat-label>Fuel Type</mat-label>
+        <mat-select [(ngModel)]="fueltype" name="fueltype" required #fueltypeCtrl="ngModel">
+            <mat-option value="Petrol">Petrol</mat-option>
+            <mat-option value="Diesel">Diesel</mat-option>
+            <mat-option value="Electric">Electric</mat-option>
+        </mat-select>
+        <mat-error *ngIf="fueltypeCtrl.errors?.['required'] && (fueltypeCtrl.dirty || fueltypeCtrl.touched)">
+            Fuel Type is required.
+        </mat-error>
+    </mat-form-field>&nbsp;
+    <mat-form-field appearance="outline" class="form-field">
+        <mat-label>Transmission</mat-label>
+        <mat-select [(ngModel)]="transmission" name="transmission" required #transmissionCtrl="ngModel">
+            <mat-option value="Automatic">Automatic</mat-option>
+            <mat-option value="Manual">Manual</mat-option>
+            <mat-option value="Electric">Electric</mat-option>
+        </mat-select>
+        <mat-error *ngIf="transmissionCtrl.errors?.['required'] && (transmissionCtrl.dirty || transmissionCtrl.touched)">
+            Transmission is required.
+        </mat-error>
+    </mat-form-field>&nbsp;
+    <mat-form-field appearance="outline" class="form-field">
+        <mat-label>Owner Count</mat-label>
+        <input matInput [(ngModel)]="ownercount" name="ownercount" required #ownercountCtrl="ngModel">
+        <mat-error *ngIf="ownercountCtrl.errors?.['required'] && (ownercountCtrl.dirty || ownercountCtrl.touched)">
+            Ownercount is required.
+        </mat-error>
+    </mat-form-field>&nbsp;
+    <mat-form-field appearance="outline" class="form-field">
+        <mat-label>Registration State</mat-label>
+        <input matInput [(ngModel)]="registrationstate" name="registrationstate" required #registrationstateCtrl="ngModel">
+        <mat-error *ngIf="registrationstateCtrl.errors?.['required'] && (registrationstateCtrl.dirty || registrationstateCtrl.touched)">
+            Ownercount is required.
+        </mat-error>
+    </mat-form-field>&nbsp;
+    <mat-form-field appearance="outline" class="form-field">
+        <mat-label>Price</mat-label>
+        <input matInput [(ngModel)]="price" name="price" required #priceCtrl="ngModel">
+        <mat-error *ngIf="priceCtrl.errors?.['required'] && (priceCtrl.dirty || priceCtrl.touched)">
+            Price is required.
+        </mat-error>
+    </mat-form-field>&nbsp;
+    <mat-form-field appearance="outline" class="form-field">
+        <mat-label>Description</mat-label>
+        <input matInput [(ngModel)]="description" name="description" required #descriptionCtrl="ngModel">
+        <mat-error *ngIf="descriptionCtrl.errors?.['required'] && (descriptionCtrl.dirty || descriptionCtrl.touched)">
+            Description is required
+        </mat-error>
+
+    </mat-form-field>&nbsp;
+    <mat-form-field appearance="outline" class="form-field">
+        <mat-label>Location City</mat-label>
+        <input matInput [(ngModel)]="locationcity" name="locationcity" required #cityCtrl="ngModel">
+
+        <mat-error *ngIf="cityCtrl.invalid && (cityCtrl.dirty || cityCtrl.touched)">
+            Location City is required
+        </mat-error>
+    </mat-form-field>&nbsp;
+    <mat-form-field appearance="outline" class="form-field">
+        <mat-label>Pincode</mat-label>
+        <input matInput type="text" [(ngModel)]="localpincode" name="pincode" required pattern="^[0-9]{6}$" #pincodeCtrl="ngModel">
+
+        <mat-error *ngIf="pincodeCtrl.hasError('required')">
+            Pincode is required
+        </mat-error>
+        <mat-error *ngIf="pincodeCtrl.hasError('pattern')">
+            Pincode must be exactly 6 digits
+        </mat-error>
+    </mat-form-field>&nbsp;
+    <!-- <mat-form-field appearance="outline" class="form-field">
   <mat-label>Status</mat-label>
   <input 
     matInput 
@@ -151,105 +139,95 @@
     Status History is required
   </mat-error>
 </mat-form-field> -->
-<div class="upload-grid">
-  <div
-    class="upload-box"
-    *ngFor="let photo of photos; let i = index"
-    (click)="triggerFileInput(i)"
-  >
-    <ng-container *ngIf="photo; else addPhoto">
-      <img [src]="photo" alt="Preview" />
-    </ng-container>
-    <ng-template #addPhoto>
-      <div class="add-photo">
-        <mat-icon>add_a_photo</mat-icon>
-        <span>Add Photo</span>
-      </div>
-    </ng-template>
-    <input
-      type="file"
-      accept="image/*"
-      #fileInput
-      (change)="onFileSelected($event, i)"
-      hidden
-    />
-  </div>
-</div>
-<div *ngIf="errorMessage" style="color:red; margin-top:8px;">
-  {{ errorMessage }}
-</div>
-
-<div *ngIf="selectedFiles.length > 0" style="margin-top:12px;">
-  <p><strong>Selected Files:</strong></p>
-  <ul>
-    <li *ngFor="let file of selectedFiles">
-      {{ file.name }} ({{ file.size / 1024 | number:'1.0-0' }} KB)
-    </li>
-  </ul>
-</div> &nbsp;
-<div class="action-buttons">
- <button 
-  mat-raised-button 
-  color="primary" 
-  (click)="saveVehicle()">
-  {{ isEditMode ? 'Update' : 'Submit' }}
-</button>&nbsp;
-    <button mat-raised-button color="warn" (click)="cancel()">
-    Cancel
-  </button>
-</div>
-  <table mat-table [dataSource]="products" class="mat-elevation-z8 full-width-table">
-    <!-- <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-<tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr> -->
-    <ng-container matColumnDef="_id">
-      <th mat-header-cell *matHeaderCellDef> Id </th>
-      <td mat-cell *matCellDef="let vehicle"> {{vehicle._id}} </td>
-    </ng-container>
-    <ng-container matColumnDef="title">
-      <th mat-header-cell *matHeaderCellDef> Title </th>
-      <td mat-cell *matCellDef="let vehicle"> {{vehicle.title}} </td>
-    </ng-container>
-    <ng-container matColumnDef="make">
-      <th mat-header-cell *matHeaderCellDef> Make </th>
-      <td mat-cell *matCellDef="let vehicle"> {{vehicle.make}} </td>
-    </ng-container>
-    <ng-container matColumnDef="images">
-      <th mat-header-cell *matHeaderCellDef> Images </th>
-      <td mat-cell *matCellDef="let vehicle">
-        <div class="image-list">
-          <img 
-            *ngFor="let img of vehicle.images" 
-            [src]="'data:' + img.mimetype + ';base64,' + img.data" 
-            [alt]="img.filename" 
-            width="20" 
-            height="20"
-          />
+    <div class="upload-grid">
+        <div class="upload-box" *ngFor="let photo of photos; let i = index" (click)="triggerFileInput(i)">
+            <ng-container *ngIf="photo; else addPhoto">
+                <img [src]="photo" alt="Preview" />
+            </ng-container>
+            <ng-template #addPhoto>
+                <div class="add-photo">
+                    <mat-icon>add_a_photo</mat-icon>
+                    <span>Add Photo</span>
+                </div>
+            </ng-template>
+            <input type="file" accept="image/*" #fileInput (change)="onFileSelected($event, i)" hidden />
         </div>
-      </td>
-    </ng-container>
-    
+    </div>
+    <div *ngIf="errorMessage" style="color:red; margin-top:8px;">
+        {{ errorMessage }}
+    </div>
 
-    <ng-container matColumnDef="action">
-      <th mat-header-cell *matHeaderCellDef> Action </th>
-      <td mat-cell *matCellDef="let vehicle">
-         <button mat-raised-button color="warn" (click)="updateVehicles(vehicle)">Edit</button>
-        <button mat-raised-button color="warn" (click)="deleteVehicles(vehicle._id)">Delete</button> 
-      </td>
-    </ng-container>
-    <ng-container matColumnDef="status">
+    <div *ngIf="selectedFiles.length > 0" style="margin-top:12px;">
+        <p><strong>Selected Files:</strong></p>
+        <ul>
+            <li *ngFor="let file of selectedFiles">
+                {{ file.name }} ({{ file.size / 1024 | number:'1.0-0' }} KB)
+            </li>
+        </ul>
+    </div> &nbsp;
+    <div class="action-buttons">
+        <button mat-raised-button color="primary" (click)="saveVehicle()">
+      {{ isEditMode ? 'Update' : 'Submit' }}
+    </button>&nbsp;
+        <button mat-raised-button color="warn" (click)="cancel()">
+      Cancel
+    </button>
+    </div>
+    <table mat-table [dataSource]="products" class="mat-elevation-z8 full-width-table">
+        <!-- <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+<tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr> -->
+        <ng-container matColumnDef="_id">
+            <th mat-header-cell *matHeaderCellDef> Id </th>
+            <td mat-cell *matCellDef="let vehicle"> {{vehicle._id}} </td>
+        </ng-container>
+        <ng-container matColumnDef="title">
+            <th mat-header-cell *matHeaderCellDef> Title </th>
+            <td mat-cell *matCellDef="let vehicle"> {{vehicle.title}} </td>
+        </ng-container>
+        <ng-container matColumnDef="make">
+            <th mat-header-cell *matHeaderCellDef> Make </th>
+            <td mat-cell *matCellDef="let vehicle"> {{vehicle.make}} </td>
+        </ng-container>
+        <ng-container matColumnDef="images">
+            <th mat-header-cell *matHeaderCellDef> Images </th>
+            <td mat-cell *matCellDef="let vehicle">
+                <div class="image-list">
+                    <img *ngFor="let img of vehicle.images" [src]="'data:' + img.mimetype + ';base64,' + img.data" [alt]="img.filename" width="20" height="20" />
+                </div>
+            </td>
+        </ng-container>
+
+
+        <ng-container matColumnDef="action">
+            <th mat-header-cell *matHeaderCellDef> Action </th>
+            <td mat-cell *matCellDef="let vehicle">
+                <button mat-raised-button color="warn" (click)="updateVehicles(vehicle)">Edit</button>
+                <button mat-raised-button color="warn" (click)="deleteVehicles(vehicle._id)">Delete</button>
+            </td>
+        </ng-container>
+      <ng-container matColumnDef="status">
   <th mat-header-cell *matHeaderCellDef> Status </th>
-  <td mat-cell *matCellDef="let vehicle">
-     <mat-chip-grid>
-      <mat-chip 
-        [color]="vehicle.status === 'Approved' ? 'primary' : vehicle.status === 'Pending' ? 'accent' : 'warn'" 
+  <td mat-cell *matCellDef="let product">
+    <mat-chip-listbox>
+      <mat-chip-option 
+        *ngFor="let audit of product.audits"
+        [color]="audit.to_status === 'approved' ? 'primary' 
+                 : audit.to_status === 'pending' ? 'accent' 
+                 : 'warn'"
         selected>
-        {{ vehicle.status }}
-      </mat-chip>
-    </mat-chip-grid>
+        {{ audit.to_status | titlecase }}
+        <span *ngIf="audit.to_status === 'rejected' && audit.reason">
+          - {{ audit.reason }}
+        </span>
+        <small style="margin-left:6px; font-size:11px; color:rgba(0,0,0,0.6)">
+          ({{ audit.created_at | date:'short' }})
+        </small>
+      </mat-chip-option>
+    </mat-chip-listbox>
   </td>
 </ng-container>
-    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-  </table>
-  
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+    </table>
+
 </div>

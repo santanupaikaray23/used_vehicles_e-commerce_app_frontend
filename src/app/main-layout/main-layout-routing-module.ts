@@ -17,7 +17,7 @@ import { AuthGuard } from '../services/authguard';
 import {Inquire} from './inquire/inquire';
 import { PlaceBooking } from './place-booking/place-booking';
 import { Receipt } from './receipt/receipt';
-
+import { Noaccess } from './noaccess/noaccess';
 
 const routes: Routes = [
   {
@@ -54,7 +54,7 @@ const routes: Routes = [
         canActivate: [AuthGuard],
         children: [
           { path: '', component: Admindashboard },
-          { path: 'buyerdashboard', component: Buyerdashboard },
+          { path: 'buyerdashboard', component: Buyerdashboard},
           { path: 'about', component: About },
           { path: 'contact', component: Contact },
         ]

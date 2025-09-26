@@ -1,6 +1,6 @@
 import { Component, ElementRef, QueryList, ViewChildren } from '@angular/core';
 import { Auth } from '../../services/auth';
-import { Router } from '@angular/router'; 
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-sellerdashboard',
@@ -25,29 +25,28 @@ export class Sellerdashboard {
   images: string | undefined;
   mileage_km: string | undefined;
   status: string | undefined;
-  // statushistory: string | undefined;
 
+  audit: any;
   vehicles: any[] = [];
   vehicle: any;
   products: any[] = [];
   isEditMode: boolean = false;
   editVehicleId: string | null = null;
-  displayedColumns: string[] = ['_id', 'title', 'make', 'images', 'action','status'];
-statusData: any[] = []
+  displayedColumns: string[] = ['_id', 'title', 'make', 'images', 'action', 'status'];
+  statusData: any[] = []
   selectedFiles: File[] = [];
   errorMessage: string = '';
-  maxFileSize = 2 * 1024 * 1024; 
+  maxFileSize = 2 * 1024 * 1024;
   maxFiles = 5;
 
   photos: (string | null)[] = Array(5).fill(null);
 
   @ViewChildren('fileInput') fileInputs!: QueryList<ElementRef<HTMLInputElement>>;
 
-  constructor(private auth: Auth, private router: Router) {} 
+  constructor(private auth: Auth, private router: Router) { }
 
   ngOnInit() {
     this.getProducts();
-     this.getStatus(); 
   }
 
   triggerFileInput(index: number) {
@@ -55,18 +54,18 @@ statusData: any[] = []
     input.click();
   }
 
-onFileSelected(event: any, index: number): void {
-  const file = event.target.files[0];
-  if (file) {
-    if (file.size > this.maxFileSize) {
-      this.errorMessage = 'File too large, max 2MB';
-      return;
+  onFileSelected(event: any, index: number): void {
+    const file = event.target.files[0];
+    if (file) {
+      if (file.size > this.maxFileSize) {
+        this.errorMessage = 'File too large, max 2MB';
+        return;
+      }
+      this.selectedFiles[index] = file;
+      this.photos[index] = URL.createObjectURL(file);
+      this.errorMessage = '';
     }
-    this.selectedFiles[index] = file;
-    this.photos[index] = URL.createObjectURL(file);
-    this.errorMessage = '';
   }
-}
 
   getProducts() {
     this.auth.getProducts().subscribe((data: any) => {
@@ -74,8 +73,15 @@ onFileSelected(event: any, index: number): void {
       const allProducts = Array.isArray(data.data) ? data.data : [];
       this.products = allProducts;
       console.log('Latest product for table:', this.products);
+
+      this.products.forEach((vehicle: any) => {
+        this.getStatusById(vehicle._id); // send vehicle._id
+      });
+
     });
   }
+
+  
 
   updateVehicles(vehicle: any) {
     this.isEditMode = true;
@@ -94,7 +100,7 @@ onFileSelected(event: any, index: number): void {
     this.locationcity = vehicle.locationcity;
     this.localpincode = vehicle.localpincode;
     this.mileage_km = vehicle.mileage_km;
-     this.status = vehicle.status; 
+    this.status = vehicle.status;
     // this.status = vehicle.status;
     // this.statushistory = vehicle.statushistory;
 
@@ -104,81 +110,81 @@ onFileSelected(event: any, index: number): void {
     );
   }
 
-saveVehicle() {
-  this.errorMessage = '';
-  const hasExistingPhotos = this.photos && this.photos.length > 0;
+  saveVehicle() {
+    this.errorMessage = '';
+    const hasExistingPhotos = this.photos && this.photos.length > 0;
 
-  if (!this.isEditMode && this.selectedFiles.length === 0) {
-    this.errorMessage = 'At least one photo is required before submitting.';
-    return;
-  }
-
-  if (this.isEditMode && !hasExistingPhotos && this.selectedFiles.length === 0) {
-    this.errorMessage = 'Please upload at least one photo since none exist yet.';
-    return;
-  }
-
-  const formData = new FormData();
-  formData.append("title", this.title || '');
-  formData.append("make", this.make || '');
-  formData.append("model", this.model || '');
-  formData.append("variant", this.variant || '');
-  formData.append("year", String(this.year || ''));
-  formData.append("fueltype", this.fueltype || '');
-  formData.append("transmission", this.transmission || '');
-  formData.append("ownercount", String(this.ownercount || ''));
-  formData.append("registrationstate", this.registrationstate || '');
-  formData.append("price", String(this.price || ''));
-  formData.append("description", this.description || '');
-  formData.append("locationcity", this.locationcity || '');
-  formData.append("localpincode", String(this.localpincode || ''));
-  formData.append("mileage_km", String(this.mileage_km || ''));
-  formData.append("status", this.status || 'draft');
-  formData.append("isActive", "false");
-
-  const now = new Date().toISOString();
-  if (this.isEditMode) {
-    formData.append("updated_at", now);
-  } else {
-    formData.append("created_at", now);
-    formData.append("updated_at", now);
-  }
-
-  const imageIndexes: number[] = [];
-  this.selectedFiles.forEach((file, index) => {
-    if (file) {
-      formData.append("images", file, file.name);
-      imageIndexes.push(index);
+    if (!this.isEditMode && this.selectedFiles.length === 0) {
+      this.errorMessage = 'At least one photo is required before submitting.';
+      return;
     }
-  });
 
-  formData.append("imageIndexes", JSON.stringify(imageIndexes));
-  if (this.isEditMode && this.editVehicleId) {
-    this.auth.updateVehicles(this.editVehicleId, formData).subscribe({
-      next: (data) => {
-        console.log("Vehicle updated", data);
-        this.getProducts();
-        this.resetForm();
-      },
-      error: (err) => {
-        console.error("Error updating vehicle:", err);
-        this.errorMessage = 'Failed to update vehicle. Please try again.';
+    if (this.isEditMode && !hasExistingPhotos && this.selectedFiles.length === 0) {
+      this.errorMessage = 'Please upload at least one photo since none exist yet.';
+      return;
+    }
+
+    const formData = new FormData();
+    formData.append("title", this.title || '');
+    formData.append("make", this.make || '');
+    formData.append("model", this.model || '');
+    formData.append("variant", this.variant || '');
+    formData.append("year", String(this.year || ''));
+    formData.append("fueltype", this.fueltype || '');
+    formData.append("transmission", this.transmission || '');
+    formData.append("ownercount", String(this.ownercount || ''));
+    formData.append("registrationstate", this.registrationstate || '');
+    formData.append("price", String(this.price || ''));
+    formData.append("description", this.description || '');
+    formData.append("locationcity", this.locationcity || '');
+    formData.append("localpincode", String(this.localpincode || ''));
+    formData.append("mileage_km", String(this.mileage_km || ''));
+    formData.append("status", this.status || 'draft');
+    formData.append("isActive", "false");
+
+    const now = new Date().toISOString();
+    if (this.isEditMode) {
+      formData.append("updated_at", now);
+    } else {
+      formData.append("created_at", now);
+      formData.append("updated_at", now);
+    }
+
+    const imageIndexes: number[] = [];
+    this.selectedFiles.forEach((file, index) => {
+      if (file) {
+        formData.append("images", file, file.name);
+        imageIndexes.push(index);
       }
     });
-  } else {
-    this.auth.createVehicles(formData).subscribe({
-      next: (data) => {
-        console.log("Vehicle created", data);
-        this.getProducts();
-        this.resetForm();
-      },
-      error: (err) => {
-        console.error("Error creating vehicle:", err);
-        this.errorMessage = 'Failed to create vehicle. Please try again.';
-      }
-    });
+
+    formData.append("imageIndexes", JSON.stringify(imageIndexes));
+    if (this.isEditMode && this.editVehicleId) {
+      this.auth.updateVehicles(this.editVehicleId, formData).subscribe({
+        next: (data) => {
+          console.log("Vehicle updated", data);
+          this.getProducts();
+          this.resetForm();
+        },
+        error: (err) => {
+          console.error("Error updating vehicle:", err);
+          this.errorMessage = 'Failed to update vehicle. Please try again.';
+        }
+      });
+    } else {
+      this.auth.createVehicles(formData).subscribe({
+        next: (data) => {
+          console.log("Vehicle created", data);
+          this.getProducts();
+          this.resetForm();
+        },
+        error: (err) => {
+          console.error("Error creating vehicle:", err);
+          this.errorMessage = 'Failed to create vehicle. Please try again.';
+        }
+      });
+    }
   }
-}
 
   resetForm() {
     this.isEditMode = false;
@@ -216,18 +222,18 @@ saveVehicle() {
   }
 
   cancel() {
-    this.resetForm();  
-    this.router.navigate(['/vehicles']); 
+    this.resetForm();
+    this.router.navigate(['/vehicles']);
   }
 
-  getStatus() {
-    this.auth.getStatus().subscribe({
+  getStatusById(id: string) {
+    this.auth.getStatusById(id).subscribe({
       next: (res: any) => {
-        console.log('Status API response:', res);
-        this.statusData = Array.isArray(res) ? res : [];
+        console.log('Single Audit Response:', res);
+        this.audit = res; // store single audit result
       },
       error: (err) => {
-        console.error('Error fetching status:', err);
+        console.error('Error fetching audit by id:', err);
       }
     });
   }

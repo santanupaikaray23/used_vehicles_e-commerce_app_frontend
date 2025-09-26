@@ -80,4 +80,7 @@ export class PlaceBooking {
       this.bookingForm.markAllAsTouched();
     }
   }
+goBack() {
+this.location.back();
+}
 }
