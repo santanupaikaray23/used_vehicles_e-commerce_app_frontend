@@ -15,6 +15,7 @@ export class Product {
     locationcity!:String;
     localpincode!:Number;
     images!:any[];
+    isActive!:Boolean;
     // status!:String;
 imageUrl!:String;
 mileage!:Number;

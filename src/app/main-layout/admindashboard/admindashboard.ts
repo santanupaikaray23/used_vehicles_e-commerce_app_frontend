@@ -15,6 +15,7 @@ export class Admindashboard{
   errorMessage: string = '';
   displayedColumns: string[] = ['_id', 'title', 'make', 'images', 'status', 'action'];
    error: string | null = null;
+   
   @ViewChildren('fileInput') fileInputs!: QueryList<ElementRef<HTMLInputElement>>;
   constructor(private auth: Auth, private router: Router) {}
   ngOnInit() {
@@ -75,14 +76,13 @@ deactivateVehicle(id: string, reason?: string) {
 
 soldVehicle(id: string) {
   this.auth.markVehicleSoldByld(id).subscribe({
-    next: (res) => {
-      console.log('Vehicle marked as sold:', res);
-      this.getProducts();
+    next: () => {
+      const product = this.products.find(p => p._id === id);
+      if (product) {
+        product.isActive = true; 
+      }
     },
-    error: (err) => {
-      console.error('Error marking vehicle as sold:', err);
-      this.errorMessage = 'Failed to mark vehicle as sold. Please try again.';
-    }
+    error: (err) => console.error('Error marking as sold:', err)
   });
 }
 

@@ -49,10 +49,9 @@
  <button *ngIf="product.status !== 'sold'" 
         class="btn btn-success" 
         (click)="soldVehicle(product._id)">
-  Mark as Sell
+   Sold
 </button>
 
-<!-- Show disabled "Sold" button if product is sold -->
 <button *ngIf="product.status === 'sold'" 
         class="btn btn-secondary" 
         disabled>
