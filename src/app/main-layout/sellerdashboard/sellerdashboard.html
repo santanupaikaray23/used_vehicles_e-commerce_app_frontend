@@ -205,29 +205,29 @@
                 <button mat-raised-button color="warn" (click)="deleteVehicles(vehicle._id)">Delete</button>
             </td>
         </ng-container>
-      <ng-container matColumnDef="status">
+<ng-container matColumnDef="status">
   <th mat-header-cell *matHeaderCellDef> Status </th>
   <td mat-cell *matCellDef="let product">
-    <mat-chip-listbox>
-      <mat-chip-option 
-        *ngFor="let audit of product.audits"
-        [color]="audit.to_status === 'approved' ? 'primary' 
-                 : audit.to_status === 'pending' ? 'accent' 
-                 : 'warn'"
-        selected>
-        {{ audit.to_status | titlecase }}
-        <span *ngIf="audit.to_status === 'rejected' && audit.reason">
-          - {{ audit.reason }}
-        </span>
-        <small style="margin-left:6px; font-size:11px; color:rgba(0,0,0,0.6)">
-          ({{ audit.created_at | date:'short' }})
-        </small>
-      </mat-chip-option>
-    </mat-chip-listbox>
+    {{ product.status }}
+    
   </td>
 </ng-container>
+
+<ng-container matColumnDef="reason">
+  <th mat-header-cell *matHeaderCellDef> Reason </th>
+  <td mat-cell *matCellDef="let product">
+    <span *ngIf="product.status === 'rejected'">
+      {{ product.reason }}
+    </span>
+  </td>
+</ng-container>
+<!-- <ng-container matColumnDef="reason">
+  <th mat-header-cell *matHeaderCellDef> Reason </th>
+  <tr mat-cell *matCellDef="let product">
+  <td>{{product.reason}}</td>
+  </tr>
+</ng-container> -->
         <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
         <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
     </table>
-
 </div>

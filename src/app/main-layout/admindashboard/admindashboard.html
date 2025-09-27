@@ -31,6 +31,7 @@
           required
         />
       </td>
+
       <td>
         <button *ngIf="!product.isActive" (click)="approveVehicle(product._id, product.reason)">
           Approve
@@ -48,6 +49,7 @@
         <!-- <button (click)="deleteVehicles(product._id)">
           Delete Permanently
         </button> -->
+        
       </td>
     </tr>
   </tbody>

@@ -71,6 +71,7 @@ deactivateVehicle(id: string, reason?: string) {
     }
   });
 }
+
   // deleteVehicles(id: number) {
   //   const payload = { created_at: new Date().toISOString() };
   //   this.auth.deleteVehicle(id).subscribe({

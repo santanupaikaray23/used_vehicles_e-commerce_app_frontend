@@ -32,7 +32,7 @@ export class Sellerdashboard {
   products: any[] = [];
   isEditMode: boolean = false;
   editVehicleId: string | null = null;
-  displayedColumns: string[] = ['_id', 'title', 'make', 'images', 'action', 'status'];
+  displayedColumns: string[] = ['_id', 'title', 'make', 'images', 'action', 'status','reason'];
   statusData: any[] = []
   selectedFiles: File[] = [];
   errorMessage: string = '';
@@ -226,15 +226,24 @@ export class Sellerdashboard {
     this.router.navigate(['/vehicles']);
   }
 
-  getStatusById(id: string) {
-    this.auth.getStatusById(id).subscribe({
-      next: (res: any) => {
-        console.log('Single Audit Response:', res);
-        this.audit = res; // store single audit result
-      },
-      error: (err) => {
-        console.error('Error fetching audit by id:', err);
+getStatusById(id: string) {
+  this.auth.getStatusById(id).subscribe({
+    next: (res: any[]) => {
+      console.log('Single Audit Response:', res);
+
+      // find the product in the products list
+      const productIndex = this.products.findIndex(p => p._id === id);
+      if (productIndex !== -1 && Array.isArray(res) && res.length > 0) {
+        // take the last audit (most recent)
+        const latestAudit = res[res.length - 1];
+        this.products[productIndex].reason = latestAudit.reason || 'N/A';
+        this.products[productIndex].status = latestAudit.to_status || this.products[productIndex].status;
       }
-    });
-  }
+    },
+    error: (err) => {
+      console.error('Error fetching audit by id:', err);
+    }
+  });
+}
+
 }
