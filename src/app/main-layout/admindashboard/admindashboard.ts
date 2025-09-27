@@ -45,6 +45,7 @@ export class Admindashboard{
     }
   });
 }
+
 approveVehicle(id: string, reason?: string) {
   const payload = reason ? { reason } : {}; 
   this.auth.activateVehicle(id, payload).subscribe({
@@ -72,18 +73,19 @@ deactivateVehicle(id: string, reason?: string) {
   });
 }
 
-  // deleteVehicles(id: number) {
-  //   const payload = { created_at: new Date().toISOString() };
-  //   this.auth.deleteVehicle(id).subscribe({
-  //     next: (data) => {
-  //       console.log('Deleted:', data);
-  //       this.getProducts();
-  //     },
-  //     error: (err) => {
-  //       console.error('Error deleting vehicle:', err);
-  //     }
-  //   });
-  // }
+soldVehicle(id: string) {
+  this.auth.markVehicleSoldByld(id).subscribe({
+    next: (res) => {
+      console.log('Vehicle marked as sold:', res);
+      this.getProducts();
+    },
+    error: (err) => {
+      console.error('Error marking vehicle as sold:', err);
+      this.errorMessage = 'Failed to mark vehicle as sold. Please try again.';
+    }
+  });
+}
+
 blockUser(userId: string) {
   this.auth.blockUser(userId).subscribe(() => {
     const user = this.users.find(u => u._id === userId);

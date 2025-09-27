@@ -22,6 +22,7 @@ export class Auth {
   private apiUrl4 = 'http://localhost:5001/api/auth';
    private apiUrl5 = 'http://localhost:5001/api/auth';
     private apiUrl6 = 'http://localhost:5001/api/auth';
+    private apiUrl7 = 'http://localhost:5001/api/auth';
 
   private sessionKey = 'userSession';   
 
@@ -224,5 +225,13 @@ addExpressions(payload: {
 getExpressionsById(id: string): Observable<Product> {
   return this.http.get<Product>(`http://localhost:5001/api/auth/expressions/${id}`)
 }
+
+ markVehicleSoldByld(id: string) {
+    return this.http.put<any>(
+      `${this.apiUrl7}/sold/${id}`,
+      {},
+      { headers: this.getAuthHeaders() }
+    );
+  }
 
 }
