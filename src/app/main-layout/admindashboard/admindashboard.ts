@@ -81,6 +81,8 @@ soldVehicle(id: string) {
       if (product) {
         product.isActive = true; 
       }
+      this.getProducts();
+
     },
     error: (err) => console.error('Error marking as sold:', err)
   });
