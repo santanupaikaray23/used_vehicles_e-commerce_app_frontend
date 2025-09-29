@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { Noaccess } from './noaccess';
+import { Buyerdashboardtwo } from './buyerdashboardtwo';
 
-describe('Noaccess', () => {
-  let component: Noaccess;
-  let fixture: ComponentFixture<Noaccess>;
+describe('Buyerdashboardtwo', () => {
+  let component: Buyerdashboardtwo;
+  let fixture: ComponentFixture<Buyerdashboardtwo>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [Noaccess]
+      declarations: [Buyerdashboardtwo]
     })
     .compileComponents();
 
-    fixture = TestBed.createComponent(Noaccess);
+    fixture = TestBed.createComponent(Buyerdashboardtwo);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

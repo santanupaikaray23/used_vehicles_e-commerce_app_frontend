@@ -174,12 +174,10 @@
     </button>
     </div>
     <table mat-table [dataSource]="products" class="mat-elevation-z8 full-width-table">
-        <!-- <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-<tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr> -->
-        <ng-container matColumnDef="_id">
+        <!-- <ng-container matColumnDef="_id">
             <th mat-header-cell *matHeaderCellDef> Id </th>
             <td mat-cell *matCellDef="let vehicle"> {{vehicle._id}} </td>
-        </ng-container>
+        </ng-container> -->
         <ng-container matColumnDef="title">
             <th mat-header-cell *matHeaderCellDef> Title </th>
             <td mat-cell *matCellDef="let vehicle"> {{vehicle.title}} </td>
@@ -196,37 +194,55 @@
                 </div>
             </td>
         </ng-container>
-
-
         <ng-container matColumnDef="action">
             <th mat-header-cell *matHeaderCellDef> Action </th>
             <td mat-cell *matCellDef="let vehicle">
                 <button mat-raised-button color="warn" (click)="updateVehicles(vehicle)">Edit</button>
                 <button mat-raised-button color="warn" (click)="deleteVehicles(vehicle._id)">Delete</button>
             </td>
+       </ng-container>
+       <!-- Audit Status -->
+        <ng-container matColumnDef="auditStatus">
+            <th mat-header-cell *matHeaderCellDef> Admin Status </th>
+            <td mat-cell *matCellDef="let product">
+                {{ product.auditStatus }}
+            </td>
         </ng-container>
-<ng-container matColumnDef="status">
-  <th mat-header-cell *matHeaderCellDef> Status </th>
-  <td mat-cell *matCellDef="let product">
-    {{ product.status }}
-    
-  </td>
-</ng-container>
 
-<ng-container matColumnDef="reason">
-  <th mat-header-cell *matHeaderCellDef> Reason </th>
-  <td mat-cell *matCellDef="let product">
-    <span *ngIf="product.status === 'rejected'">
-      {{ product.reason }}
-    </span>
-  </td>
-</ng-container>
-<!-- <ng-container matColumnDef="reason">
-  <th mat-header-cell *matHeaderCellDef> Reason </th>
-  <tr mat-cell *matCellDef="let product">
-  <td>{{product.reason}}</td>
-  </tr>
-</ng-container> -->
+        <ng-container matColumnDef="auditReason">
+            <th mat-header-cell *matHeaderCellDef> Admin Reason </th>
+            <td mat-cell *matCellDef="let product">
+                {{ product.auditReason }}
+            </td>
+        </ng-container>
+
+        <!-- Buyer Status -->
+        <ng-container matColumnDef="buyerStatus">
+            <th mat-header-cell *matHeaderCellDef> Buyer Status </th>
+            <td mat-cell *matCellDef="let product">
+                {{ product.buyerStatus }}
+            </td>
+        </ng-container>
+
+        <ng-container matColumnDef="buyerReason">
+            <th mat-header-cell *matHeaderCellDef> Buyer Reason </th>
+            <td mat-cell *matCellDef="let product">
+                {{ product.buyerReason }}
+            </td>
+        </ng-container>
+            <ng-container matColumnDef="buyerContact_phone">
+            <th mat-header-cell *matHeaderCellDef> Phone Number </th>
+            <td mat-cell *matCellDef="let product">
+                {{ product.buyerContact_phone}}
+            </td>
+        </ng-container>
+            <ng-container matColumnDef="buyerPreferred_contact_time">
+            <th mat-header-cell *matHeaderCellDef> Contact Time </th>
+            <td mat-cell *matCellDef="let product">
+                {{ product.buyerPreferred_contact_time}}
+            </td>
+        </ng-container>
+
         <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
         <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
     </table>

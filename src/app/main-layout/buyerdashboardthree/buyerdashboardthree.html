@@ -1,0 +1,137 @@
+<div class="listing-root">
+  <div class="toolbar">
+    <div class="search">
+      <mat-form-field appearance="outline">
+        <mat-label>Search</mat-label>
+        <input
+          matInput
+          placeholder="Search make, model, keywords..."
+          [formControl]="filters.controls.search"
+        />
+      </mat-form-field>
+    </div>
+    <div class="controls">
+      <mat-form-field appearance="outline">
+        <mat-label>Price (Min)</mat-label>
+        <input matInput type="number" [formControl]="filters.controls.minPrice" />
+      </mat-form-field>
+      <span class="one">-</span>
+      <mat-form-field appearance="outline">
+        <mat-label>Price (Max)</mat-label>
+        <input matInput type="number" [formControl]="filters.controls.maxPrice" />
+      </mat-form-field>
+      <mat-form-field appearance="outline">
+        <mat-label>Year (From)</mat-label>
+        <input matInput type="number" [formControl]="filters.controls.minYear" />
+      </mat-form-field>
+      <span class="one">-</span>
+      <mat-form-field appearance="outline">
+        <mat-label>Year (To)</mat-label>
+        <input matInput type="number" [formControl]="filters.controls.maxYear" />
+      </mat-form-field>
+      <mat-form-field appearance="outline">
+        <mat-label>Mileage (Min)</mat-label>
+        <input matInput type="number" [formControl]="filters.controls.minMileage" />
+      </mat-form-field>
+      <span class="one">-</span>
+      <mat-form-field appearance="outline">
+        <mat-label>Mileage (Max)</mat-label>
+        <input matInput type="number" [formControl]="filters.controls.maxMileage" />
+      </mat-form-field>
+      <mat-form-field appearance="outline">
+        <mat-label>Fuel Type</mat-label>
+        <mat-select [formControl]="filters.controls.fueltype">
+          <mat-option value="">All</mat-option>
+          <mat-option *ngFor="let fueltype of fueltype" [value]="fueltype">
+            {{ fueltype }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+      <mat-form-field appearance="outline">
+        <mat-label>Transmission</mat-label>
+        <mat-select [formControl]="filters.controls.transmissions">
+          <mat-option value="">All</mat-option>
+          <mat-option *ngFor="let t of transmissions" [value]="t">
+            {{ t }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+      <mat-form-field appearance="outline">
+        <mat-label>State</mat-label>
+        <mat-select [formControl]="filters.controls.locationcity">
+          <mat-option value="">All</mat-option>
+          <mat-option *ngFor="let locationcity of locationcity" [value]="locationcity">
+            {{ locationcity }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+      <div class="sort-section">
+        <label class="sort">Sort by:</label>
+        <select id="sort" [formControl]="filters.controls.sort">
+          <option value="newest">Newest</option>
+          <option value="price_low">Price: Low → High</option>
+          <option value="price_high">Price: High → Low</option>
+          <option value="year">Year (New → Old)</option>
+        </select>
+      </div>
+      <button mat-button color="warn" (click)="filters.reset()">Clear Filters</button>
+    </div>
+  </div>
+
+  <div class="page-size-control">
+    <mat-form-field appearance="outline">
+      <mat-label>Items per page</mat-label>
+      <mat-select [value]="pageSize" (selectionChange)="changePageSize($event.value)">
+        <mat-option *ngFor="let size of [6, 12, 24, 48]" [value]="size">
+          {{ size }}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+  </div>
+<div class="results-summary">
+  <p>Total Vehicles Found: <strong>{{ total }}</strong></p>
+</div>
+  <div class="grid">
+    <div *ngIf="vehicles.length === 0" class="no-results">
+      No matching vehicles.
+    </div>
+    <div *ngFor="let vehicle of vehicles" class="card">
+      <div class="thumb">
+    
+        <div class="image-list" *ngIf="vehicle.images.length > 0">
+          <img
+            *ngFor="let img of vehicle.images.slice(0)"
+            [src]="'data:' + img.mimetype + ';base64,' + img.data"
+            [alt]="img.filename"
+            (click)="vehicle.images[0] = img"
+          />
+        </div>
+      </div>
+      <div class="info">
+        <h3>{{ vehicle.title || (vehicle.make + ' ' + vehicle.model) }}</h3>
+        <p class="meta">
+          {{ vehicle.year }}
+          {{ vehicle.mileage ? (vehicle.mileage + ' km') : '' }}
+        </p>
+        <p class="desc">{{ vehicle.description }}</p>
+        <div class="price">₹{{ vehicle.price | number }}</div>
+      </div>
+    </div>
+  </div>
+
+  <ul class="pagination">
+    <li class="page-item" [class.disabled]="pageIndex == 1">
+      <a class="page-link" (click)="onPageChange(pageIndex - 1)">Previous</a>
+    </li>
+    <li
+      class="page-item"
+      [class.active]="page == pageIndex"
+      *ngFor="let page of getPageNumbers()"
+    >
+      <a class="page-link" (click)="onPageChange(page)">{{ page }}</a>
+    </li>
+    <li class="page-item" [class.disabled]="pageIndex == getValue()">
+      <a class="page-link" (click)="onPageChange(pageIndex + 1)">Next</a>
+    </li>
+  </ul>
+</div>

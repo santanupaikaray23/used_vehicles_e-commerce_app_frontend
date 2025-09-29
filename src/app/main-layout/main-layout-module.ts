@@ -37,7 +37,12 @@ import { MatSortModule } from '@angular/material/sort';
 import { MatChipsModule } from '@angular/material/chips';
 import { PlaceBooking } from './place-booking/place-booking';
 import { Receipt } from './receipt/receipt';
-import { Noaccess } from './noaccess/noaccess';
+import { Buyerdashboardtwo } from './buyerdashboardtwo/buyerdashboardtwo';
+import { Detail } from './detail/detail';
+import { PlaceBookingtwo } from './place-bookingtwo/place-bookingtwo';
+import { Receipttwo } from './receipttwo/receipttwo';
+import { Buyerdashboardthree } from './buyerdashboardthree/buyerdashboardthree';
+
 
 
 
@@ -58,7 +63,11 @@ import { Noaccess } from './noaccess/noaccess';
     AdminLayoutComponent,
     PlaceBooking,
     Receipt,
-    Noaccess,
+    Buyerdashboardtwo,
+    Detail,
+    PlaceBookingtwo,
+    Receipttwo,
+    Buyerdashboardthree
     
     
   ],

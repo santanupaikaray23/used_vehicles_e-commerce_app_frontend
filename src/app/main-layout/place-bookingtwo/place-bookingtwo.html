@@ -1,0 +1,86 @@
+<form [formGroup]="bookingForm" (ngSubmit)="onSubmit()" class="p-3 border rounded bg-light">
+  <div class="form-group mb-3">
+    <label for="vehicleName" class="form-label fw-bold">Vehicle Name:</label>
+    <input
+      id="vehicleName"
+      type="text"
+      class="form-control"
+      formControlName="vehicle_name"
+      placeholder="Enter vehicle name"
+    />
+    <div
+      *ngIf="bookingForm.get('vehicle_name')?.touched && bookingForm.get('vehicle_name')?.invalid"
+      class="text-danger mt-1"
+    >
+      Vehicle name is required
+    </div>
+  </div>
+
+  <div class="form-group mb-3">
+    <label for="vehiclePrice" class="form-label fw-bold">Price:</label>
+    <input
+      id="vehiclePrice"
+      type="number"
+      class="form-control"
+      formControlName="vehicle_price"
+      placeholder="₹0"
+    />
+    <div
+      *ngIf="bookingForm.get('vehicle_price')?.touched && bookingForm.get('vehicle_price')?.invalid"
+      class="text-danger mt-1"
+    >
+      Price is required
+    </div>
+  </div>
+
+  <div class="form-group mb-3">
+    <label for="message" class="form-label fw-bold">Message:</label>
+    <textarea
+      id="message"
+      rows="3"
+      class="form-control"
+      formControlName="message"
+      placeholder="Enter your message to the seller"
+    ></textarea>
+    <div
+      *ngIf="bookingForm.get('message')?.touched && bookingForm.get('message')?.invalid"
+      class="text-danger mt-1"
+    >
+      Message is required
+    </div>
+  </div>
+
+  <div class="form-group mb-3">
+    <label for="phone" class="form-label fw-bold">Phone Number:</label>
+    <input
+      id="phone"
+      type="tel"
+      maxlength="10"
+      class="form-control"
+      formControlName="contact_phone"
+      placeholder="Enter 10-digit phone"
+    />
+    <div
+      *ngIf="bookingForm.get('contact_phone')?.touched && bookingForm.get('contact_phone')?.invalid"
+      class="text-danger mt-1"
+    >
+      Enter a valid 10-digit phone number
+    </div>
+  </div>
+
+  <div class="form-group mb-3">
+    <label for="preferredContactTime" class="form-label fw-bold">Preferred Contact Time:</label>
+    <input
+      id="preferredContactTime"
+      type="text"
+      class="form-control"
+      formControlName="preferred_contact_time"
+      placeholder="e.g. Morning / Evening"
+    />
+  </div>
+  <div class="d-grid">
+    <button type="submit" class="btn btn-success">
+      Submit Booking
+    </button>
+  </div>
+</form>

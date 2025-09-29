@@ -234,4 +234,11 @@ getExpressionsById(id: string): Observable<Product> {
     );
   }
 
+  getbuyerStatusById(id: string) {
+  return this.http.get<any>(
+    `http://localhost:5001/api/auth/buyerStatus/${id}`,
+    { headers: this.getAuthHeaders() }
+  );
+}
+
 }

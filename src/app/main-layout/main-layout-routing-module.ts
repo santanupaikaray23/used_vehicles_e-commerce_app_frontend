@@ -17,7 +17,11 @@ import { AuthGuard } from '../services/authguard';
 import {Inquire} from './inquire/inquire';
 import { PlaceBooking } from './place-booking/place-booking';
 import { Receipt } from './receipt/receipt';
-import { Noaccess } from './noaccess/noaccess';
+import { Buyerdashboardtwo } from './buyerdashboardtwo/buyerdashboardtwo';
+import { Detail } from './detail/detail';
+import { PlaceBookingtwo } from './place-bookingtwo/place-bookingtwo';
+import { Receipttwo } from './receipttwo/receipttwo';
+import { Buyerdashboardthree } from './buyerdashboardthree/buyerdashboardthree';
 
 const routes: Routes = [
   {
@@ -29,8 +33,8 @@ const routes: Routes = [
         component: SellerLayoutComponent,
         canActivate: [AuthGuard],   
         children: [
-          { path: '', component: Sellerdashboard },
-          { path: 'buyerdashboard', component: Buyerdashboard },
+          { path: '', component: Sellerdashboard},
+          { path: 'buyerdashboardthree', component: Buyerdashboardthree},
           { path: 'about', component: About },
           { path: 'contact', component: Contact },
         ]
@@ -40,9 +44,9 @@ const routes: Routes = [
   component: BuyerLayoutComponent,
   canActivate: [AuthGuard],
   children: [
-    { path: '', component: Buyerdashboard },
+    { path: '', component: Buyerdashboard},
     { path: 'inquire/:id', component: Inquire }, 
-    { path: 'place-booking/:id', component: PlaceBooking },
+    { path: 'place-booking/:id', component: PlaceBooking},
     {path:'receipt/:id', component: Receipt},
     { path: 'about', component: About },
     { path: 'contact', component: Contact },
@@ -54,7 +58,10 @@ const routes: Routes = [
         canActivate: [AuthGuard],
         children: [
           { path: '', component: Admindashboard },
-          { path: 'buyerdashboard', component: Buyerdashboard},
+          { path: 'buyerdashboardtwo', component: Buyerdashboardtwo},
+          { path: 'buyerdashboardtwo/detail/:id', component: Detail},
+          { path: 'place-bookingtwo/:id', component: PlaceBookingtwo},
+          { path: 'receipt-two/:id', component: Receipttwo},
           { path: 'about', component: About },
           { path: 'contact', component: Contact },
         ]

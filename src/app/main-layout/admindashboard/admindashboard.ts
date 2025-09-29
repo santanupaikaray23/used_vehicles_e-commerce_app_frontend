@@ -13,7 +13,7 @@ export class Admindashboard{
   products: any[] = [];
   users: any[] = [];
   errorMessage: string = '';
-  displayedColumns: string[] = ['_id', 'title', 'make', 'images', 'status', 'action'];
+  displayedColumns: string[] = ['title', 'make', 'images', 'status', 'action'];
    error: string | null = null;
    
   @ViewChildren('fileInput') fileInputs!: QueryList<ElementRef<HTMLInputElement>>;

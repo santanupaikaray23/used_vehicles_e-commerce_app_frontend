@@ -32,7 +32,10 @@ export class Sellerdashboard {
   products: any[] = [];
   isEditMode: boolean = false;
   editVehicleId: string | null = null;
-  displayedColumns: string[] = ['_id', 'title', 'make', 'images', 'action', 'status','reason'];
+  displayedColumns: string[] = ['title', 'make', 'images', 'action',   'auditStatus',
+  'auditReason',
+  'buyerStatus',
+  'buyerReason','buyerContact_phone', 'buyerPreferred_contact_time'];
   statusData: any[] = []
   selectedFiles: File[] = [];
   errorMessage: string = '';
@@ -67,21 +70,35 @@ export class Sellerdashboard {
     }
   }
 
+  // getProducts() {
+  //   this.auth.getProducts().subscribe((data: any) => {
+  //     console.log('API response:', data);
+  //     const allProducts = Array.isArray(data.data) ? data.data : [];
+  //     this.products = allProducts;
+  //     console.log('Latest product for table:', this.products);
+
+  //     this.products.forEach((vehicle: any) => {
+  //       this.getStatusById(vehicle._id); // send vehicle._id
+  //     });
+
+  //   });
+  // }
+
   getProducts() {
-    this.auth.getProducts().subscribe((data: any) => {
-      console.log('API response:', data);
-      const allProducts = Array.isArray(data.data) ? data.data : [];
-      this.products = allProducts;
-      console.log('Latest product for table:', this.products);
+  this.auth.getProducts().subscribe((data: any) => {
+    console.log('API response:', data);
+    const allProducts = Array.isArray(data.data) ? data.data : [];
+    this.products = allProducts;
+    console.log('Latest product for table:', this.products);
 
-      this.products.forEach((vehicle: any) => {
-        this.getStatusById(vehicle._id); // send vehicle._id
-      });
-
+    this.products.forEach((vehicle: any) => {
+      // Fetch both audit + buyer statuses for each product
+      this.updateStatusById(vehicle._id, 'audit');
+      this.updateStatusById(vehicle._id, 'buyer');
     });
-  }
 
-  
+  });
+}
 
   updateVehicles(vehicle: any) {
     this.isEditMode = true;
@@ -139,7 +156,7 @@ export class Sellerdashboard {
     formData.append("locationcity", this.locationcity || '');
     formData.append("localpincode", String(this.localpincode || ''));
     formData.append("mileage_km", String(this.mileage_km || ''));
-    formData.append("status", this.status || 'draft');
+    formData.append("status", this.status || 'drafted');
     formData.append("isActive", "false");
 
     const now = new Date().toISOString();
@@ -203,7 +220,7 @@ export class Sellerdashboard {
     this.locationcity = '';
     this.localpincode = undefined;
     this.mileage_km = undefined;
-    // this.status = '';
+    this.status = '';
     // this.statushistory = '';
     this.selectedFiles = [];
     this.photos = Array(5).fill(null);
@@ -226,24 +243,78 @@ export class Sellerdashboard {
     this.router.navigate(['/vehicles']);
   }
 
-getStatusById(id: string) {
-  this.auth.getStatusById(id).subscribe({
-    next: (res: any[]) => {
-      console.log('Single Audit Response:', res);
+// getStatusById(id: string) {
+//   this.auth.getStatusById(id).subscribe({
+//     next: (res: any[]) => {
+//       console.log('Single Audit Response:', res);
 
-      // find the product in the products list
+//       // find the product in the products list
+//       const productIndex = this.products.findIndex(p => p._id === id);
+//       if (productIndex !== -1 && Array.isArray(res) && res.length > 0) {
+//         // take the last audit (most recent)
+//         const latestAudit = res[res.length - 1];
+//         this.products[productIndex].reason = latestAudit.reason || 'N/A';
+//         this.products[productIndex].status = latestAudit.to_status || this.products[productIndex].status;
+//       }
+//     },
+//     error: (err) => {
+//       console.error('Error fetching audit by id:', err);
+//     }
+//   });
+// }
+
+// getBuyerStatusById(id: string) {
+//   this.auth.getbuyerStatusById(id).subscribe({
+//     next: (res: any) => {
+//       console.log('Single Buyer Status Response:', res);
+
+//       const productIndex = this.products.findIndex(p => p._id === id);
+
+//       if (productIndex !== -1 && res) {
+//         this.products[productIndex].status = res.status || this.products[productIndex].status;
+//         this.products[productIndex].reason = res.message || 'N/A';
+//       }
+//     },
+//     error: (err) => {
+//       console.error('Error fetching buyer status by id:', err);
+//     }
+//   });
+// }
+updateStatusById(id: string, type: 'audit' | 'buyer') {
+  let apiCall;
+
+  if (type === 'audit') {
+    apiCall = this.auth.getStatusById(id);  // returns array
+  } else {
+    apiCall = this.auth.getbuyerStatusById(id);  // returns single object
+  }
+
+  apiCall.subscribe({
+    next: (res: any) => {
+      console.log(`Single ${type} Response:`, res);
+
       const productIndex = this.products.findIndex(p => p._id === id);
-      if (productIndex !== -1 && Array.isArray(res) && res.length > 0) {
-        // take the last audit (most recent)
-        const latestAudit = res[res.length - 1];
-        this.products[productIndex].reason = latestAudit.reason || 'N/A';
-        this.products[productIndex].status = latestAudit.to_status || this.products[productIndex].status;
+
+      if (productIndex !== -1) {
+        if (type === 'audit' && Array.isArray(res) && res.length > 0) {
+          const latestAudit = res[res.length - 1];
+          this.products[productIndex].auditReason = latestAudit.reason || 'N/A';
+          this.products[productIndex].auditStatus = latestAudit.to_status || 'N/A';
+        } 
+        
+        if (type === 'buyer' && res) {
+          const latestAudit = res[res.length - 1];
+
+          this.products[productIndex].buyerStatus = latestAudit.status || 'N/A'; 
+          this.products[productIndex].buyerReason = latestAudit.message || 'N/A';
+          this.products[productIndex].buyerContact_phone=latestAudit.contact_phone || 'N/A';
+          this.products[productIndex].buyerPreferred_contact_time=latestAudit.preferred_contact_time || 'N/A';
+        }
       }
     },
     error: (err) => {
-      console.error('Error fetching audit by id:', err);
+      console.error(`Error fetching ${type} by id:`, err);
     }
   });
 }
-
 }
