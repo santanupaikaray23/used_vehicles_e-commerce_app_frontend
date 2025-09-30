@@ -23,6 +23,7 @@ export class Auth {
    private apiUrl5 = 'http://localhost:5001/api/auth';
     private apiUrl6 = 'http://localhost:5001/api/auth';
     private apiUrl7 = 'http://localhost:5001/api/auth';
+  private apiUrl8 = 'http://localhost:5001/api/auth';
 
   private sessionKey = 'userSession';   
 
@@ -240,5 +241,13 @@ getExpressionsById(id: string): Observable<Product> {
     { headers: this.getAuthHeaders() }
   );
 }
+
+ markContactedByld(id: string, statusToBeSet: string) {
+    return this.http.put<any>(
+      `${this.apiUrl8}/expressions/${id}`,
+      {status: statusToBeSet},
+      { headers: this.getAuthHeaders() }
+    );
+  }
 
 }

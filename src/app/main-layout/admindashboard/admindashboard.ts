@@ -13,7 +13,8 @@ export class Admindashboard{
   products: any[] = [];
   users: any[] = [];
   errorMessage: string = '';
-  displayedColumns: string[] = ['title', 'make', 'images', 'status', 'action'];
+  displayedColumns: string[] = ['title', 'make', 'images', 'action', 'reason','buyerStatus',
+  'buyerReason','buyerContact_phone', 'buyerPreferred_contact_time'];
    error: string | null = null;
    
   @ViewChildren('fileInput') fileInputs!: QueryList<ElementRef<HTMLInputElement>>;
@@ -22,18 +23,28 @@ export class Admindashboard{
     this.getProducts();
     this.getUsers();
   }
+ 
   getProducts() {
-    this.auth.getProducts().subscribe({
-      next: (data: any) => {
-        console.log('API response:', data);
-        const allProducts = Array.isArray(data.data) ? data.data : [];
-        this.products = allProducts;
-      },
-      error: (err) => {
-        console.error('Error fetching products:', err);
-      }
-    });
-  }
+  this.auth.getProducts().subscribe({
+    next: (data: any) => {
+      console.log('API response:', data);
+
+      const allProducts = Array.isArray(data.data) ? data.data : [];
+      this.products = allProducts;
+
+      // Call getBuyerStatusById for each product
+      this.products.forEach((product: any) => {
+        if (product._id) {
+          this.getBuyerStatusById(product._id);
+        }
+      });
+    },
+    error: (err) => {
+      console.error('Error fetching products:', err);
+    }
+  });
+}
+
   getUsers() {
   this.auth.getUsers().subscribe({
     next: (res: any) => {
@@ -98,6 +109,27 @@ unblockUser(userId: string) {
   this.auth.unblockUser(userId).subscribe(() => {
     const user = this.users.find(u => u._id === userId);
     if (user) user.is_blocked = 'false';
+  });
+}
+
+getBuyerStatusById(id: string) {
+  this.auth.getbuyerStatusById(id).subscribe({
+    next: (res: any) => {
+      console.log('Single Buyer Status Response:', res);
+
+      const productIndex = this.products.findIndex(p => p._id === id);
+
+      if (productIndex !== -1 && res) {
+        const responseData = Array.isArray(res) ? res[0] : {};
+        this.products[productIndex].buyerStatus = responseData.status || this.products[productIndex].status;
+        this.products[productIndex].message = responseData.message || 'N/A';
+        this.products[productIndex].buyerContact_phone = responseData.contact_phone || 'N/A';
+        this.products[productIndex].buyerPreferred_contact_time  = responseData.preferred_contact_time || 'N/A';
+      }
+    },
+    error: (err) => {
+      console.error('Error fetching buyer status by id:', err);
+    }
   });
 }
 }

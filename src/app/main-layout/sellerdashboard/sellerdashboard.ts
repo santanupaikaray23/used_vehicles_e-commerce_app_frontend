@@ -32,10 +32,10 @@ export class Sellerdashboard {
   products: any[] = [];
   isEditMode: boolean = false;
   editVehicleId: string | null = null;
-  displayedColumns: string[] = ['title', 'make', 'images', 'action',   'auditStatus',
+  displayedColumns: string[] = ['title', 'make', 'images', 'action', 'auditStatus',
   'auditReason',
   'buyerStatus',
-  'buyerReason','buyerContact_phone', 'buyerPreferred_contact_time'];
+  'buyerReason','buyerContact_phone', 'buyerPreferred_contact_time', 'actioncontacted', 'actionclosed'];
   statusData: any[] = []
   selectedFiles: File[] = [];
   errorMessage: string = '';
@@ -95,6 +95,7 @@ export class Sellerdashboard {
       // Fetch both audit + buyer statuses for each product
       this.updateStatusById(vehicle._id, 'audit');
       this.updateStatusById(vehicle._id, 'buyer');
+      
     });
 
   });
@@ -156,7 +157,7 @@ export class Sellerdashboard {
     formData.append("locationcity", this.locationcity || '');
     formData.append("localpincode", String(this.localpincode || ''));
     formData.append("mileage_km", String(this.mileage_km || ''));
-    formData.append("status", this.status || 'drafted');
+    formData.append("status", this.status || 'draft');
     formData.append("isActive", "false");
 
     const now = new Date().toISOString();
@@ -296,15 +297,19 @@ updateStatusById(id: string, type: 'audit' | 'buyer') {
       const productIndex = this.products.findIndex(p => p._id === id);
 
       if (productIndex !== -1) {
-        if (type === 'audit' && Array.isArray(res) && res.length > 0) {
+        if(res && res.length == 0){
+          this.products[productIndex].auditStatus = this.products[productIndex].status;
+        } 
+        
+        else if (type === 'audit' && Array.isArray(res) && res.length > 0) {
           const latestAudit = res[res.length - 1];
           this.products[productIndex].auditReason = latestAudit.reason || 'N/A';
           this.products[productIndex].auditStatus = latestAudit.to_status || 'N/A';
         } 
         
-        if (type === 'buyer' && res) {
+        else if (type === 'buyer' && res && res.length > 0) {
           const latestAudit = res[res.length - 1];
-
+          console.log("latest audit", latestAudit)
           this.products[productIndex].buyerStatus = latestAudit.status || 'N/A'; 
           this.products[productIndex].buyerReason = latestAudit.message || 'N/A';
           this.products[productIndex].buyerContact_phone=latestAudit.contact_phone || 'N/A';
@@ -317,4 +322,20 @@ updateStatusById(id: string, type: 'audit' | 'buyer') {
     }
   });
 }
+
+markStatus(vehicleId: string, statusToBeSet: string) {
+  this.auth.markContactedByld(vehicleId, statusToBeSet).subscribe({
+    next: (res) => {
+      // Update local products array if needed
+      const index = this.products.findIndex(p => p._id === vehicleId);
+      if (index !== -1) {
+        this.products[index].buyerStatus = statusToBeSet;
+      }
+    },
+    error: (err) => {
+      console.error('Error marking expression as contacted:', err);
+    }
+  });
+}
+
 }
