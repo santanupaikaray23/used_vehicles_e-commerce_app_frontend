@@ -12,6 +12,7 @@ import { SignupDto } from '../../models/signup.model.dto';
   styleUrl: './signup.css'
 })
 export class Signup {
+  selectedFileName: string = '';
   signupForm: FormGroup;
   serverError: string | null = null;
   loading = false;
@@ -37,10 +38,11 @@ export class Signup {
         '',
         [
           Validators.required,
-          Validators.pattern(/^[0-9]{10,13}$/) // 10–13 digits
+          Validators.pattern(/^[0-9]{10,13}$/) 
         ]
       ],
       city: ['', Validators.required],
+            avatar_url: ['', Validators.required],
        
     });
   }
@@ -74,5 +76,17 @@ export class Signup {
       }
     });
   }
+onFileSelected(event: Event) {
+  const input = event.target as HTMLInputElement;
+  if (input.files && input.files.length > 0) {
+    const file = input.files[0];
+    this.selectedFileName = file.name;
 
+    const reader = new FileReader();
+    reader.onload = () => {
+      this.signupForm.patchValue({ avatar_url: reader.result as string });
+    };
+    reader.readAsDataURL(file); // converts file to base64 string
+  }
+}
 }

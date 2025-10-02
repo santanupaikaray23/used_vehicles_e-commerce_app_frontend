@@ -3,7 +3,6 @@
     <mat-card appearance="outlined">
       <section class="signup-form-section">
                 <div class="text-center">
-          <h2>Sign up</h2>
         </div>
         <div *ngIf="serverError" class="error-message">
           <mat-error>{{ serverError }}</mat-error>
@@ -76,6 +75,43 @@
               </mat-error>
             </mat-form-field>
           </div>
+          &nbsp;
+          <div class="input-field">
+<div class="input-field">
+  <mat-form-field class="full-width" appearance="outline">
+    <mat-label>Profile Image</mat-label>
+    <input
+      type="file"
+      accept="image/*"
+      hidden
+      #fileInput
+      (change)="onFileSelected($event)"
+    />
+
+    <!-- Readonly input showing filename -->
+    <input
+      matInput
+      placeholder="Upload your image"
+      [value]="selectedFileName"
+      readonly
+    />
+
+    <button
+      mat-icon-button
+      matSuffix
+      type="button"
+      (click)="fileInput.click()"
+    >
+      <mat-icon>upload</mat-icon>
+    </button>
+
+    <mat-error *ngIf="signupForm.get('avatar_url')?.hasError('required')">
+      Profile image is required
+    </mat-error>
+  </mat-form-field>
+</div>
+
+</div>
           <div class="input-field">
             <mat-form-field class="full-width">
               <mat-label>City</mat-label>

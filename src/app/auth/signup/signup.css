@@ -1,8 +1,9 @@
 .signup-container {
   display: flex;
   justify-content: center;
-  padding: 50px;
+  padding: -20px;
   background-color: rgb(247, 251, 250);
+  margin-top: 10px;
 }
 .signup-form-section {
   width: 390px;

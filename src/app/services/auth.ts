@@ -139,8 +139,7 @@ export class Auth {
       formData
     );
   }
-
-
+  
   deleteVehicle(id: number) {
     return this.http.delete(`http://localhost:5001/api/auth/deletevehicledetail/${id}`);
   }
@@ -247,6 +246,12 @@ getExpressionsById(id: string): Observable<Product> {
       `${this.apiUrl8}/expressions/${id}`,
       {status: statusToBeSet},
       { headers: this.getAuthHeaders() }
+    );
+  }
+
+    getSummery() {
+    return this.http.get<number | { total: number }>(
+      "http://localhost:5001/api/auth/vehicledetails/summary"
     );
   }
 

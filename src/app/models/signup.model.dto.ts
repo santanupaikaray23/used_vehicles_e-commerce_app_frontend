@@ -4,6 +4,7 @@ export class SignupDto {
     role!:string;
     name!:string;
     phone!:number;
+    avatar_url! :string;
     city!:string;
    created_at?: string;
    updated_at?: string;
