@@ -123,11 +123,11 @@ export class Auth {
     return this.http.get<{ data: Product[], total: number }>(this.apiUrl3, { params: httpParams });
   }
 
-  getTotal() {
-    return this.http.get<number | { total: number }>(
-      "http://localhost:5001/api/auth/vehicledetails/total"
-    );
-  }
+  // getTotal() {
+  //   return this.http.get<number | { total: number }>(
+  //     "http://localhost:5001/api/auth/vehicledetails/total"
+  //   );
+  // }
 
   createVehicles(vehicle: FormData) {
     return this.http.post("http://localhost:5001/api/auth/addvehicledetail", vehicle);

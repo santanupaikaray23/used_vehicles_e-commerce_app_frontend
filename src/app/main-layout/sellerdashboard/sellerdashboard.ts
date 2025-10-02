@@ -57,18 +57,22 @@ export class Sellerdashboard {
     input.click();
   }
 
-  onFileSelected(event: any, index: number): void {
+onFileSelected(event: any, index: number) {
     const file = event.target.files[0];
     if (file) {
-      if (file.size > this.maxFileSize) {
-        this.errorMessage = 'File too large, max 2MB';
-        return;
-      }
-      this.selectedFiles[index] = file;
-      this.photos[index] = URL.createObjectURL(file);
-      this.errorMessage = '';
+        const allowedTypes = ['image/jpeg', 'image/png'];
+        if (!allowedTypes.includes(file.type)) {
+            this.errorMessage = 'Only .jpg and .png formats are allowed!';
+            return;
+        } else {
+            this.errorMessage = '';
+        }
+        this.selectedFiles[index] = file;
+        const reader = new FileReader();
+        reader.onload = e => this.photos[index] = reader.result as string;
+        reader.readAsDataURL(file);
     }
-  }
+}
 
   // getProducts() {
   //   this.auth.getProducts().subscribe((data: any) => {
