@@ -46,15 +46,20 @@
             </mat-form-field>
           </div>
           <div class="input-field">
-        <mat-form-field class="full-width">
-  <mat-label>Role(Optional)</mat-label>
-  <mat-select formControlName="role">
-    <mat-option value="buyer">Buyer</mat-option>
-    <mat-option value="seller">Seller</mat-option>
-  </mat-select>
-</mat-form-field>
           </div>
-          <div class="input-field">
+        <div class="input-field">
+  <mat-form-field class="full-width">
+    <mat-label>Role</mat-label>
+    <mat-select formControlName="role" required>
+      <mat-option value="buyer">Buyer</mat-option>
+      <mat-option value="seller">Seller</mat-option>
+    </mat-select>
+    <mat-error *ngIf="signupForm.get('role')?.hasError('required')">
+      Role is required
+    </mat-error>
+  </mat-form-field>
+</div>
+ <div class="input-field">
             <mat-form-field class="full-width">
               <mat-label>Name</mat-label>
               <input matInput placeholder="Name" type="text" formControlName="name" />

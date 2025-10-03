@@ -14,7 +14,7 @@ import { Product } from '../models/product.dto';
 })
 export class Auth {
   private apiUrl = 'http://localhost:5001/api/auth/login';
-  private apiUrl1 = 'http://localhost:5001/api/auth/signup';
+  private apiUrl1 = 'http://localhost:5001/api/auth';
   private apiUrlLogout = 'http://localhost:5001/api/auth/logout';
   private apiUrlProfile = 'http://localhost:5001/api/auth/userInfo';
   private apiUrl0 = 'http://localhost:5001/api/auth/vehicledetailsbuyer';
@@ -26,6 +26,7 @@ export class Auth {
   private apiUrl8 = 'http://localhost:5001/api/auth';
 
   private sessionKey = 'userSession';   
+
 
   constructor(
     private http: HttpClient,
@@ -63,7 +64,7 @@ export class Auth {
   }
 
   signup(data: SignupDto): Observable<any> {
-    return this.http.post(this.apiUrl1, data);
+    return this.http.post(`${this.apiUrl1}/signup`, data);
   }
 
   logout(): Observable<any> {
@@ -78,9 +79,9 @@ export class Auth {
       case 'admin':
         this.router.navigate(['/admindashboard']);
         break;
-      case 'user':
-        this.router.navigate(['/user']);
-        break;
+      // case 'user':
+      //   this.router.navigate(['/user']);
+      //   break;
       case 'buyer':
         this.router.navigate(['/buyerdashboard']);
         break;
@@ -123,11 +124,11 @@ export class Auth {
     return this.http.get<{ data: Product[], total: number }>(this.apiUrl3, { params: httpParams });
   }
 
-  // getTotal() {
-  //   return this.http.get<number | { total: number }>(
-  //     "http://localhost:5001/api/auth/vehicledetails/total"
-  //   );
-  // }
+  getTotal() {
+    return this.http.get<number | { total: number }>(
+      "http://localhost:5001/api/auth/eois/last7days"
+    );
+  }
 
   createVehicles(vehicle: FormData) {
     return this.http.post("http://localhost:5001/api/auth/addvehicledetail", vehicle);

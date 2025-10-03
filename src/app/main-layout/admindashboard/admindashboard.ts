@@ -31,8 +31,7 @@ export class Admindashboard{
 
       const allProducts = Array.isArray(data.data) ? data.data : [];
       this.products = allProducts;
-
-      // Call getBuyerStatusById for each product
+      
       this.products.forEach((product: any) => {
         if (product._id) {
           this.getBuyerStatusById(product._id);

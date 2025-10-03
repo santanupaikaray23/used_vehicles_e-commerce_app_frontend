@@ -32,7 +32,6 @@ export class Signup {
           Validators.pattern(/^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/) // min 8 chars, 1 number, 1 letter
         ]
       ],
-      role: [''],
       name: ['', Validators.required],
       phone: [
         '',
@@ -42,6 +41,7 @@ export class Signup {
         ]
       ],
       city: ['', Validators.required],
+          role: ['', Validators.required],
             avatar_url: ['', Validators.required],
        
     });
@@ -61,6 +61,8 @@ export class Signup {
      created_at: new Date().toISOString(),
      updated_at: new Date().toISOString()
   };
+
+  console.log("form data", formData)
 
     this.auth.signup(formData).subscribe({
       next: (res) => {

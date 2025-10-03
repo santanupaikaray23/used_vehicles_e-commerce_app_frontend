@@ -10,21 +10,21 @@
         <mat-label>Make</mat-label>
         <input matInput [(ngModel)]="make" name="make" required #makeCtrl="ngModel">
         <mat-error *ngIf="makeCtrl.errors?.['required'] && (makeCtrl.dirty || makeCtrl.touched)">
-            Title is required.
+            Make is required.
         </mat-error>
     </mat-form-field>&nbsp;
     <mat-form-field appearance="outline" class="form-field">
         <mat-label>Model</mat-label>
         <input matInput [(ngModel)]="model" name="model" required #modelCtrl="ngModel">
         <mat-error *ngIf="modelCtrl.errors?.['required'] && (modelCtrl.dirty || modelCtrl.touched)">
-            Title is required.
+            Model is required.
         </mat-error>
     </mat-form-field>&nbsp;
     <mat-form-field appearance="outline" class="form-field">
         <mat-label>Variant</mat-label>
         <input matInput [(ngModel)]="variant" name="variant" required #variantCtrl="ngModel">
         <mat-error *ngIf="modelCtrl.errors?.['required'] && (variantCtrl.dirty || variantCtrl.touched)">
-            Title is required.
+            Variant is required.
         </mat-error>
     </mat-form-field>&nbsp;
     <mat-form-field appearance="outline" class="form-field">
@@ -38,7 +38,7 @@
         <mat-label>Mileage_KM</mat-label>
         <input matInput type="number" [(ngModel)]="mileage_km" name="mileage_km" required #mileage_kmCtrl="ngModel">
         <mat-error *ngIf="modelCtrl.errors?.['required'] && (mileage_kmCtrl.dirty || mileage_kmCtrl.touched)">
-            Year is required.
+            Mileage_KM is required.
         </mat-error>
     </mat-form-field>&nbsp;
     <mat-form-field appearance="outline" class="form-field">
@@ -74,7 +74,7 @@
         <mat-label>Registration State</mat-label>
         <input matInput [(ngModel)]="registrationstate" name="registrationstate" required #registrationstateCtrl="ngModel">
         <mat-error *ngIf="registrationstateCtrl.errors?.['required'] && (registrationstateCtrl.dirty || registrationstateCtrl.touched)">
-            Ownercount is required.
+            Registrationstate is required.
         </mat-error>
     </mat-form-field>&nbsp;
     <mat-form-field appearance="outline" class="form-field">
@@ -111,34 +111,6 @@
             Pincode must be exactly 6 digits
         </mat-error>
     </mat-form-field>&nbsp;
-    <!-- <mat-form-field appearance="outline" class="form-field">
-  <mat-label>Status</mat-label>
-  <input 
-    matInput 
-    type="text" 
-    [(ngModel)]="status"
-    name="status"
-    required
-    #statusCtrl="ngModel">
-    
-  <mat-error *ngIf="statusCtrl.hasError('required')">
-    Status is required
-  </mat-error>
-</mat-form-field>&nbsp;
-<mat-form-field appearance="outline" class="form-field">
-  <mat-label>Status History</mat-label>
-  <input 
-    matInput 
-    type="text" 
-    [(ngModel)]="statushistory"
-    name="statushistory"
-    required
-    #statusHistoryCtrl="ngModel">
-    
-  <mat-error *ngIf="statusHistoryCtrl.hasError('required')">
-    Status History is required
-  </mat-error>
-</mat-form-field> -->
     <div class="upload-grid">
         <div class="upload-box" *ngFor="let photo of photos; let i = index" (click)="triggerFileInput(i)">
             <ng-container *ngIf="photo; else addPhoto">
@@ -174,10 +146,6 @@
     </button>
     </div>
     <table mat-table [dataSource]="products" class="mat-elevation-z8 full-width-table">
-        <!-- <ng-container matColumnDef="_id">
-            <th mat-header-cell *matHeaderCellDef> Id </th>
-            <td mat-cell *matCellDef="let vehicle"> {{vehicle._id}} </td>
-        </ng-container> -->
         <ng-container matColumnDef="title">
             <th mat-header-cell *matHeaderCellDef> Title </th>
             <td mat-cell *matCellDef="let vehicle"> {{vehicle.title}} </td>
@@ -242,7 +210,7 @@
                 {{ product.buyerPreferred_contact_time}}
             </td>
         </ng-container>
-       <ng-container matColumnDef="actioncontacted">
+        <ng-container matColumnDef="actioncontacted">
             <th mat-header-cell *matHeaderCellDef> Contact to Buyer </th>
             <td mat-cell *matCellDef="let vehicle">
                 <button 
