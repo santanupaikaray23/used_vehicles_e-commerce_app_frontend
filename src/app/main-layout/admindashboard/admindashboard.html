@@ -24,14 +24,10 @@
           height="60"
         />
       </td>
-
-      <!-- Buyer info fields (fixed to match TS) -->
       <td>{{ product.buyerStatus }}</td>
       <td>{{ product.message }}</td>
       <td>{{ product.buyerContact_phone }}</td>
       <td>{{ product.buyerPreferred_contact_time }}</td>
-
-      <!-- Actions -->
       <td>
         <input
           *ngIf="product.showReason"
@@ -40,7 +36,6 @@
           placeholder="Enter reason"
           required
         />
-
         <button *ngIf="!product.isActive" (click)="approveVehicle(product._id, product.reason)">
           Approve
         </button>
@@ -54,7 +49,6 @@
         >
           Confirm Rejected
         </button>
-
         <button
           *ngIf="product.status !== 'sold'"
           class="btn btn-success"
@@ -73,7 +67,6 @@
 <table>
   <thead>
     <tr>
-      <!-- <th>ID</th> -->
       <th>Email</th>
       <th>Phone</th>
       <th>Role</th> 
@@ -82,7 +75,6 @@
   </thead>
  <tbody>
   <tr *ngFor="let user of users">
-    <!-- <td>{{ user._id }}</td> -->
     <td>{{ user.email }}</td>
     <td>{{ user.phone }}</td>
     <td>{{ user.role}}</td> 

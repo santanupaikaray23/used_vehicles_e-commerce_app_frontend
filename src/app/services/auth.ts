@@ -8,27 +8,19 @@ import { HttpHeaders } from '@angular/common/http';
 import { Router} from '@angular/router';
 import { LoginDto } from '../models/login.model.dto';
 import { Product } from '../models/product.dto';
+import { environment } from '../../environments/environment';
+
 
 @Injectable({
   providedIn: 'root'
 })
 export class Auth {
-  private apiUrl = 'http://localhost:5001/api/auth/login';
-  private apiUrl1 = 'http://localhost:5001/api/auth';
-  private apiUrlLogout = 'http://localhost:5001/api/auth/logout';
-  private apiUrlProfile = 'http://localhost:5001/api/auth/userInfo';
-  private apiUrl0 = 'http://localhost:5001/api/auth/vehicledetailsbuyer';
-  private apiUrl3 = 'http://localhost:5001/api/auth/vehicledetails';
-  private apiUrl4 = 'http://localhost:5001/api/auth';
-   private apiUrl5 = 'http://localhost:5001/api/auth';
-    private apiUrl6 = 'http://localhost:5001/api/auth';
-    private apiUrl7 = 'http://localhost:5001/api/auth';
-  private apiUrl8 = 'http://localhost:5001/api/auth';
+  private baseUrl = environment.apiUrl;
 
   private sessionKey = 'userSession';   
 
-
   constructor(
+    
     private http: HttpClient,
     private storage: Storage,
     private router: Router
@@ -60,18 +52,18 @@ export class Auth {
 
 
   login(credentials: LoginDto): Observable<any> {
-    return this.http.post<any>(this.apiUrl, credentials);
+    return this.http.post<any>(`${this.baseUrl}/auth/login`, credentials);
   }
 
   signup(data: SignupDto): Observable<any> {
-    return this.http.post(`${this.apiUrl1}/signup`, data);
+    return this.http.post(`${this.baseUrl}/auth/signup`, data);
   }
 
   logout(): Observable<any> {
     this.clearSession(); 
     this.storage.removeItem('token'); 
     this.router.navigate(['/login']); 
-    return this.http.post(this.apiUrlLogout, {}); 
+    return this.http.post(`${this.baseUrl}/auth/logout`, {}); 
   }
 
   navigateByRole(role: string): void {
@@ -79,9 +71,6 @@ export class Auth {
       case 'admin':
         this.router.navigate(['/admindashboard']);
         break;
-      // case 'user':
-      //   this.router.navigate(['/user']);
-      //   break;
       case 'buyer':
         this.router.navigate(['/buyerdashboard']);
         break;
@@ -96,9 +85,8 @@ export class Auth {
   getUserinfo(): Observable<userInfoDto> {
     const token = this.storage.getItem('token');
     const headers = new HttpHeaders().set('x-access-token', token || '');
-    return this.http.get<userInfoDto>(this.apiUrlProfile, { headers });
+    return this.http.get<userInfoDto>(`${this.baseUrl}/auth/userInfo`, { headers });
   }
-
 
   readVehicles(params?: { [key: string]: any }): Observable<{ data: Product[], total: number }> {
     let httpParams = new HttpParams();
@@ -109,7 +97,7 @@ export class Auth {
         }
       });
     }
-    return this.http.get<{ data: Product[], total: number }>(this.apiUrl0, { params: httpParams });
+    return this.http.get<{ data: Product[], total: number }>(`${this.baseUrl}/auth/vehicledetails`, { params: httpParams });
   }
 
   getProducts(params?: { [key: string]: any }): Observable<{ data: Product[], total: number }> {
@@ -121,33 +109,33 @@ export class Auth {
         }
       });
     }
-    return this.http.get<{ data: Product[], total: number }>(this.apiUrl3, { params: httpParams });
+    return this.http.get<{ data: Product[], total: number }>(`${this.baseUrl}/auth/vehicledetails`, { params: httpParams });
   }
 
   getTotal() {
     return this.http.get<number | { total: number }>(
-      "http://localhost:5001/api/auth/eois/last7days"
+      `${this.baseUrl}/auth/eois/last7days`
     );
   }
 
   createVehicles(vehicle: FormData) {
-    return this.http.post("http://localhost:5001/api/auth/addvehicledetail", vehicle);
+    return this.http.post(`${this.baseUrl}/auth/addvehicledetail`, vehicle);
   }
 
   updateVehicles(id: string, formData: FormData) {
     return this.http.put(
-      `http://localhost:5001/api/auth/updatevehicledetail/${id}`,
+      `${this.baseUrl}/auth/updatevehicledetail/${id}`,
       formData
     );
   }
   
   deleteVehicle(id: number) {
-    return this.http.delete(`http://localhost:5001/api/auth/deletevehicledetail/${id}`);
+    return this.http.delete(`${this.baseUrl}/auth/deletevehicledetail/${id}`);
   }
 
   activateVehicle(id: string, payload: { reason?: string }) {
     return this.http.put<any>(
-      `${this.apiUrl4}/activatevehicledetail/${id}`,
+      `${this.baseUrl}/auth/activatevehicledetail/${id}`,
       payload,
       { headers: this.getAuthHeaders() }
     );
@@ -155,7 +143,7 @@ export class Auth {
 
   deactivateVehicle(id: string, payload: { reason?: string }) {
     return this.http.put<any>(
-      `${this.apiUrl4}/deactivatevehicledetail/${id}`,
+      `${this.baseUrl}/auth/deactivatevehicledetail/${id}`,
       payload,
       { headers: this.getAuthHeaders() }
     );
@@ -170,7 +158,7 @@ export class Auth {
 
 blockUser(id: string, reason?: string) {
   return this.http.put<any>(
-    `${this.apiUrl5}/blockUser/${id}`,
+    `${this.baseUrl}/auth/blockUser/${id}`,
     { reason: reason || null }, 
     { headers: this.getAuthHeaders() }
   );
@@ -178,7 +166,7 @@ blockUser(id: string, reason?: string) {
 
 unblockUser(id: string) {
   return this.http.put<any>(
-    `${this.apiUrl5}/unblockUser/${id}`,
+    `${this.baseUrl}/auth/unblockUser/${id}`,
     {},
     { headers: this.getAuthHeaders() }
   );
@@ -186,25 +174,21 @@ unblockUser(id: string) {
 
 getUsers() {
   return this.http.get<any>(
-    'http://localhost:5001/api/auth/users',
+    `${this.baseUrl}/auth/users`,
     { headers: this.getAuthHeaders() } 
   );
 }
 
 getStatusById(id: string) {
   return this.http.get<any>(
-    `http://localhost:5001/api/auth/adminAudit/${id}`,
+    `${this.baseUrl}/auth/adminAudit/${id}`,
     { headers: this.getAuthHeaders() }
   );
 }
 
 getvehicleById(id: string): Observable<Product> {
-  return this.http.get<Product>(`http://localhost:5001/api/auth/vehicledetails/${id}`)
+  return this.http.get<Product>(`${this.baseUrl}/auth/vehicledetails/${id}`)
 }
-
-// addExpressions(expression: any) {
-//   return this.http.post("http://localhost:5001/api/auth/addexpressions", expression);
-// }
 
 addExpressions(payload: {
   buyer_id: string;       
@@ -217,19 +201,19 @@ addExpressions(payload: {
   status?: 'new' | 'contacted' | 'closed';
 }) {
   return this.http.post<any>(
-    `${this.apiUrl6}/addExpressions`,
+    `${this.baseUrl}/auth/addExpressions`,
     payload,
     { headers: this.getAuthHeaders() }
   );
 }
 
 getExpressionsById(id: string): Observable<Product> {
-  return this.http.get<Product>(`http://localhost:5001/api/auth/expressions/${id}`)
+  return this.http.get<Product>(`${this.baseUrl}/auth/expressions/${id}`)
 }
 
  markVehicleSoldByld(id: string) {
     return this.http.put<any>(
-      `${this.apiUrl7}/sold/${id}`,
+      `${this.baseUrl}/auth/sold/${id}`,
       {},
       { headers: this.getAuthHeaders() }
     );
@@ -237,14 +221,14 @@ getExpressionsById(id: string): Observable<Product> {
 
   getbuyerStatusById(id: string) {
   return this.http.get<any>(
-    `http://localhost:5001/api/auth/buyerStatus/${id}`,
+    `${this.baseUrl}/auth/buyerStatus/${id}`,
     { headers: this.getAuthHeaders() }
   );
 }
 
  markContactedByld(id: string, statusToBeSet: string) {
     return this.http.put<any>(
-      `${this.apiUrl8}/expressions/${id}`,
+      `${this.baseUrl}/auth/expressions/${id}`,
       {status: statusToBeSet},
       { headers: this.getAuthHeaders() }
     );
@@ -252,7 +236,7 @@ getExpressionsById(id: string): Observable<Product> {
 
     getSummery() {
     return this.http.get<number | { total: number }>(
-      "http://localhost:5001/api/auth/vehicledetails/summary"
+      `${this.baseUrl}/api/auth/vehicledetails/summary`
     );
   }
 

@@ -43,7 +43,6 @@ export class LoginPage {
     if (res.token) {
       localStorage.setItem('token', res.token);
       const role = res.role || res.user?.role; 
-      console.log("res---->",res)
       if (role) {
         this.auth.navigateByRole(role);
       } else {
