@@ -7,8 +7,8 @@ import { Location } from '@angular/common';
 
 @Component({
   selector: 'app-inquire',
-  standalone: true, // <-- Set to true
-  imports: [CommonModule, RouterModule], // <-- Add CommonModule
+  standalone: true, 
+  imports: [CommonModule, RouterModule], 
   templateUrl: './inquire.html',
   styleUrl: './inquire.css'
 })

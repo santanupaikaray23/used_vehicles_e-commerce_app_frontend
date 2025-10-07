@@ -236,8 +236,19 @@ getExpressionsById(id: string): Observable<Product> {
 
     getSummery() {
     return this.http.get<number | { total: number }>(
-      `${this.baseUrl}/api/auth/vehicledetails/summary`
+      `${this.baseUrl}/auth/vehicledetails/summary`
     );
   }
+
+   forgotPassword(email: string): Observable<any> {
+    return this.http.post(`${this.baseUrl}/auth/forgotpassword`, { email });
+  }
+
+resetPassword(token: string, newPassword: string): Observable<any> {
+  return this.http.post(`${this.baseUrl}/auth/resetpassword`, {
+    token,
+    newPassword,
+  });
+}
 
 }

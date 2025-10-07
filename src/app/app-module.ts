@@ -14,11 +14,13 @@ import {MatToolbar} from '@angular/material/toolbar'
 import { MainLayoutModule } from './main-layout/main-layout-module';
 import { HttpClientModule, provideHttpClient, withFetch } from '@angular/common/http';
 import { ReactiveFormsModule } from '@angular/forms';
+import { Resetpassword } from './auth/resetpassword/resetpassword';
 
 
 @NgModule({
   declarations: [
-    App
+    App,
+    Resetpassword
  
   ],
   imports: [

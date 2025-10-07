@@ -3,10 +3,14 @@ import { RouterModule, Routes } from '@angular/router';
 import { authRoutesGuard } from './guards/auth-routes-guard';
 import { LoginPage} from './auth/login-page/login-page';
 import { Signup } from './auth/signup/signup';
+import { ForgotPassword } from './auth/forgot-password/forgot-password';
+import { Resetpassword } from './auth/resetpassword/resetpassword';
 
 const routes: Routes = [
 {path: 'login', component: LoginPage},
 {path: 'signup', component: Signup},
+{path: 'forgot-password', component: ForgotPassword},
+ { path: 'resetpassword', component: Resetpassword },
 
   {
 path: '',
