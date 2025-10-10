@@ -212,7 +212,6 @@ resetForm() {
     this.localpincode = undefined;
     this.mileage_km = undefined;
     this.status = '';
-    // this.statushistory = '';
     this.selectedFiles = [];
     this.photos = Array(5).fill(null);
   }
@@ -279,7 +278,6 @@ updateStatusById(id: string, type: 'audit' | 'buyer') {
 markStatus(vehicleId: string, statusToBeSet: string) {
   this.auth.markContactedByld(vehicleId, statusToBeSet).subscribe({
     next: (res) => {
-      // Update local products array if needed
       const index = this.products.findIndex(p => p._id === vehicleId);
       if (index !== -1) {
         this.products[index].buyerStatus = statusToBeSet;

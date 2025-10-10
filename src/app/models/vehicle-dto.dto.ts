@@ -13,6 +13,7 @@ price?: Number;
 description?: String;
 locationcity?: String;
 localpincode?: Number;
+ isActive!:Boolean;
 images?: String;
 status?: String;
 

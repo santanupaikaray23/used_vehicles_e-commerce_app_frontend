@@ -62,18 +62,19 @@ export class Buyerdashboardtwo {
 
     this.svc.readVehicles(params).subscribe({
       next: (res) => {
-        this.vehicles = res.data;
+        console.log("res.data", res.data)
+        this.vehicles = res.data.filter(ele => ele.isActive == true);
 
         this.fueltype = Array.from(
-          new Set(res.data.map(vehicle => String(vehicle.fueltype)))
+          new Set(this.vehicles.map(vehicle => String(vehicle.fueltype)))
         ).filter(f => !!f) as string[];
 
         this.transmissions = Array.from(
-          new Set(res.data.map(vehicle => String((vehicle as any).transmission)))
+          new Set(this.vehicles.map(vehicle => String((vehicle as any).transmission)))
         ).filter(t => !!t) as string[];
 
         this.locationcity = Array.from(
-          new Set(res.data.map(vehicle => String((vehicle as any).locationcity)))
+          new Set(this.vehicles.map(vehicle => String((vehicle as any).locationcity)))
         ).filter(s => !!s) as string[];
       },
       error: (err) => console.error('Buyer Vehicles API error:', err)
@@ -83,7 +84,7 @@ export class Buyerdashboardtwo {
   loadTotal() {
     this.svc.readVehicles().subscribe({
       next: (res: any) => {
-        this.total = res.total ?? res;
+        this.total = res.data.filter((ele:any) => ele.isActive == true).length;
       },
       error: (err) => console.error('Buyer Total API error:', err)
     });
@@ -108,6 +109,5 @@ export class Buyerdashboardtwo {
     const totalPages = Math.ceil(this.total / this.pageSize);
     return Array(totalPages).fill(0).map((x, i) => i + 1);
   }
-
 
 }

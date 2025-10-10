@@ -38,7 +38,7 @@ export class LoginPage {
    this.auth.login(loginData).subscribe({
   next: (res) => {
     this.loading = false;
-    console.log('Login successful');
+    console.log('Login successful', res);
 
     if (res.token) {
       localStorage.setItem('token', res.token);
