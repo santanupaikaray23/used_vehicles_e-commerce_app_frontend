@@ -7,7 +7,8 @@
     "build": "ng build",
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
-    "serve:ssr:used_vehicles_e-commerce_app": "node dist/used_vehicles_e-commerce_app/server/server.mjs"
+    "serve:ssr:used_vehicles_e-commerce_app": "node dist/used_vehicles_e-commerce_app/server/server.mjs",
+    "prerender": "ng run used_vehicles_e-commerce_app:prerender"
   },
   "prettier": {
     "printWidth": 100,
@@ -26,14 +27,11 @@
     "@angular/animations": "^20.2.2",
     "@angular/cdk": "^20.2.1",
     "@angular/common": "^20.2.0",
-    "@angular/compiler": "^20.2.0",
-    "@angular/core": "^20.2.0",
     "@angular/forms": "^20.2.0",
     "@angular/material": "^20.2.1",
     "@angular/platform-browser": "^20.2.0",
     "@angular/platform-server": "^20.2.0",
     "@angular/router": "^20.2.0",
-    "@angular/ssr": "^20.2.1",
     "bootstrap": "^5.3.8",
     "express": "^5.1.0",
     "html2pdf.js": "^0.12.1",
@@ -42,9 +40,13 @@
     "zone.js": "~0.15.0"
   },
   "devDependencies": {
+    "@angular-devkit/build-angular": "^20.3.5",
     "@angular/build": "^20.2.1",
     "@angular/cli": "^20.2.1",
-    "@angular/compiler-cli": "^20.2.0",
+    "@angular/compiler": "^20.3.0",
+    "@angular/compiler-cli": "^20.3.0",
+    "@angular/core": "^20.3.0",
+    "@angular/ssr": "^20.3.5",
     "@types/express": "^5.0.1",
     "@types/jasmine": "~5.1.0",
     "@types/node": "^20.17.19",
