@@ -1,3 +1,4 @@
+<div class="warning-message">Please download this receipt for your reference.</div>
 <div *ngIf="booking" id="receipt" class="receipt-card">
   <h2 class="receipt-title">Booking Receipt</h2>
   <div class="receipt-details">
@@ -10,5 +11,6 @@
   <div class="receipt-actions">
     <button routerLink="/admindashboard" class="btn btn-home">🏠 Go to Home</button>
     <button class="btn btn-print" (click)="printReceipt()">🖨 Print</button>
+      <button class="btn btn-download" (click)="downloadReceipt()">⬇ Download</button>
   </div>
 </div>

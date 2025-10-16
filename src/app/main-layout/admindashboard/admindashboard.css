@@ -50,5 +50,26 @@ td button {
 button {
   margin: 2px;
 }
+@media (max-width: 768px) {
+  table {
+    display: block;
+    width: 100%;
+    overflow-x: auto; /* enables horizontal scroll */
+    border-radius: 6px;
+  }
 
+  thead {
+    font-size: 13px;
+  }
+
+  th, td {
+    white-space: nowrap; /* prevents columns from wrapping oddly */
+    padding: 8px 10px;
+  }
+
+  td button {
+    font-size: 12px;
+    padding: 4px 8px;
+  }
+}
 

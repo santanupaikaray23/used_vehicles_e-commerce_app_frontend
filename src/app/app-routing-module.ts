@@ -7,6 +7,7 @@ import { ForgotPassword } from './auth/forgot-password/forgot-password';
 import { Resetpassword } from './auth/resetpassword/resetpassword';
 
 const routes: Routes = [
+{ path: '', redirectTo: '/login', pathMatch: 'full' },
 {path: 'login', component: LoginPage},
 {path: 'signup', component: Signup},
 {path: 'forgot-password', component: ForgotPassword},
@@ -18,6 +19,7 @@ path: '',
     loadChildren: () =>
       import('./main-layout/main-layout-module').then((m) => m.MainLayoutModule), 
   },
+   { path: '**', redirectTo: '/login' }
 ];
 
 @NgModule({

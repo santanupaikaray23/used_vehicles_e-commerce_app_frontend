@@ -52,3 +52,57 @@
   height: 100vh;
   object-fit: cover;
 }
+@media (max-width: 992px) {
+  .main-container {
+    flex-direction: column;
+  }
+
+  .image-container {
+    height: 300px;
+  }
+
+  .image-container img {
+    height: 100%;
+  }
+
+  .login-container {
+    flex: 1;
+    padding: 20px;
+  }
+
+  .login-form-section {
+    width: 80%;
+    max-width: 400px;
+  }
+}
+
+/* Mobile devices (max-width: 600px) */
+@media (max-width: 600px) {
+  .main-container {
+    flex-direction: column;
+  }
+
+  .image-container {
+    display: none; /* Hide image for small screens */
+  }
+
+  .login-container {
+    width: 100%;
+    padding: 20px;
+  }
+
+  .login-form-section {
+    width: 100%;
+    padding: 10px;
+  }
+
+  .submit-button {
+    width: 100%;
+    max-width: none;
+  }
+
+  .button-row {
+    flex-direction: column;
+    gap: 10px;
+  }
+}

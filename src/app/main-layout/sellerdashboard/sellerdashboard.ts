@@ -188,7 +188,7 @@ saveVehicle() {
         },
         error: (err) => {
           console.error("Error creating vehicle:", err);
-          this.errorMessage = 'Failed to create vehicle. Please try again.';
+          this.errorMessage = 'Please fill in the above fields correctly.';
         }
       });
     }
@@ -230,7 +230,7 @@ deleteVehicles(id: number) {
 
 cancel() {
     this.resetForm();
-    this.router.navigate(['/vehicles']);
+     this.isEditMode = false;
   }
 
 updateStatusById(id: string, type: 'audit' | 'buyer') {

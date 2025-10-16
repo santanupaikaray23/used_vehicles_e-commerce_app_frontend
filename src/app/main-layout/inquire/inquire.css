@@ -40,3 +40,33 @@
 .carousel-btn.right {
   right: 10px;
 }
+@media (max-width: 768px) {
+  .vehicle-container {
+    max-width: 100%;
+    padding: 0 10px;
+  }
+
+  .main-image {
+    width: 100%;
+    max-width: none;
+    height: 250px;
+  }
+
+  .vehicle-images {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+
+  .vehicle-images img.thumbnail {
+    width: 80px;
+    height: 60px;
+    margin: 4px;
+  }
+
+  .carousel-btn {
+    font-size: 18px;
+    padding: 2px 8px;
+  }
+}
+

@@ -192,3 +192,57 @@
   font-size: 1.1rem;
   font-weight: 600;
 }
+@media (max-width: 768px) {
+  .listing-root {
+    padding: 0.5rem;
+    gap: 0.8rem;
+  }
+
+  .toolbar {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 0.8rem;
+  }
+
+  .controls {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 0.8rem;
+  }
+
+  .search {
+    width: 100%;
+  }
+
+  .grid {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+
+  .card img {
+    height: 160px;
+  }
+
+  .desc {
+    font-size: 13px;
+    height: auto;
+  }
+
+  .price {
+    font-size: 1.2rem;
+  }
+
+  .pagination {
+    flex-wrap: wrap;
+  }
+
+  .button {
+    padding: 0.4rem 0.8rem;
+    font-size: 13px;
+  }
+
+  .sort-section select {
+    width: 100%;
+    min-width: unset;
+  }
+}

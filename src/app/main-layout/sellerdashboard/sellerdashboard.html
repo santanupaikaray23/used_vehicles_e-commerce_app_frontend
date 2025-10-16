@@ -108,9 +108,10 @@
             Pincode is required
         </mat-error>
         <mat-error *ngIf="pincodeCtrl.hasError('pattern')">
-            Pincode must be exactly 6 digits
+        Enter 6 digits Pincode
         </mat-error>
     </mat-form-field>&nbsp;
+     <p>Please upload images smaller than 5120 KB</p>
     <div class="upload-grid">
         <div class="upload-box" *ngFor="let photo of photos; let i = index" (click)="triggerFileInput(i)">
             <ng-container *ngIf="photo; else addPhoto">

@@ -9,12 +9,12 @@
   align-items: center;
   gap: 12px; 
 }
-.profile-avatar {
+/* .profile-avatar {
   width: 10px;  
   height: 10px;
   background: #16a085;
   border-radius: 50%;
-}
+} */
 .panel {
   background: transparent;
   box-shadow: none;
@@ -29,9 +29,10 @@
   gap: 6px;
   align-items: center;
 }
-.avatar-image {
+/* .avatar-image {
   width: 40px;
   height: 40px;
   border-radius: 50%;
   object-fit: cover;
-}
+} */
+

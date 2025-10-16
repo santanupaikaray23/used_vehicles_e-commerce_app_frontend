@@ -42,5 +42,25 @@ export class Receipttwo {
     printWindow.print();
   }
 }
+ downloadReceipt() {
+    if (!this.booking) return;
 
+    const receiptContent = `
+Booking Receipt
+------------------------
+Booking ID: ${this.booking._id}
+Vehicle: ${this.booking.vehicle_name}
+Price: ₹${this.booking.vehicle_price}
+Date: ${new Date(this.booking.created_at).toLocaleString()}
+------------------------
+Thank you for your booking!
+    `;
+
+    const blob = new Blob([receiptContent], { type: 'text/plain' });
+    const link = document.createElement('a');
+    link.href = URL.createObjectURL(blob);
+    link.download = `Booking_Receipt_${this.booking._id}.txt`;
+    link.click();
+    URL.revokeObjectURL(link.href);
+  }
 }

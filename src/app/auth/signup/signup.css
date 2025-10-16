@@ -1,11 +1,10 @@
 .signup-container {
   display: flex;
   justify-content: center;
-  padding: -20px;
   background-color: rgb(247, 251, 250);
 }
 .signup-form-section {
-  width: 390px;
+  width: 340px;
 }
 .input-field {
   width: 100%;  
@@ -14,6 +13,35 @@
   width: 100%;
 }
 .button-row {
-  margin-left: 110px;
+  margin-left: 85px;
+}
+/* Tablet screens (up to 768px wide) */
+@media (max-width: 768px) {
+  .signup-form-section {
+    width: 80%;
+  }
+
+  .button-row {
+    margin-left: 0;
+    text-align: center;
+  }
 }
 
+/* Mobile screens (up to 480px wide) */
+@media (max-width: 480px) {
+  .signup-container {
+    flex-direction: column;
+    align-items: center;
+    padding: 10px;
+  }
+
+  .signup-form-section {
+    width: 100%;
+  }
+
+  .button-row {
+    margin-left: 0;
+    width: 100%;
+    text-align: center;
+  }
+}

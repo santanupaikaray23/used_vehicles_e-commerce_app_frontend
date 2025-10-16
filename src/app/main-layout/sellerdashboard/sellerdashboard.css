@@ -85,3 +85,43 @@
   font-size: 32px;
   margin-bottom: 5px;
 }
+@media (max-width: 768px) {
+  .container {
+    max-width: 95%;
+    margin: 20px auto;
+    padding: 14px;
+  }
+
+  .form-control {
+    font-size: 13px;
+    padding: 8px;
+  }
+
+  .btn {
+    width: 100%;
+    font-size: 13px;
+    margin: 5px 0;
+  }
+
+  .table {
+    display: block;
+    width: 100%;
+    overflow-x: auto; /* allows horizontal scroll */
+    border-radius: 6px;
+  }
+
+  .upload-grid {
+    grid-template-columns: repeat(3, 90px);
+    justify-content: center;
+    gap: 8px;
+  }
+
+  .upload-box {
+    width: 90px;
+    height: 90px;
+  }
+
+  .add-photo mat-icon {
+    font-size: 26px;
+  }
+}

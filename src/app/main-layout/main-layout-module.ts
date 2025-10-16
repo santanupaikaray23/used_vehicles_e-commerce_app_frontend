@@ -26,7 +26,6 @@ import { Contact } from './contact/contact';
 import { Admindashboard } from './admindashboard/admindashboard';
 import { Buyerdashboard } from './buyerdashboard/buyerdashboard';
 import { Sellerdashboard } from './sellerdashboard/sellerdashboard';
-import { Userdashboard } from './userdashboard/userdashboard';
 import { MatSelectModule } from '@angular/material/select';
 import { BuyerLayoutComponent } from './buyer-layout-component/buyer-layout-component';
 import { SellerLayoutComponent } from './seller-layout-component/seller-layout-component';
@@ -58,7 +57,6 @@ import { ForgotPassword } from '../auth/forgot-password/forgot-password';
     Admindashboard,
     Buyerdashboard,
     Sellerdashboard,
-    Userdashboard,
     BuyerLayoutComponent,
     SellerLayoutComponent,
     AdminLayoutComponent,
