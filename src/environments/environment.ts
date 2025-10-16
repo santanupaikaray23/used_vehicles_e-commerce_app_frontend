@@ -1,4 +1,4 @@
 export const environment = {
-  production: false,
-  apiUrl: 'http://localhost:5001/api'  
+  production: true,
+  apiUrl: 'https://login-with-jwt-test1.onrender.com/api'  
 };
