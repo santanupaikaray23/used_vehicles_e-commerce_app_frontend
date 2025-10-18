@@ -216,7 +216,7 @@
             <td mat-cell *matCellDef="let vehicle">
                 <button 
                     class="btn btn-primary"
-                    (click)="markStatus(vehicle._id, 'contacted')"
+                    (click)="contactBuyer(vehicle)"
                     [disabled]="vehicle.buyerStatus === 'contacted' 
                     || vehicle.buyerStatus === 'closed'">
                     {{ vehicle.buyerStatus === 'contacted' 

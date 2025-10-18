@@ -85,43 +85,58 @@
   font-size: 32px;
   margin-bottom: 5px;
 }
+/* Responsive adjustments */
+@media (max-width: 992px) {
+  .container {
+    max-width: 90%;
+    padding: 15px;
+  }
+
+  .upload-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
 @media (max-width: 768px) {
   .container {
-    max-width: 95%;
     margin: 20px auto;
-    padding: 14px;
+    padding: 12px;
+  }
+
+  .upload-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 8px;
   }
 
   .form-control {
     font-size: 13px;
-    padding: 8px;
   }
 
   .btn {
-    width: 100%;
     font-size: 13px;
-    margin: 5px 0;
+    padding: 6px 10px;
   }
 
-  .table {
+  table {
     display: block;
     width: 100%;
-    overflow-x: auto; /* allows horizontal scroll */
+    overflow-x: auto;
     border-radius: 6px;
   }
 
-  .upload-grid {
-    grid-template-columns: repeat(3, 90px);
-    justify-content: center;
-    gap: 8px;
+  th, td {
+    white-space: nowrap;
+    padding: 18px 0px;
+  }
+}
+
+@media (max-width: 480px) {
+  .btn {
+    width: 100%;
+    margin-bottom: 8px;
   }
 
-  .upload-box {
-    width: 90px;
-    height: 90px;
-  }
-
-  .add-photo mat-icon {
-    font-size: 26px;
+  .container {
+    padding: 10px;
   }
 }

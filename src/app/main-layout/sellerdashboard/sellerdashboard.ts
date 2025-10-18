@@ -289,4 +289,17 @@ markStatus(vehicleId: string, statusToBeSet: string) {
   });
 }
 
+contactBuyer(vehicle: any): void {
+  this.markStatus(vehicle._id, 'contacted');
+
+  if (vehicle.buyerContact_phone) {
+    setTimeout(() => {
+      // Works reliably on both Android and iOS
+      window.open(`tel:${vehicle.buyerContact_phone}`, '_self');
+    }, 300);
+  } else {
+    alert('No phone number available for this buyer.');
+  }
+}
+
 }

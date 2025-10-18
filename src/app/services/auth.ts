@@ -240,7 +240,7 @@ getExpressionsById(id: string): Observable<Product> {
     );
   }
 
-   forgotPassword(email: string): Observable<any> {
+forgotPassword(email: string): Observable<any> {
     return this.http.post(`${this.baseUrl}/auth/forgotpassword`, { email });
   }
 
