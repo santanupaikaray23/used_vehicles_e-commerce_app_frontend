@@ -11,4 +11,10 @@
   color: red;
   font-size: 0.9em;
 }
+.spinner-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 60vh;
+}
 

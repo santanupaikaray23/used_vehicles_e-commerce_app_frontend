@@ -1,4 +1,12 @@
-<form [formGroup]="bookingForm" (ngSubmit)="onSubmit()" class="p-3 border rounded bg-light">
+<div *ngIf="isLoading" class="spinner-container text-center">
+  <img src="https://i.ibb.co/X3m7MyL/loader.gif" alt="Loading..." width="60" height="60" />
+</div>
+<form
+  *ngIf="!isLoading"
+  [formGroup]="bookingForm"
+  (ngSubmit)="onSubmit()"
+  class="p-3 border rounded bg-light"
+>
   <div class="form-group mb-3">
     <label for="vehicleName" class="form-label fw-bold">Vehicle Name:</label>
     <input
@@ -78,9 +86,8 @@
       placeholder="e.g. Morning / Evening"
     />
   </div>
+
   <div class="d-grid">
-    <button type="submit" class="btn btn-success">
-      Submit Booking
-    </button>
+    <button type="submit" class="btn btn-success">Submit Booking</button>
   </div>
 </form>

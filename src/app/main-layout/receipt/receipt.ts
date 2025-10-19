@@ -10,15 +10,25 @@ import { Auth } from '../../services/auth';
 })
 export class Receipt {
    booking: any;
+     isLoading = true; 
 
   constructor(private route: ActivatedRoute, private auth: Auth) {}
 
   ngOnInit(): void {
-    const id = this.route.snapshot.paramMap.get('id');
+      const id = this.route.snapshot.paramMap.get('id');
     if (id) {
-      this.auth.getExpressionsById(id).subscribe((data) => {
-        this.booking = data;
+      this.auth.getExpressionsById(id).subscribe({
+        next: (data) => {
+          this.booking = data;
+          this.isLoading = false; // stop spinner after data loads
+        },
+        error: (err) => {
+          console.error('Error loading booking receipt:', err);
+          this.isLoading = false;
+        }
       });
+    } else {
+      this.isLoading = false;
     }
   }
   

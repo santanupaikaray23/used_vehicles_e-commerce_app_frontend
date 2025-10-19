@@ -44,6 +44,12 @@
   background-color: #28a745;
   color: white;
 }
+.spinner-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 60vh;
+}
 @media print {
   .btn {
     display: none;

@@ -9,7 +9,7 @@ import { Router } from '@angular/router';
   styleUrl: './sellerdashboard.css'
 })
 export class Sellerdashboard {
-  title: string | undefined;
+   title: string | undefined;
   make: string | undefined;
   model: string | undefined;
   variant: string | undefined;
@@ -32,14 +32,19 @@ export class Sellerdashboard {
   products: any[] = [];
   isEditMode: boolean = false;
   editVehicleId: string | null = null;
-  displayedColumns: string[] = ['title', 'make', 'images', 'action', 'auditStatus',
-  'auditReason',
-  'buyerStatus',
-  'buyerReason','buyerContact_phone', 'buyerPreferred_contact_time', 'actioncontacted', 'actionclosed'];
+  isLoading: boolean = false; 
+
+  displayedColumns: string[] = [
+    'title', 'make', 'images', 'action',
+    'auditStatus', 'auditReason', 'buyerStatus',
+    'buyerReason', 'buyerContact_phone', 'buyerPreferred_contact_time',
+    'actioncontacted', 'actionclosed'
+  ];
+
   statusData: any[] = []
   selectedFiles: File[] = [];
   errorMessage: string = '';
-  maxFileSize = 2 * 1024 * 1024;
+  maxFileSize = 5 * 1024 * 1024;
   maxFiles = 5;
 
   photos: (string | null)[] = Array(5).fill(null);
@@ -57,41 +62,44 @@ export class Sellerdashboard {
     input.click();
   }
 
-onFileSelected(event: any, index: number) {
+  onFileSelected(event: any, index: number) {
     const file = event.target.files[0];
     if (file) {
-        const allowedTypes = ['image/jpeg', 'image/png'];
-        if (!allowedTypes.includes(file.type)) {
-            this.errorMessage = 'Only .jpg and .png formats are allowed!';
-            return;
-        } else {
-            this.errorMessage = '';
-        }
-        this.selectedFiles[index] = file;
-        const reader = new FileReader();
-        reader.onload = e => this.photos[index] = reader.result as string;
-        reader.readAsDataURL(file);
+      const allowedTypes = ['image/jpeg', 'image/png'];
+      if (!allowedTypes.includes(file.type)) {
+        this.errorMessage = 'Only .jpg and .png formats are allowed!';
+        return;
+      } else {
+        this.errorMessage = '';
+      }
+      this.selectedFiles[index] = file;
+      const reader = new FileReader();
+      reader.onload = e => this.photos[index] = reader.result as string;
+      reader.readAsDataURL(file);
     }
-}
+  }
 
-getProducts() {
-  this.auth.getProducts().subscribe((data: any) => {
-    console.log('API response:', data);
-    const allProducts = Array.isArray(data.data) ? data.data : [];
-    this.products = allProducts;
-    console.log('Latest product for table:', this.products);
+  getProducts() {
+    this.isLoading = true;
+    this.auth.getProducts().subscribe({
+      next: (data: any) => {
+        const allProducts = Array.isArray(data.data) ? data.data : [];
+        this.products = allProducts;
 
-    this.products.forEach((vehicle: any) => {
-      // Fetch both audit + buyer statuses for each product
-      this.updateStatusById(vehicle._id, 'audit');
-      this.updateStatusById(vehicle._id, 'buyer');
-      
+        this.products.forEach((vehicle: any) => {
+          this.updateStatusById(vehicle._id, 'audit');
+          this.updateStatusById(vehicle._id, 'buyer');
+        });
+        this.isLoading = false;
+      },
+      error: (err) => {
+        console.error('Error fetching products:', err);
+        this.isLoading = false;
+      }
     });
+  }
 
-  });
-}
-
-updateVehicles(vehicle: any) {
+  updateVehicles(vehicle: any) {
     this.isEditMode = true;
     this.editVehicleId = vehicle._id;
     this.title = vehicle.title;
@@ -109,8 +117,6 @@ updateVehicles(vehicle: any) {
     this.localpincode = vehicle.localpincode;
     this.mileage_km = vehicle.mileage_km;
     this.status = vehicle.status;
-    // this.status = vehicle.status;
-    // this.statushistory = vehicle.statushistory;
 
     this.selectedFiles = [];
     this.photos = (vehicle.images || []).map((img: any) =>
@@ -118,7 +124,7 @@ updateVehicles(vehicle: any) {
     );
   }
 
-saveVehicle() {
+  saveVehicle() {
     this.errorMessage = '';
     const hasExistingPhotos = this.photos && this.photos.length > 0;
 
@@ -165,36 +171,60 @@ saveVehicle() {
         imageIndexes.push(index);
       }
     });
-
     formData.append("imageIndexes", JSON.stringify(imageIndexes));
+
+    this.isLoading = true; 
+
     if (this.isEditMode && this.editVehicleId) {
       this.auth.updateVehicles(this.editVehicleId, formData).subscribe({
         next: (data) => {
           console.log("Vehicle updated", data);
+          this.isLoading = false;
+       alert('Vehicle updated successfully!');
           this.getProducts();
           this.resetForm();
         },
         error: (err) => {
           console.error("Error updating vehicle:", err);
           this.errorMessage = 'Failed to update vehicle. Please try again.';
+          this.isLoading = false;
         }
       });
     } else {
       this.auth.createVehicles(formData).subscribe({
         next: (data) => {
           console.log("Vehicle created", data);
+          this.isLoading = false;
+       alert('Vehicle submitted successfully!');
           this.getProducts();
           this.resetForm();
         },
         error: (err) => {
           console.error("Error creating vehicle:", err);
           this.errorMessage = 'Please fill in the above fields correctly.';
+          this.isLoading = false;
         }
       });
     }
   }
 
-resetForm() {
+  deleteVehicles(id: number) {
+    this.isLoading = true;
+    this.auth.deleteVehicle(id).subscribe({
+      next: (data) => {
+        console.log('Deleted:', data);
+      alert('Vehicle deleted successfully.');
+        this.getProducts();
+        this.isLoading = false;
+      },
+      error: (err) => {
+        console.error('Error deleting vehicle:', err);
+        this.isLoading = false;
+      }
+    });
+  }
+
+  resetForm() {
     this.isEditMode = false;
     this.editVehicleId = null;
     this.title = '';
@@ -216,90 +246,71 @@ resetForm() {
     this.photos = Array(5).fill(null);
   }
 
-deleteVehicles(id: number) {
-    this.auth.deleteVehicle(id).subscribe({
-      next: (data) => {
-        console.log('Deleted:', data);
-        this.getProducts();
+  cancel() {
+    this.resetForm();
+    this.isEditMode = false;
+  }
+
+  updateStatusById(id: string, type: 'audit' | 'buyer') {
+    let apiCall;
+
+    if (type === 'audit') {
+      apiCall = this.auth.getStatusById(id);  
+    } else {
+      apiCall = this.auth.getbuyerStatusById(id);  
+    }
+
+    apiCall.subscribe({
+      next: (res: any) => {
+        const productIndex = this.products.findIndex(p => p._id === id);
+
+        if (productIndex !== -1) {
+          if (res && res.length == 0) {
+            this.products[productIndex].auditStatus = this.products[productIndex].status;
+          } else if (type === 'audit' && Array.isArray(res) && res.length > 0) {
+            const latestAudit = res[res.length - 1];
+            this.products[productIndex].auditReason = latestAudit.reason || 'N/A';
+            this.products[productIndex].auditStatus = latestAudit.to_status || 'N/A';
+          } else if (type === 'buyer' && res && res.length > 0) {
+            const latestAudit = res[res.length - 1];
+            this.products[productIndex].buyerStatus = latestAudit.status || 'N/A';
+            this.products[productIndex].buyerReason = latestAudit.message || 'N/A';
+            this.products[productIndex].buyerContact_phone = latestAudit.contact_phone || 'N/A';
+            this.products[productIndex].buyerPreferred_contact_time = latestAudit.preferred_contact_time || 'N/A';
+          }
+        }
       },
       error: (err) => {
-        console.error('Error deleting vehicle:', err);
+        console.error(`Error fetching ${type} by id:`, err);
       }
     });
   }
 
-cancel() {
-    this.resetForm();
-     this.isEditMode = false;
-  }
-
-updateStatusById(id: string, type: 'audit' | 'buyer') {
-  let apiCall;
-
-  if (type === 'audit') {
-    apiCall = this.auth.getStatusById(id);  
-  } else {
-    apiCall = this.auth.getbuyerStatusById(id);  
-  }
-
-  apiCall.subscribe({
-    next: (res: any) => {
-      console.log(`Single ${type} Response:`, res);
-
-      const productIndex = this.products.findIndex(p => p._id === id);
-
-      if (productIndex !== -1) {
-        if(res && res.length == 0){
-          this.products[productIndex].auditStatus = this.products[productIndex].status;
-        } 
-        
-        else if (type === 'audit' && Array.isArray(res) && res.length > 0) {
-          const latestAudit = res[res.length - 1];
-          this.products[productIndex].auditReason = latestAudit.reason || 'N/A';
-          this.products[productIndex].auditStatus = latestAudit.to_status || 'N/A';
-        } 
-        
-        else if (type === 'buyer' && res && res.length > 0) {
-          const latestAudit = res[res.length - 1];
-          console.log("latest audit", latestAudit)
-          this.products[productIndex].buyerStatus = latestAudit.status || 'N/A'; 
-          this.products[productIndex].buyerReason = latestAudit.message || 'N/A';
-          this.products[productIndex].buyerContact_phone=latestAudit.contact_phone || 'N/A';
-          this.products[productIndex].buyerPreferred_contact_time=latestAudit.preferred_contact_time || 'N/A';
+  markStatus(vehicleId: string, statusToBeSet: string) {
+    this.isLoading = true;
+    this.auth.markContactedByld(vehicleId, statusToBeSet).subscribe({
+      next: (res) => {
+        const index = this.products.findIndex(p => p._id === vehicleId);
+        if (index !== -1) {
+          this.products[index].buyerStatus = statusToBeSet;
         }
+        this.isLoading = false;
+      },
+      error: (err) => {
+        console.error('Error marking contacted:', err);
+        this.isLoading = false;
       }
-    },
-    error: (err) => {
-      console.error(`Error fetching ${type} by id:`, err);
-    }
-  });
-}
-
-markStatus(vehicleId: string, statusToBeSet: string) {
-  this.auth.markContactedByld(vehicleId, statusToBeSet).subscribe({
-    next: (res) => {
-      const index = this.products.findIndex(p => p._id === vehicleId);
-      if (index !== -1) {
-        this.products[index].buyerStatus = statusToBeSet;
-      }
-    },
-    error: (err) => {
-      console.error('Error marking expression as contacted:', err);
-    }
-  });
-}
-
-contactBuyer(vehicle: any): void {
-  this.markStatus(vehicle._id, 'contacted');
-
-  if (vehicle.buyerContact_phone) {
-    setTimeout(() => {
-      // Works reliably on both Android and iOS
-      window.open(`tel:${vehicle.buyerContact_phone}`, '_self');
-    }, 300);
-  } else {
-    alert('No phone number available for this buyer.');
+    });
   }
-}
 
+  contactBuyer(vehicle: any): void {
+    this.markStatus(vehicle._id, 'contacted');
+    if (vehicle.buyerContact_phone) {
+      setTimeout(() => {
+        window.open(`tel:${vehicle.buyerContact_phone}`, '_self');
+      }, 300);
+    } else {
+      alert('No phone number available for this buyer.');
+    }
+  }
 }

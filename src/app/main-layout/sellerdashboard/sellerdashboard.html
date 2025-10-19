@@ -1,3 +1,6 @@
+<div *ngIf="isLoading" class="spinner-container text-center">
+  <img src="https://i.ibb.co/X3m7MyL/loader.gif" alt="Loading..." width="60" height="60" />
+</div>
 <div class="container">
     <mat-form-field appearance="outline" class="form-field">
         <mat-label>Title</mat-label>
@@ -111,7 +114,7 @@
         Enter 6 digits Pincode
         </mat-error>
     </mat-form-field>&nbsp;
-     <p>Please upload images smaller than 5120 KB</p>
+     <p>Please upload images smaller than 5,168 KB</p>
     <div class="upload-grid">
         <div class="upload-box" *ngFor="let photo of photos; let i = index" (click)="triggerFileInput(i)">
             <ng-container *ngIf="photo; else addPhoto">
