@@ -45,7 +45,6 @@ import { ForgotPassword } from '../auth/forgot-password/forgot-password';
 
 
 
-
 @NgModule({
   declarations: [
     UserHeader,

@@ -195,7 +195,7 @@ export class Sellerdashboard {
         next: (data) => {
           console.log("Vehicle created", data);
           this.isLoading = false;
-       alert('Vehicle submitted successfully!');
+       alert('Vehicle submitted successfully!, Please wait for Buyer Respond.');
           this.getProducts();
           this.resetForm();
         },

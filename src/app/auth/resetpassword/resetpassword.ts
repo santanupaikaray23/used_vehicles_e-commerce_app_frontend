@@ -10,11 +10,12 @@ import { Auth } from '../../services/auth';
   styleUrl: './resetpassword.css'
 })
 export class Resetpassword {
-    resetPasswordForm: FormGroup;
+  resetPasswordForm: FormGroup;
   token: string = '';
   message: string = '';
-    hidePassword = true;
-    hideConfirmPassword = true;
+  hidePassword = true;
+  hideConfirmPassword = true;
+  isLoading = false;
 
   constructor(
     private formBuilder: FormBuilder,
@@ -55,29 +56,35 @@ export class Resetpassword {
     }
   }
 
-  resetPassword() {
-    if (this.resetPasswordForm.invalid) {
-      this.message = 'Please fill in all fields correctly.';
-      return;
-    }
-
-    const newPassword = this.resetPasswordForm.get('newPassword')?.value;
-
-    if (!this.token || !newPassword) {
-      this.message = 'Token and password are required.';
-      return;
-    }
-
-    this.auth.resetPassword(this.token, newPassword).subscribe({
-      next: (response) => {
-        this.message = response.message || 'Password reset successful!';
-        alert(this.message);
-        this.router.navigate(['/login']);
-      },
-      error: (err) => {
-        this.message = err.error?.message || 'Failed to reset password.';
-        alert(this.message);
-      },
-    });
+ resetPassword() {
+  if (this.resetPasswordForm.invalid) {
+    this.message = 'Please fill in all fields correctly.';
+    return;
   }
+
+  const newPassword = this.resetPasswordForm.get('newPassword')?.value;
+
+  if (!this.token || !newPassword) {
+    this.message = 'Token and password are required.';
+    return;
+  }
+
+  // Start loading
+  this.isLoading = true;
+
+  this.auth.resetPassword(this.token, newPassword).subscribe({
+    next: (response) => {
+      this.isLoading = false;
+      this.message = response.message || 'Password reset successful!';
+      alert(this.message);
+      this.router.navigate(['/login']);
+    },
+    error: (err) => {
+      this.isLoading = false;
+      this.message = err.error?.message || 'Failed to reset password.';
+      alert(this.message);
+    },
+  });
+}
+
 }
