@@ -180,8 +180,8 @@ export class Sellerdashboard {
         next: (data) => {
           console.log("Vehicle updated", data);
           this.isLoading = false;
+            this.getProducts();
        alert('Vehicle updated successfully!');
-          this.getProducts();
           this.resetForm();
         },
         error: (err) => {
@@ -195,8 +195,8 @@ export class Sellerdashboard {
         next: (data) => {
           console.log("Vehicle created", data);
           this.isLoading = false;
+            this.getProducts();
        alert('Vehicle submitted successfully!, Please wait for Buyer Respond.');
-          this.getProducts();
           this.resetForm();
         },
         error: (err) => {
@@ -213,9 +213,10 @@ export class Sellerdashboard {
     this.auth.deleteVehicle(id).subscribe({
       next: (data) => {
         console.log('Deleted:', data);
+         this.isLoading = false;
+           this.getProducts();
       alert('Vehicle deleted successfully.');
-        this.getProducts();
-        this.isLoading = false;
+       
       },
       error: (err) => {
         console.error('Error deleting vehicle:', err);
