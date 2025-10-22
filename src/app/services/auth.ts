@@ -225,6 +225,9 @@ getExpressionsById(id: string): Observable<Product> {
     { headers: this.getAuthHeaders() }
   );
 }
+getBuyerStatusByProduct(productId: string) {
+  return this.http.get<any>(`${this.baseUrl}/auth/buyerStatus?productId=${productId}`);
+}
 
  markContactedByld(id: string, statusToBeSet: string) {
     return this.http.put<any>(

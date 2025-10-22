@@ -1,0 +1,122 @@
+<!-- <div *ngIf="isLoading" class="spinner-container text-center">
+  <img src="https://i.ibb.co/X3m7MyL/loader.gif" alt="Loading..." width="60" height="60" />
+</div>
+
+<div *ngIf="!isLoading && products.length > 0; else noData">
+  <table mat-table [dataSource]="products" class="mat-elevation-z8 full-width-table">
+    <ng-container matColumnDef="buyerStatuses">
+      <th mat-header-cell *matHeaderCellDef>All Buyer Records</th>
+      <td mat-cell *matCellDef="let product">
+        <div *ngIf="product.buyerStatuses?.length > 0; else noBuyerData">
+          <table class="inner-table">
+            <thead>
+              <tr>
+                <th>Status</th>
+                <th>Message</th>
+                <th>Phone</th>
+                <th>Contact Time</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let record of product.buyerStatuses">
+                <td>{{ record.status }}</td>
+                <td>{{ record.message }}</td>
+                <td>{{ record.contact_phone }}</td>
+                <td>{{ record.preferred_contact_time }}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <ng-template #noBuyerData> <span>No buyer data found.</span> </ng-template>
+      </td>
+    </ng-container>
+
+    <ng-container matColumnDef="actioncontacted">
+      <th mat-header-cell *matHeaderCellDef>Contact Buyer</th>
+      <td mat-cell *matCellDef="let product">
+        <button mat-raised-button color="primary" (click)="contactBuyer(product)">Call</button>
+      </td>
+    </ng-container>
+
+    <ng-container matColumnDef="actionclosed">
+      <th mat-header-cell *matHeaderCellDef>Mark Closed</th>
+      <td mat-cell *matCellDef="let product">
+        <button mat-raised-button color="warn" (click)="markStatus(product._id, 'closed')">
+          Close
+        </button>
+      </td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+  </table>
+</div>
+
+<ng-template #noData>
+  <p class="text-center mt-4">No buyer status records available.</p>
+</ng-template> -->
+<div *ngIf="isLoading" class="spinner-container text-center">
+  <img src="https://i.ibb.co/X3m7MyL/loader.gif" alt="Loading..." width="60" height="60" />
+</div>
+
+<!-- ✅ Table for products -->
+<div *ngIf="!isLoading && products.length > 0; else noData">
+  <table mat-table [dataSource]="products" class="mat-elevation-z8 full-width-table">
+    <ng-container matColumnDef="buyerStatuses">
+      <th mat-header-cell *matHeaderCellDef>All Buyer Records</th>
+      <td mat-cell *matCellDef="let product">
+        <div>
+          <h3>{{ product.vehicle_name }} — ₹{{ product.vehicle_price | number }}</h3>
+
+          <div *ngIf="product.buyerStatuses?.length > 0; else noBuyerData">
+            <table class="inner-table">
+              <thead>
+                <tr>
+                  <th>Buyer</th>
+                  <th>Status</th>
+                  <th>Message</th>
+                  <th>Phone</th>
+                  <th>Contact Time</th>
+                  <th>Actions</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let record of product.buyerStatuses; let i = index">
+                  <td><strong>Buyer {{ i + 1 }}</strong></td>
+                  <td>{{ record.status }}</td>
+                  <td>{{ record.message }}</td>
+                  <td>{{ record.contact_phone }}</td>
+                  <td>{{ record.preferred_contact_time || 'N/A' }}</td>
+                  <td>
+                    <button mat-raised-button color="primary" (click)="contactBuyer(record)">
+                      Call
+                    </button>
+                    <button
+                      mat-raised-button
+                      color="warn"
+                      class="ml-2"
+                      (click)="markStatus(record._id, 'closed')"
+                    >
+                      Close
+                    </button>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <ng-template #noBuyerData>
+            <span>No buyer data found.</span>
+          </ng-template>
+        </div>
+      </td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+  </table>
+</div>
+
+<ng-template #noData>
+  <p class="text-center mt-4">No buyer status records available.</p>
+</ng-template>

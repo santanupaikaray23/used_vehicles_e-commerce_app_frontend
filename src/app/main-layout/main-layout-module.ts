@@ -42,6 +42,7 @@ import { PlaceBookingtwo } from './place-bookingtwo/place-bookingtwo';
 import { Receipttwo } from './receipttwo/receipttwo';
 import { Buyerdashboardthree } from './buyerdashboardthree/buyerdashboardthree';
 import { ForgotPassword } from '../auth/forgot-password/forgot-password';
+import { Buyerstatus } from './buyerstatus/buyerstatus';
 
 
 
@@ -66,7 +67,8 @@ import { ForgotPassword } from '../auth/forgot-password/forgot-password';
     PlaceBookingtwo,
     Receipttwo,
     Buyerdashboardthree,
-    ForgotPassword
+    ForgotPassword,
+    Buyerstatus
     
     
   ],

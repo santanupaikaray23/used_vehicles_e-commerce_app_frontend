@@ -18,6 +18,7 @@ import { Detail } from './detail/detail';
 import { PlaceBookingtwo } from './place-bookingtwo/place-bookingtwo';
 import { Receipttwo } from './receipttwo/receipttwo';
 import { Buyerdashboardthree } from './buyerdashboardthree/buyerdashboardthree';
+import { Buyerstatus } from './buyerstatus/buyerstatus';
 
 const routes: Routes = [
   {
@@ -30,6 +31,7 @@ const routes: Routes = [
         canActivate: [AuthGuard],   
         children: [
           { path: '', component: Sellerdashboard},
+          {path: 'buyerstatus/:id', component: Buyerstatus},
           { path: 'buyerdashboardthree', component: Buyerdashboardthree},
           { path: 'about', component: About },
           { path: 'contact', component: Contact },

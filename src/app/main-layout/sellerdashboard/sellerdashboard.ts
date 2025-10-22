@@ -36,9 +36,8 @@ export class Sellerdashboard {
 
   displayedColumns: string[] = [
     'title', 'make', 'images', 'action',
-    'auditStatus', 'auditReason', 'buyerStatus',
-    'buyerReason', 'buyerContact_phone', 'buyerPreferred_contact_time',
-    'actioncontacted', 'actionclosed'
+    'auditStatus', 'auditReason'
+   
   ];
 
   statusData: any[] = []
@@ -87,8 +86,8 @@ export class Sellerdashboard {
         this.products = allProducts;
 
         this.products.forEach((vehicle: any) => {
-          this.updateStatusById(vehicle._id, 'audit');
-          this.updateStatusById(vehicle._id, 'buyer');
+          this.updateAuditStatusById(vehicle._id, 'audit');
+        
         });
         this.isLoading = false;
       },
@@ -252,66 +251,35 @@ export class Sellerdashboard {
     this.isEditMode = false;
   }
 
-  updateStatusById(id: string, type: 'audit' | 'buyer') {
-    let apiCall;
+updateAuditStatusById(id: string, p0: string) {
+  const apiCall = this.auth.getStatusById(id);
 
-    if (type === 'audit') {
-      apiCall = this.auth.getStatusById(id);  
-    } else {
-      apiCall = this.auth.getbuyerStatusById(id);  
-    }
+  apiCall.subscribe({
+    next: (res: any) => {
+      const productIndex = this.products.findIndex(p => p._id === id);
+      if (productIndex === -1) return;
 
-    apiCall.subscribe({
-      next: (res: any) => {
-        const productIndex = this.products.findIndex(p => p._id === id);
-
-        if (productIndex !== -1) {
-          if (res && res.length == 0) {
-            this.products[productIndex].auditStatus = this.products[productIndex].status;
-          } else if (type === 'audit' && Array.isArray(res) && res.length > 0) {
-            const latestAudit = res[res.length - 1];
-            this.products[productIndex].auditReason = latestAudit.reason || 'N/A';
-            this.products[productIndex].auditStatus = latestAudit.to_status || 'N/A';
-          } else if (type === 'buyer' && res && res.length > 0) {
-            const latestAudit = res[res.length - 1];
-            this.products[productIndex].buyerStatus = latestAudit.status || 'N/A';
-            this.products[productIndex].buyerReason = latestAudit.message || 'N/A';
-            this.products[productIndex].buyerContact_phone = latestAudit.contact_phone || 'N/A';
-            this.products[productIndex].buyerPreferred_contact_time = latestAudit.preferred_contact_time || 'N/A';
-          }
-        }
-      },
-      error: (err) => {
-        console.error(`Error fetching ${type} by id:`, err);
+      if (!res || res.length === 0) {
+        // If no audit data found, keep current product status
+        this.products[productIndex].auditStatus = this.products[productIndex].status || 'N/A';
+        this.products[productIndex].auditReason = 'No audit records found';
+        return;
       }
-    });
-  }
 
-  markStatus(vehicleId: string, statusToBeSet: string) {
-    this.isLoading = true;
-    this.auth.markContactedByld(vehicleId, statusToBeSet).subscribe({
-      next: (res) => {
-        const index = this.products.findIndex(p => p._id === vehicleId);
-        if (index !== -1) {
-          this.products[index].buyerStatus = statusToBeSet;
-        }
-        this.isLoading = false;
-      },
-      error: (err) => {
-        console.error('Error marking contacted:', err);
-        this.isLoading = false;
-      }
-    });
-  }
+      // Ensure res is an array
+      const audits = Array.isArray(res) ? res : [res];
+      const latestAudit = audits[audits.length - 1];
 
-  contactBuyer(vehicle: any): void {
-    this.markStatus(vehicle._id, 'contacted');
-    if (vehicle.buyerContact_phone) {
-      setTimeout(() => {
-        window.open(`tel:${vehicle.buyerContact_phone}`, '_self');
-      }, 300);
-    } else {
-      alert('No phone number available for this buyer.');
+      // Update product with latest audit info
+      this.products[productIndex].auditReason = latestAudit.reason || 'N/A';
+      this.products[productIndex].auditStatus = latestAudit.to_status || 'N/A';
+      this.products[productIndex].auditDate = latestAudit.updatedAt
+        ? new Date(latestAudit.updatedAt).toLocaleString()
+        : 'N/A';
+    },
+    error: (err) => {
+      console.error(`Error fetching audit status by id:`, err);
     }
-  }
+  });
+}
 }

@@ -174,7 +174,12 @@
             <td mat-cell *matCellDef="let vehicle">
                 <button mat-raised-button color="warn" (click)="updateVehicles(vehicle)">Edit</button>
                 <button mat-raised-button color="warn" (click)="deleteVehicles(vehicle._id)">Delete</button>
-            </td>
+               <button
+  mat-raised-button
+  color="primary"
+  [routerLink]="['/sellerdashboard/buyerstatus', vehicle._id]">
+  Check Buyer Status
+</button>
        </ng-container>
        <!-- Audit Status -->
         <ng-container matColumnDef="auditStatus">
@@ -192,7 +197,7 @@
         </ng-container>
 
         <!-- Buyer Status -->
-        <ng-container matColumnDef="buyerStatus">
+        <!-- <ng-container matColumnDef="buyerStatus">
             <th mat-header-cell *matHeaderCellDef> Buyer Status </th>
             <td mat-cell *matCellDef="let product">
                 {{ product.buyerStatus }}
@@ -230,20 +235,10 @@
                         'Contacted' : 'Contact Now' }}
                 </button>
             </td>
-        </ng-container>
+        </ng-container> -->
 
-        <ng-container matColumnDef="actionclosed">
-            <th mat-header-cell *matHeaderCellDef> closed </th>
-            <td mat-cell *matCellDef="let vehicle">
-                <button 
-                    class="btn btn-primary"
-                    (click)="markStatus(vehicle._id, 'closed')"
-                    [disabled]="vehicle.buyerStatus === 'closed'">
-                    {{ vehicle.buyerStatus === 'closed' ? vehicle.buyerStatus : 'Close' }}
-                </button>
-            </td>
-        </ng-container>
         <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
         <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
     </table>
+    
 </div>
