@@ -112,15 +112,30 @@ export class Auth {
     return this.http.get<{ data: Product[], total: number }>(`${this.baseUrl}/auth/vehicledetails`, { params: httpParams });
   }
 
+   getSellerVehicles(): Observable<any> {
+    const token = localStorage.getItem('token'); 
+    const headers = new HttpHeaders({
+      Authorization: `Bearer ${token}`, 
+    });
+
+    return this.http.get(`${this.baseUrl}/auth/seller/vehicledetails`, { headers });
+  }
+
   getTotal() {
     return this.http.get<number | { total: number }>(
       `${this.baseUrl}/auth/eois/last7days`
     );
   }
 
-  createVehicles(vehicle: FormData) {
-    return this.http.post(`${this.baseUrl}/auth/addvehicledetail`, vehicle);
-  }
+ createVehicles(vehicle: FormData) {
+  const token = localStorage.getItem('token');
+
+  return this.http.post(`${this.baseUrl}/auth/addvehicledetail`, vehicle, {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  });
+}
 
   updateVehicles(id: string, formData: FormData) {
     return this.http.put(
@@ -225,6 +240,7 @@ getExpressionsById(id: string): Observable<Product> {
     { headers: this.getAuthHeaders() }
   );
 }
+
 getBuyerStatusByProduct(productId: string) {
   return this.http.get<any>(`${this.baseUrl}/auth/buyerStatus?productId=${productId}`);
 }

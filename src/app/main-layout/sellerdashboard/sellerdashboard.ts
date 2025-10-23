@@ -9,7 +9,7 @@ import { Router } from '@angular/router';
   styleUrl: './sellerdashboard.css'
 })
 export class Sellerdashboard {
-   title: string | undefined;
+  title: string | undefined;
   make: string | undefined;
   model: string | undefined;
   variant: string | undefined;
@@ -32,15 +32,11 @@ export class Sellerdashboard {
   products: any[] = [];
   isEditMode: boolean = false;
   editVehicleId: string | null = null;
-  isLoading: boolean = false; 
+  isLoading: boolean = false;
 
-  displayedColumns: string[] = [
-    'title', 'make', 'images', 'action',
-    'auditStatus', 'auditReason'
-   
-  ];
+  displayedColumns: string[] = ['title', 'make', 'images', 'action', 'auditStatus', 'auditReason'];
 
-  statusData: any[] = []
+  statusData: any[] = [];
   selectedFiles: File[] = [];
   errorMessage: string = '';
   maxFileSize = 5 * 1024 * 1024;
@@ -50,10 +46,36 @@ export class Sellerdashboard {
 
   @ViewChildren('fileInput') fileInputs!: QueryList<ElementRef<HTMLInputElement>>;
 
-  constructor(private auth: Auth, private router: Router) { }
+  constructor(private auth: Auth, private router: Router) {}
 
   ngOnInit() {
-    this.getProducts();
+    this.getSellerVehicles();
+  }
+
+  /** ✅ Replace old getProducts() with new seller vehicle API */
+  getSellerVehicles() {
+    this.isLoading = true;
+    this.auth.getSellerVehicles().subscribe({
+      next: (response: any) => {
+        // ✅ Backend returns: { success, count, vehicles }
+        if (response.success && Array.isArray(response.vehicles)) {
+          this.products = response.vehicles; // store in same variable to avoid breaking UI
+        } else {
+          this.products = [];
+        }
+
+        // ✅ Update audit info for each vehicle
+        this.products.forEach((vehicle: any) => {
+          this.updateAuditStatusById(vehicle._id, 'audit');
+        });
+
+        this.isLoading = false;
+      },
+      error: (err) => {
+        console.error('Error fetching seller vehicles:', err);
+        this.isLoading = false;
+      },
+    });
   }
 
   triggerFileInput(index: number) {
@@ -73,29 +95,9 @@ export class Sellerdashboard {
       }
       this.selectedFiles[index] = file;
       const reader = new FileReader();
-      reader.onload = e => this.photos[index] = reader.result as string;
+      reader.onload = (e) => (this.photos[index] = reader.result as string);
       reader.readAsDataURL(file);
     }
-  }
-
-  getProducts() {
-    this.isLoading = true;
-    this.auth.getProducts().subscribe({
-      next: (data: any) => {
-        const allProducts = Array.isArray(data.data) ? data.data : [];
-        this.products = allProducts;
-
-        this.products.forEach((vehicle: any) => {
-          this.updateAuditStatusById(vehicle._id, 'audit');
-        
-        });
-        this.isLoading = false;
-      },
-      error: (err) => {
-        console.error('Error fetching products:', err);
-        this.isLoading = false;
-      }
-    });
   }
 
   updateVehicles(vehicle: any) {
@@ -138,71 +140,71 @@ export class Sellerdashboard {
     }
 
     const formData = new FormData();
-    formData.append("title", this.title || '');
-    formData.append("make", this.make || '');
-    formData.append("model", this.model || '');
-    formData.append("variant", this.variant || '');
-    formData.append("year", String(this.year || ''));
-    formData.append("fueltype", this.fueltype || '');
-    formData.append("transmission", this.transmission || '');
-    formData.append("ownercount", String(this.ownercount || ''));
-    formData.append("registrationstate", this.registrationstate || '');
-    formData.append("price", String(this.price || ''));
-    formData.append("description", this.description || '');
-    formData.append("locationcity", this.locationcity || '');
-    formData.append("localpincode", String(this.localpincode || ''));
-    formData.append("mileage_km", String(this.mileage_km || ''));
-    formData.append("status", this.status || 'draft');
-    formData.append("isActive", "false");
+    formData.append('title', this.title || '');
+    formData.append('make', this.make || '');
+    formData.append('model', this.model || '');
+    formData.append('variant', this.variant || '');
+    formData.append('year', String(this.year || ''));
+    formData.append('fueltype', this.fueltype || '');
+    formData.append('transmission', this.transmission || '');
+    formData.append('ownercount', String(this.ownercount || ''));
+    formData.append('registrationstate', this.registrationstate || '');
+    formData.append('price', String(this.price || ''));
+    formData.append('description', this.description || '');
+    formData.append('locationcity', this.locationcity || '');
+    formData.append('localpincode', String(this.localpincode || ''));
+    formData.append('mileage_km', String(this.mileage_km || ''));
+    formData.append('status', this.status || 'draft');
+    formData.append('isActive', 'false');
 
     const now = new Date().toISOString();
     if (this.isEditMode) {
-      formData.append("updated_at", now);
+      formData.append('updated_at', now);
     } else {
-      formData.append("created_at", now);
-      formData.append("updated_at", now);
+      formData.append('created_at', now);
+      formData.append('updated_at', now);
     }
 
     const imageIndexes: number[] = [];
     this.selectedFiles.forEach((file, index) => {
       if (file) {
-        formData.append("images", file, file.name);
+        formData.append('images', file, file.name);
         imageIndexes.push(index);
       }
     });
-    formData.append("imageIndexes", JSON.stringify(imageIndexes));
+    formData.append('imageIndexes', JSON.stringify(imageIndexes));
 
-    this.isLoading = true; 
+    this.isLoading = true;
 
     if (this.isEditMode && this.editVehicleId) {
       this.auth.updateVehicles(this.editVehicleId, formData).subscribe({
         next: (data) => {
-          console.log("Vehicle updated", data);
+          console.log('Vehicle updated', data);
           this.isLoading = false;
-            this.getProducts();
-       alert('Vehicle updated successfully!');
+          this.getSellerVehicles();
+          alert('Vehicle updated successfully!');
           this.resetForm();
         },
         error: (err) => {
-          console.error("Error updating vehicle:", err);
+          console.error('Error updating vehicle:', err);
           this.errorMessage = 'Failed to update vehicle. Please try again.';
           this.isLoading = false;
-        }
+        },
       });
     } else {
       this.auth.createVehicles(formData).subscribe({
         next: (data) => {
-          console.log("Vehicle created", data);
+          console.log('Vehicle created', data);
           this.isLoading = false;
-            this.getProducts();
-       alert('Vehicle submitted successfully!, Please wait for Buyer Respond.');
+          this.getSellerVehicles();
+          alert('Vehicle submitted successfully! Please wait for Buyer Respond.');
           this.resetForm();
         },
         error: (err) => {
-          console.error("Error creating vehicle:", err);
+          console.error('Error creating vehicle:', err);
           this.errorMessage = 'Please fill in the above fields correctly.';
           this.isLoading = false;
-        }
+        },
       });
     }
   }
@@ -212,15 +214,14 @@ export class Sellerdashboard {
     this.auth.deleteVehicle(id).subscribe({
       next: (data) => {
         console.log('Deleted:', data);
-         this.isLoading = false;
-           this.getProducts();
-      alert('Vehicle deleted successfully.');
-       
+        this.isLoading = false;
+        this.getSellerVehicles();
+        alert('Vehicle deleted successfully.');
       },
       error: (err) => {
         console.error('Error deleting vehicle:', err);
         this.isLoading = false;
-      }
+      },
     });
   }
 
@@ -251,35 +252,31 @@ export class Sellerdashboard {
     this.isEditMode = false;
   }
 
-updateAuditStatusById(id: string, p0: string) {
-  const apiCall = this.auth.getStatusById(id);
+  updateAuditStatusById(id: string, p0: string) {
+    const apiCall = this.auth.getStatusById(id);
+    apiCall.subscribe({
+      next: (res: any) => {
+        const productIndex = this.products.findIndex((p) => p._id === id);
+        if (productIndex === -1) return;
 
-  apiCall.subscribe({
-    next: (res: any) => {
-      const productIndex = this.products.findIndex(p => p._id === id);
-      if (productIndex === -1) return;
+        if (!res || res.length === 0) {
+          this.products[productIndex].auditStatus = this.products[productIndex].status || 'N/A';
+          this.products[productIndex].auditReason = 'No audit records found';
+          return;
+        }
 
-      if (!res || res.length === 0) {
-        // If no audit data found, keep current product status
-        this.products[productIndex].auditStatus = this.products[productIndex].status || 'N/A';
-        this.products[productIndex].auditReason = 'No audit records found';
-        return;
-      }
+        const audits = Array.isArray(res) ? res : [res];
+        const latestAudit = audits[audits.length - 1];
 
-      // Ensure res is an array
-      const audits = Array.isArray(res) ? res : [res];
-      const latestAudit = audits[audits.length - 1];
-
-      // Update product with latest audit info
-      this.products[productIndex].auditReason = latestAudit.reason || 'N/A';
-      this.products[productIndex].auditStatus = latestAudit.to_status || 'N/A';
-      this.products[productIndex].auditDate = latestAudit.updatedAt
-        ? new Date(latestAudit.updatedAt).toLocaleString()
-        : 'N/A';
-    },
-    error: (err) => {
-      console.error(`Error fetching audit status by id:`, err);
-    }
-  });
-}
+        this.products[productIndex].auditReason = latestAudit.reason || 'N/A';
+        this.products[productIndex].auditStatus = latestAudit.to_status || 'N/A';
+        this.products[productIndex].auditDate = latestAudit.updatedAt
+          ? new Date(latestAudit.updatedAt).toLocaleString()
+          : 'N/A';
+      },
+      error: (err) => {
+        console.error(`Error fetching audit status by id:`, err);
+      },
+    });
+  }
 }
