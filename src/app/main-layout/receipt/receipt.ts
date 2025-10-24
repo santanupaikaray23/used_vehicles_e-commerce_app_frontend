@@ -10,7 +10,7 @@ import { Auth } from '../../services/auth';
 })
 export class Receipt {
    booking: any;
-     isLoading = true; 
+   isLoading = true; 
 
   constructor(private route: ActivatedRoute, private auth: Auth) {}
 
@@ -20,7 +20,7 @@ export class Receipt {
       this.auth.getExpressionsById(id).subscribe({
         next: (data) => {
           this.booking = data;
-          this.isLoading = false; // stop spinner after data loads
+          this.isLoading = false; 
         },
         error: (err) => {
           console.error('Error loading booking receipt:', err);

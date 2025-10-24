@@ -241,8 +241,11 @@ getExpressionsById(id: string): Observable<Product> {
   );
 }
 
-getBuyerStatusByProduct(productId: string) {
-  return this.http.get<any>(`${this.baseUrl}/auth/buyerStatus?productId=${productId}`);
+// getBuyerStatusByProduct(productId: string) {
+//   return this.http.get<any>(`${this.baseUrl}/auth/buyerStatus?productId=${productId}`);
+// }
+getBuyerStatusByProduct(id: string) {
+  return this.http.get<any>(`${this.baseUrl}/auth/buyerStatus/${id}`);
 }
 
  markContactedByld(id: string, statusToBeSet: string) {

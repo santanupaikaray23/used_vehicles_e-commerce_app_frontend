@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { Auth } from '../../services/auth';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'app-buyerstatus',
@@ -15,22 +15,39 @@ export class Buyerstatus {
 
   displayedColumns: string[] = ['buyerStatuses'];
 
-  constructor(private auth: Auth, private router: Router) {}
+  constructor(
+    private auth: Auth,
+    private route: ActivatedRoute,
+    private router: Router
+  ) {}
 
   ngOnInit() {
-    this.fetchBuyerStatuses();
+    // ✅ Use "id" since your route path is 'buyerstatus/:id'
+    const productId = this.route.snapshot.paramMap.get('id');
+    console.log('🔍 Extracted Product ID:', productId);
+
+    this.fetchBuyerStatuses(productId);
   }
 
-  fetchBuyerStatuses() {
+  fetchBuyerStatuses(productId: string | null) {
+    if (!productId) {
+      console.warn('⚠️ No productId provided. Redirecting or handling gracefully.');
+      this.isLoading = false;
+      return;
+    }
+
     this.isLoading = true;
-    this.auth.getBuyerStatusByProduct('').subscribe({
+
+    this.auth.getBuyerStatusByProduct(productId).subscribe({
       next: (res: any) => {
         console.log('✅ API Response:', res);
 
-        const rawData = res?.data || res || [];
-        this.buyerStatuses = Array.isArray(rawData) ? rawData : [rawData];
+        // Because your Node route returns an array directly, no "data" key needed
+        const rawData = Array.isArray(res) ? res : [res];
+        this.buyerStatuses = rawData;
 
         const uniqueListings = new Map();
+
         this.buyerStatuses.forEach((item: any) => {
           if (!uniqueListings.has(item.listing_id)) {
             uniqueListings.set(item.listing_id, {
@@ -54,7 +71,7 @@ export class Buyerstatus {
       }
     });
   }
-
+  
   markStatus(buyerId: string, statusToBeSet: string) {
     this.isLoading = true;
     this.auth.markContactedByld(buyerId, statusToBeSet).subscribe({
