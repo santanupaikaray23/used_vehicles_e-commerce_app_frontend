@@ -114,21 +114,29 @@ unblockUser(userId: string) {
 getBuyerStatusById(id: string) {
   this.auth.getbuyerStatusById(id).subscribe({
     next: (res: any) => {
-      console.log('Single Buyer Status Response:', res);
+      console.log('Buyer Status Response:', res);
 
-      const productIndex = this.products.findIndex(p => p._id === id);
+      // Ensure we have an array response
+      const responseArray = Array.isArray(res) ? res : [res];
 
-      if (productIndex !== -1 && res) {
-        const responseData = Array.isArray(res) ? res[0] : {};
-        this.products[productIndex].buyerStatus = responseData.status || this.products[productIndex].status;
-        this.products[productIndex].message = responseData.message || 'N/A';
-        this.products[productIndex].buyerContact_phone = responseData.contact_phone || 'N/A';
-        this.products[productIndex].buyerPreferred_contact_time  = responseData.preferred_contact_time || 'N/A';
-      }
+      // Loop through each returned product detail
+      responseArray.forEach((responseData: any) => {
+        const productIndex = this.products.findIndex(p => p._id === responseData._id || p._id === id);
+
+    if (productIndex !== -1 && responseArray.length > 0) {
+  this.products[productIndex].buyerDetails = responseArray.map((r: any) => ({
+    status: r.status || 'N/A',
+    message: r.message || 'N/A',
+    contact_phone: r.contact_phone || 'N/A',
+    preferred_contact_time: r.preferred_contact_time || 'N/A',
+  }));
+}
+      });
     },
     error: (err) => {
       console.error('Error fetching buyer status by id:', err);
     }
   });
 }
+
 }

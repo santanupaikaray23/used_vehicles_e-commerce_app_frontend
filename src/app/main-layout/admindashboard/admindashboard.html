@@ -1,20 +1,21 @@
-<table>
+<table class="table table-bordered table-striped">
   <thead>
     <tr>
       <th>Title</th>
       <th>Make</th>
       <th>Images</th>
-      <th>Buyer Status</th>
-      <th>Buyer Message</th>
-      <th>Buyer Phone</th>
-      <th>Buyer Contact Time</th>
+      <th>Buyer Details</th>
       <th>Action</th>
     </tr>
   </thead>
+
   <tbody>
     <tr *ngFor="let product of products">
+      <!-- Product Details -->
       <td>{{ product.title }}</td>
       <td>{{ product.make }}</td>
+
+      <!-- Product Images -->
       <td>
         <img
           *ngFor="let img of product.images"
@@ -22,12 +23,32 @@
           [alt]="img.filename"
           width="60"
           height="60"
+          style="margin: 4px; border-radius: 6px;"
         />
       </td>
-      <td>{{ product.buyerStatus }}</td>
-      <td>{{ product.message }}</td>
-      <td>{{ product.buyerContact_phone }}</td>
-      <td>{{ product.buyerPreferred_contact_time }}</td>
+
+      <!-- Buyer Details Section -->
+      <td>
+        <div *ngIf="product.buyerDetails && product.buyerDetails.length > 0; else noBuyers">
+          <div
+            *ngFor="let buyer of product.buyerDetails; let i = index"
+            class="buyer-card"
+            style="border: 1px solid #ddd; border-radius: 8px; padding: 6px; margin-bottom: 8px;"
+          >
+            <p><strong>#{{ i + 1 }}</strong></p>
+            <p><strong>Status:</strong> {{ buyer.status || 'N/A' }}</p>
+            <p><strong>Message:</strong> {{ buyer.message || 'N/A' }}</p>
+            <p><strong>Phone:</strong> {{ buyer.contact_phone || 'N/A' }}</p>
+            <p><strong>Contact Time:</strong> {{ buyer.preferred_contact_time || 'N/A' }}</p>
+          </div>
+        </div>
+
+        <ng-template #noBuyers>
+          <span>No buyer responses yet.</span>
+        </ng-template>
+      </td>
+
+      <!-- Action Buttons -->
       <td>
         <input
           *ngIf="product.showReason"
@@ -36,12 +57,15 @@
           placeholder="Enter reason"
           required
         />
+
         <button *ngIf="!product.isActive" (click)="approveVehicle(product._id, product.reason)">
           Approve
         </button>
+
         <button *ngIf="product.isActive && !product.showReason" (click)="product.showReason = true">
           Rejected
         </button>
+
         <button
           *ngIf="product.isActive && product.showReason"
           [disabled]="!product.reason"
@@ -49,6 +73,7 @@
         >
           Confirm Rejected
         </button>
+
         <button
           *ngIf="product.status !== 'sold'"
           class="btn btn-success"
@@ -56,6 +81,7 @@
         >
           Sold
         </button>
+
         <button *ngIf="product.status === 'sold'" class="btn btn-secondary" disabled>
           Sold
         </button>

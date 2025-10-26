@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { Auth } from '../../services/auth';
 import { ActivatedRoute, Router } from '@angular/router';
+import { ChangeDetectorRef } from '@angular/core';
 
 @Component({
   selector: 'app-buyerstatus',
@@ -18,7 +19,8 @@ export class Buyerstatus {
   constructor(
     private auth: Auth,
     private route: ActivatedRoute,
-    private router: Router
+    private router: Router,
+      private cdr: ChangeDetectorRef
   ) {}
 
   ngOnInit() {
@@ -72,34 +74,35 @@ export class Buyerstatus {
     });
   }
   
-  markStatus(buyerId: string, statusToBeSet: string) {
-    this.isLoading = true;
-    this.auth.markContactedByld(buyerId, statusToBeSet).subscribe({
-      next: () => {
-        this.products.forEach(product => {
-          product.buyerStatuses.forEach((buyer: any) => {
-            if (buyer._id === buyerId) {
-              buyer.status = statusToBeSet;
-            }
-          });
-        });
-        this.isLoading = false;
-      },
-      error: (err) => {
-        console.error('❌ Error marking contacted:', err);
-        this.isLoading = false;
-      }
-    });
-  }
-
-  contactBuyer(buyer: any): void {
-    this.markStatus(buyer._id, 'contacted');
-    if (buyer.contact_phone) {
-      setTimeout(() => {
-        window.open(`tel:${buyer.contact_phone}`, '_self');
-      }, 300);
-    } else {
-      alert('No phone number available for this buyer.');
+ markStatus(buyerId: string, statusToBeSet: string) {
+  this.isLoading = true;
+  this.auth.markContactedByld(buyerId, statusToBeSet).subscribe({
+    next: (response) => {
+      console.log('✅ Status updated successfully:', response);
+      this.products = this.products.map(product => ({
+        ...product,
+        buyerStatuses: product.buyerStatuses.map((buyer: any) =>
+          buyer._id === buyerId ? { ...buyer, status: statusToBeSet } : buyer
+        )
+      }));
+      this.isLoading = false;
+      this.cdr.detectChanges(); // ensure UI refreshes
+    },
+    error: (err) => {
+      console.error('❌ Error marking contacted:', err);
+      this.isLoading = false;
     }
+  });
+}
+
+contactBuyer(buyer: any): void {
+  this.markStatus(buyer._id, 'contacted');
+  if (buyer.contact_phone) {
+    setTimeout(() => {
+      window.open(`tel:${buyer.contact_phone}`, '_self');
+    }, 300);
+  } else {
+    alert('No phone number available for this buyer.');
   }
+}
 }

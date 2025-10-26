@@ -25,16 +25,13 @@ export class Sellerdashboard {
   images: string | undefined;
   mileage_km: string | undefined;
   status: string | undefined;
-
   audit: any;
-  vehicles: any[] = [];
-  vehicle: any;
   products: any[] = [];
   isEditMode: boolean = false;
   editVehicleId: string | null = null;
   isLoading: boolean = false;
 
-  displayedColumns: string[] = ['title', 'make', 'images', 'action', 'auditStatus', 'auditReason'];
+  displayedColumns: string[] = ['title', 'make', 'images', 'action', 'auditStatus', 'auditReason', 'action2'];
 
   statusData: any[] = [];
   selectedFiles: File[] = [];
@@ -52,19 +49,16 @@ export class Sellerdashboard {
     this.getSellerVehicles();
   }
 
-  /** ✅ Replace old getProducts() with new seller vehicle API */
   getSellerVehicles() {
     this.isLoading = true;
     this.auth.getSellerVehicles().subscribe({
       next: (response: any) => {
-        // ✅ Backend returns: { success, count, vehicles }
         if (response.success && Array.isArray(response.vehicles)) {
-          this.products = response.vehicles; // store in same variable to avoid breaking UI
+          this.products = response.vehicles; 
         } else {
           this.products = [];
         }
 
-        // ✅ Update audit info for each vehicle
         this.products.forEach((vehicle: any) => {
           this.updateAuditStatusById(vehicle._id, 'audit');
         });
@@ -215,8 +209,9 @@ export class Sellerdashboard {
       next: (data) => {
         console.log('Deleted:', data);
         this.isLoading = false;
+         alert('Vehicle deleted successfully.');
         this.getSellerVehicles();
-        alert('Vehicle deleted successfully.');
+       
       },
       error: (err) => {
         console.error('Error deleting vehicle:', err);
