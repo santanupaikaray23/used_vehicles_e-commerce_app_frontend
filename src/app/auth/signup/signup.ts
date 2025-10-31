@@ -12,9 +12,10 @@ import { SignupDto } from '../../models/signup.model.dto';
   styleUrl: './signup.css'
 })
 export class Signup {
-  selectedFileName: string = '';
+   selectedFileName: string = '';
   signupForm: FormGroup;
   serverError: string | null = null;
+  previewUrl: string | null = null;
   loading = false;
   hidePassword = true;
 
@@ -68,14 +69,21 @@ export class Signup {
       next: (res) => {
         console.log('Signup success');
         alert(res.message); 
-        this.loading = false;
         this.router.navigate(['/login']);
       },
-      error: (err) => {
-        console.error('Signup failed.');
-        this.loading = false;
-        this.serverError = err.error?.message;
-      }
+    error: (err) => {
+  console.error('Signup failed.', err);
+
+  let errorMessage = 'An unexpected error occurred. Please try again.';
+
+  if (err.status === 413) {
+    errorMessage = 'Upload failed: The image size is too large.';
+  } else if (err.error?.message) {
+    errorMessage = err.error.message;
+  }
+
+  this.serverError = errorMessage;
+}
     });
   }
 onFileSelected(event: Event) {
@@ -83,12 +91,12 @@ onFileSelected(event: Event) {
   if (input.files && input.files.length > 0) {
     const file = input.files[0];
     this.selectedFileName = file.name;
-
     const reader = new FileReader();
     reader.onload = () => {
+      this.previewUrl = reader.result as string; 
       this.signupForm.patchValue({ avatar_url: reader.result as string });
     };
-    reader.readAsDataURL(file); // converts file to base64 string
+    reader.readAsDataURL(file); 
   }
 }
 }

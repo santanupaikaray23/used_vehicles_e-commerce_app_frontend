@@ -25,23 +25,6 @@
   </div>
 
   <div class="form-group mb-3">
-    <label for="vehiclePrice" class="form-label fw-bold">Price:</label>
-    <input
-      id="vehiclePrice"
-      type="number"
-      class="form-control"
-      formControlName="vehicle_price"
-      placeholder="₹0"
-    />
-    <div
-      *ngIf="bookingForm.get('vehicle_price')?.touched && bookingForm.get('vehicle_price')?.invalid"
-      class="text-danger mt-1"
-    >
-      Price is required
-    </div>
-  </div>
-
-  <div class="form-group mb-3">
     <label for="message" class="form-label fw-bold">Message:</label>
     <textarea
       id="message"
@@ -88,6 +71,6 @@
   </div>
 
   <div class="d-grid">
-    <button type="submit" class="btn btn-success">Submit Booking</button>
+    <button type="submit" class="btn btn-success">Submit</button>
   </div>
 </form>

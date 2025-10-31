@@ -2,8 +2,8 @@
   <img src="https://i.ibb.co/X3m7MyL/loader.gif" alt="Loading..." width="60" height="60" />
 </div>
 <div class="container">
-     <form #vehicleForm="ngForm" (ngSubmit)="saveVehicle()" novalidate>
-    <p>Please fill all details about your vehicle.</p>
+    <form #vehicleForm="ngForm" (ngSubmit)="saveVehicle(vehicleForm)" novalidate>
+    <p>Add your vehicle information below.</p>
     <mat-form-field appearance="outline" class="form-field">
         <mat-label>Title</mat-label>
         <input matInput [(ngModel)]="title" name="title" required #titleCtrl="ngModel">
@@ -147,9 +147,9 @@
         <button mat-raised-button color="primary" type="submit">
       {{ isEditMode ? 'Update' : 'Submit' }}
     </button>&nbsp;
-        <button mat-raised-button color="warn" (click)="cancel()">
-      Cancel
-    </button>
+     <button mat-raised-button color="warn" type="button" (click)="cancel()">
+        Cancel
+      </button>
     </div>
 </form>
     <table mat-table [dataSource]="products" class="mat-elevation-z8 full-width-table">

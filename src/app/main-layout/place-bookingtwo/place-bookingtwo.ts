@@ -30,7 +30,7 @@ export class PlaceBookingtwo {
   ngOnInit(): void {
   this.bookingForm = this.fb.group({
     vehicle_name: ['', Validators.required],
-    vehicle_price: ['', Validators.required],
+    // vehicle_price: ['', Validators.required],
     message: ['', Validators.required],
     contact_phone: [
       '',
@@ -49,7 +49,7 @@ export class PlaceBookingtwo {
       // patch values when vehicle loads
       this.bookingForm.patchValue({
         vehicle_name: this.vehicle?.title || '',
-        vehicle_price: this.vehicle?.price || ''
+        // vehicle_price: this.vehicle?.price || ''
       });
     });
   }
@@ -61,7 +61,7 @@ export class PlaceBookingtwo {
         ...this.bookingForm.value,
         listing_id: this.vehicle._id,            
         vehicle_name: this.vehicle?.title || null,
-        vehicle_price: this.vehicle?.price ? Number(this.vehicle.price) : null,
+        // vehicle_price: this.vehicle?.price ? Number(this.vehicle.price) : null,
         status: 'new'
       };
 

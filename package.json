@@ -34,8 +34,10 @@
     "@angular/router": "^20.3.0",
     "axios": "^1.12.2",
     "bootstrap": "^5.3.8",
+    "canvg": "^4.0.3",
     "express": "^5.1.0",
     "html2pdf.js": "^0.12.1",
+    "jspdf": "^3.0.3",
     "rxjs": "~7.8.0",
     "tslib": "^2.3.0",
     "zone.js": "~0.15.0"

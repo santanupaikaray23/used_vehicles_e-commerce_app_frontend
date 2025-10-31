@@ -24,7 +24,6 @@ export class Buyerstatus {
   ) {}
 
   ngOnInit() {
-    // ✅ Use "id" since your route path is 'buyerstatus/:id'
     const productId = this.route.snapshot.paramMap.get('id');
     console.log('🔍 Extracted Product ID:', productId);
 
@@ -33,7 +32,7 @@ export class Buyerstatus {
 
   fetchBuyerStatuses(productId: string | null) {
     if (!productId) {
-      console.warn('⚠️ No productId provided. Redirecting or handling gracefully.');
+      console.warn('No productId provided. Redirecting or handling gracefully.');
       this.isLoading = false;
       return;
     }
@@ -42,7 +41,7 @@ export class Buyerstatus {
 
     this.auth.getBuyerStatusByProduct(productId).subscribe({
       next: (res: any) => {
-        console.log('✅ API Response:', res);
+        console.log('API Response:', res);
 
         // Because your Node route returns an array directly, no "data" key needed
         const rawData = Array.isArray(res) ? res : [res];
@@ -63,12 +62,12 @@ export class Buyerstatus {
         });
 
         this.products = Array.from(uniqueListings.values());
-        console.log('✅ Final grouped products:', this.products);
+        console.log('Final grouped products:', this.products);
 
         this.isLoading = false;
       },
       error: (err) => {
-        console.error('❌ Error fetching buyer statuses:', err);
+        console.error('Error fetching buyer statuses:', err);
         this.isLoading = false;
       }
     });
@@ -78,7 +77,7 @@ export class Buyerstatus {
   this.isLoading = true;
   this.auth.markContactedByld(buyerId, statusToBeSet).subscribe({
     next: (response) => {
-      console.log('✅ Status updated successfully:', response);
+      console.log('Status updated successfully:', response);
       this.products = this.products.map(product => ({
         ...product,
         buyerStatuses: product.buyerStatuses.map((buyer: any) =>
@@ -86,10 +85,10 @@ export class Buyerstatus {
         )
       }));
       this.isLoading = false;
-      this.cdr.detectChanges(); // ensure UI refreshes
+      this.cdr.detectChanges(); 
     },
     error: (err) => {
-      console.error('❌ Error marking contacted:', err);
+      console.error('Error marking contacted:', err);
       this.isLoading = false;
     }
   });

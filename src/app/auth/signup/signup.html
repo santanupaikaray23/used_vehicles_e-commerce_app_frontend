@@ -49,7 +49,7 @@
           </div>
         <div class="input-field">
   <mat-form-field class="full-width">
-    <mat-label>Role</mat-label>
+    <mat-label>Choose Role You Need</mat-label>
     <mat-select formControlName="role" required>
       <mat-option value="buyer">Buyer</mat-option>
       <mat-option value="seller">Seller</mat-option>
@@ -80,11 +80,10 @@
               </mat-error>
             </mat-form-field>
           </div>
-          &nbsp;
-          <div class="input-field">
-<div class="input-field">
+          
+<div class="input-field flex-avatar-field">
   <mat-form-field class="full-width" appearance="outline">
-    <mat-label>Profile Image</mat-label>
+    <mat-label>Set Profile Photo</mat-label>
     <input
       type="file"
       accept="image/*"
@@ -93,12 +92,12 @@
       (change)="onFileSelected($event)"
     />
 
-    <!-- Readonly input showing filename -->
     <input
       matInput
-      placeholder="Upload your image"
+      placeholder="Max image size:5168KB"
       [value]="selectedFileName"
       readonly
+      formControlName="avatar_url"
     />
 
     <button
@@ -114,8 +113,10 @@
       Profile image is required
     </mat-error>
   </mat-form-field>
-</div>
-
+  <div class="avatar-preview" *ngIf="previewUrl">
+    <img [src]="previewUrl" alt="Profile Preview" class="avatar-image" />
+    <p class="upload-success-text">Done!</p>
+  </div>
 </div>
           <div class="input-field">
             <mat-form-field class="full-width">
@@ -148,6 +149,7 @@
               </button>
             </div>
           </div>
+          
         </form>
       </section>
     </mat-card>

@@ -8,7 +8,7 @@
       <th mat-header-cell *matHeaderCellDef>All Buyer Records</th>
       <td mat-cell *matCellDef="let product">
         <div>
-          <h3>{{ product.vehicle_name }} — ₹{{ product.vehicle_price | number }}</h3>
+          <h3>{{ product.vehicle_name }}</h3>
 
           <div *ngIf="product.buyerStatuses?.length > 0; else noBuyerData">
             <table class="inner-table">

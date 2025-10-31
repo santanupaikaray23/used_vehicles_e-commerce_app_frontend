@@ -50,6 +50,18 @@ td button {
 button {
   margin: 2px;
 }
+.avatar {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.avatar-image {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 2px solid #ddd;
+}
 @media (max-width: 768px) {
   table {
     display: block;

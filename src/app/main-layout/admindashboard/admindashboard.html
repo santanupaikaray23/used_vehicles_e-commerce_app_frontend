@@ -4,6 +4,7 @@
       <th>Title</th>
       <th>Make</th>
       <th>Images</th>
+      <th>Price</th>
       <th>Buyer Details</th>
       <th>Action</th>
     </tr>
@@ -26,7 +27,7 @@
           style="margin: 4px; border-radius: 6px;"
         />
       </td>
-
+ <td>{{ product.price }}</td>
       <!-- Buyer Details Section -->
       <td>
         <div *ngIf="product.buyerDetails && product.buyerDetails.length > 0; else noBuyers">
@@ -96,6 +97,7 @@
       <th>Email</th>
       <th>Phone</th>
       <th>Role</th> 
+      <th>User Images</th>
       <th>Action</th>
     </tr>
   </thead>
@@ -104,6 +106,15 @@
     <td>{{ user.email }}</td>
     <td>{{ user.phone }}</td>
     <td>{{ user.role}}</td> 
+    <td>
+  <div class="avatar" *ngIf="user?.avatar_url">
+    <img
+      [src]="user.avatar_url"
+      alt="User Avatar"
+      class="avatar-image"
+    />
+  </div>
+</td>
     <td>
       <button 
         *ngIf="user.is_blocked === 'false'" 
