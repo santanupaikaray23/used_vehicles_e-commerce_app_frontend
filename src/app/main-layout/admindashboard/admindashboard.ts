@@ -13,6 +13,7 @@ export class Admindashboard{
   products: any[] = [];
   users: any[] = [];
   errorMessage: string = '';
+   isLoading: boolean = false;
   displayedColumns: string[] = ['title', 'make', 'images', 'action', 'reason','buyerStatus',
   'buyerReason','buyerContact_phone', 'buyerPreferred_contact_time'];
    error: string | null = null;
@@ -25,36 +26,37 @@ export class Admindashboard{
   }
  
   getProducts() {
-  this.auth.getProducts().subscribe({
-    next: (data: any) => {
-      console.log('API response:', data);
-
-      const allProducts = Array.isArray(data.data) ? data.data : [];
-      this.products = allProducts;
-      
-      this.products.forEach((product: any) => {
-        if (product._id) {
-          this.getBuyerStatusById(product._id);
-        }
-      });
-    },
-    error: (err) => {
-      console.error('Error fetching products:', err);
-    }
-  });
+  this.isLoading = true; // ✅ Start loading
+    this.auth.getProducts().subscribe({
+      next: (data: any) => {
+        const allProducts = Array.isArray(data.data) ? data.data : [];
+        this.products = allProducts;
+        this.products.forEach((product: any) => {
+          if (product._id) this.getBuyerStatusById(product._id);
+        });
+        this.isLoading = false; // ✅ Stop loading
+      },
+      error: (err) => {
+        console.error('Error fetching products:', err);
+        this.isLoading = false; // ✅ Stop loading on error
+      },
+    });
 }
 
-  getUsers() {
-  this.auth.getUsers().subscribe({
-    next: (res: any) => {
-      console.log('API response (users):', res);
-      const allUsers = Array.isArray(res.data) ? res.data : [];
-      this.users = allUsers;
-    },
-    error: (err) => {
-      console.error('Error fetching users:', err);
-    }
-  });
+getUsers() {
+ this.isLoading = true; // ✅ Start loading
+    this.auth.getUsers().subscribe({
+      next: (res: any) => {
+        const allUsers = Array.isArray(res.data) ? res.data : [];
+        this.users = allUsers;
+        this.isLoading = false; // ✅ Stop loading
+      },
+      error: (err) => {
+        console.error('Error fetching users:', err);
+        this.isLoading = false; // ✅ Stop loading on error
+      },
+    });
+  
 }
 
 approveVehicle(id: string, reason?: string) {
@@ -70,6 +72,7 @@ approveVehicle(id: string, reason?: string) {
     }
   });
 }
+
 deactivateVehicle(id: string, reason?: string) {
   const payload = reason ? { reason } : {};
   this.auth.deactivateVehicle(id, payload).subscribe({

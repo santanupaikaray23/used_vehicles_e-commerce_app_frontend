@@ -30,7 +30,7 @@ export class PlaceBooking {
   ngOnInit(): void {
     this.bookingForm = this.fb.group({
       vehicle_name: ['', Validators.required],
-      // vehicle_price: ['', Validators.required],
+      vehicle_price: ['', Validators.required],
       message: ['', Validators.required],
       contact_phone: ['', [Validators.required, Validators.pattern(/^[0-9]{10}$/)]],
       preferred_contact_time: ['']
@@ -45,7 +45,7 @@ export class PlaceBooking {
           this.vehicle = data;
           this.bookingForm.patchValue({
             vehicle_name: this.vehicle?.title || '',
-            // vehicle_price: this.vehicle?.price || ''
+            vehicle_price: this.vehicle?.price || ''
           });
           this.isLoading = false; 
         },

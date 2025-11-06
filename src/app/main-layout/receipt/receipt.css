@@ -12,10 +12,13 @@
   color: #333;
 }
 .receipt-details p {
-  font-size: 16px;
+ font-size: 16px;
   margin: 10px 0;
   padding: 10px;
   border-bottom: 1px solid #eee;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
 .receipt-details strong {
   color: #444;

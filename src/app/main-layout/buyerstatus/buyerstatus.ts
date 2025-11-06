@@ -25,7 +25,7 @@ export class Buyerstatus {
 
   ngOnInit() {
     const productId = this.route.snapshot.paramMap.get('id');
-    console.log('🔍 Extracted Product ID:', productId);
+    console.log('Extracted Product ID:', productId);
 
     this.fetchBuyerStatuses(productId);
   }
@@ -41,9 +41,6 @@ export class Buyerstatus {
 
     this.auth.getBuyerStatusByProduct(productId).subscribe({
       next: (res: any) => {
-        console.log('API Response:', res);
-
-        // Because your Node route returns an array directly, no "data" key needed
         const rawData = Array.isArray(res) ? res : [res];
         this.buyerStatuses = rawData;
 
@@ -54,7 +51,7 @@ export class Buyerstatus {
             uniqueListings.set(item.listing_id, {
               _id: item.listing_id,
               vehicle_name: item.vehicle_name,
-              vehicle_price: item.vehicle_price,
+              // vehicle_price: item.vehicle_price,
               buyerStatuses: []
             });
           }
@@ -77,7 +74,7 @@ export class Buyerstatus {
   this.isLoading = true;
   this.auth.markContactedByld(buyerId, statusToBeSet).subscribe({
     next: (response) => {
-      console.log('Status updated successfully:', response);
+      console.log('Status updated successfully:');
       this.products = this.products.map(product => ({
         ...product,
         buyerStatuses: product.buyerStatuses.map((buyer: any) =>
@@ -104,4 +101,5 @@ contactBuyer(buyer: any): void {
     alert('No phone number available for this buyer.');
   }
 }
+
 }

@@ -1,3 +1,7 @@
+<div *ngIf="isLoading" class="spinner-container text-center">
+  <img src="https://i.ibb.co/X3m7MyL/loader.gif" alt="Loading..." width="60" height="60" />
+</div>
+ <div *ngIf="!isLoading">
 <form [formGroup]="bookingForm" (ngSubmit)="onSubmit()" class="p-3 border rounded bg-light">
   <div class="form-group mb-3">
     <label for="vehicleName" class="form-label fw-bold">Vehicle Name:</label>
@@ -15,7 +19,14 @@
       Vehicle name is required
     </div>
   </div>
-  
+    <div class="form-group">
+    <label>Price:</label>
+    <input
+      type="text"
+      class="form-control"
+      [value]="'₹' + (vehicle.price || 0)"
+      disabled />
+  </div>
   <div class="form-group mb-3">
     <label for="message" class="form-label fw-bold">Message:</label>
     <textarea
@@ -67,3 +78,4 @@
     </button>
   </div>
 </form>
+</div>

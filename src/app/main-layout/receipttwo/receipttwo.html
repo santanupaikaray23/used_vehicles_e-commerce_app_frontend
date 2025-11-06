@@ -1,9 +1,14 @@
+<div *ngIf="isLoading" class="spinner-container text-center">
+  <img src="https://i.ibb.co/X3m7MyL/loader.gif" alt="Loading..." width="60" height="60" />
+</div>
+<div *ngIf="!isLoading">
 <div class="warning-message">Please download this receipt for your reference.</div>
 <div *ngIf="booking" id="receipt" class="receipt-card">
   <h2 class="receipt-title">Booking Receipt</h2>
   <div class="receipt-details">
     <p><strong>Booking ID:</strong> {{ booking._id }}</p>
     <p><strong>Vehicle:</strong> {{ booking.vehicle_name }}</p>
+    <p><strong>Price:</strong> ₹{{ booking.vehicle_price }}</p>
     <p><strong>Date:</strong> {{ booking.created_at | date: 'short' }}</p>
   </div>
   <div class="receipt-actions">
@@ -11,4 +16,5 @@
     <button class="btn btn-print" (click)="printReceipt()">🖨 Print</button>
       <button class="btn btn-download" (click)="downloadReceipt()">⬇ Download</button>
   </div>
+</div>
 </div>

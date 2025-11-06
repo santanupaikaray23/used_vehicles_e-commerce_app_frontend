@@ -14,21 +14,20 @@
             <table class="inner-table">
               <thead>
                 <tr>
-                  <th>Buyer</th>
-                  <th>Status</th>
-                  <th>Message</th>
-                  <th>Phone</th>
-                  <th>Contact Time</th>
-                  <th>Actions</th>
+                  <th>Buyer No.</th>&nbsp;
+                  <th>Buyer Status</th>&nbsp;
+                  <th>Buyer Message</th>
+                  <th>Buyer Phone number</th>
+                  <th>Contact Time</th>&nbsp; 
                 </tr>
               </thead>
               <tbody>
                 <tr *ngFor="let record of product.buyerStatuses; let i = index">
-                  <td><strong>Buyer {{ i + 1 }}</strong></td>
-                  <td>{{ record.status }}</td>
-                  <td>{{ record.message }}</td>
-                  <td>{{ record.contact_phone }}</td>
-                  <td>{{ record.preferred_contact_time || 'N/A' }}</td>
+                  <td><strong>Buyer {{ i + 1 }}</strong></td>&nbsp;
+                  <td>{{ record.status }}</td>&nbsp;
+                  <td>{{ record.message }}</td> 
+                  <td>{{record.contact_phone}}</td>
+                   <td>{{ record.preferred_contact_time || 'N/A' }}</td>
                   <td>
                     <button mat-raised-button color="primary" (click)="contactBuyer(record)">Call</button>
                     <button mat-raised-button color="warn" class="ml-2" (click)="markStatus(record._id, 'closed')">

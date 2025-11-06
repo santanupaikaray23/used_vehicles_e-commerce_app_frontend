@@ -1,3 +1,13 @@
+<div *ngIf="isLoading" class="spinner-container text-center">
+  <img
+    src="https://i.ibb.co/X3m7MyL/loader.gif"
+    alt="Loading..."
+    width="60"
+    height="60"
+  />
+</div>
+
+<!-- ✅ Product Table -->
 <table class="table table-bordered table-striped">
   <thead>
     <tr>
@@ -12,11 +22,9 @@
 
   <tbody>
     <tr *ngFor="let product of products">
-      <!-- Product Details -->
       <td>{{ product.title }}</td>
       <td>{{ product.make }}</td>
 
-      <!-- Product Images -->
       <td>
         <img
           *ngFor="let img of product.images"
@@ -27,8 +35,8 @@
           style="margin: 4px; border-radius: 6px;"
         />
       </td>
- <td>{{ product.price }}</td>
-      <!-- Buyer Details Section -->
+      <td>{{ product.price }}</td>
+
       <td>
         <div *ngIf="product.buyerDetails && product.buyerDetails.length > 0; else noBuyers">
           <div
@@ -49,7 +57,6 @@
         </ng-template>
       </td>
 
-      <!-- Action Buttons -->
       <td>
         <input
           *ngIf="product.showReason"
@@ -90,43 +97,38 @@
     </tr>
   </tbody>
 </table>
+
 <h2>Users</h2>
 <table>
   <thead>
     <tr>
       <th>Email</th>
       <th>Phone</th>
-      <th>Role</th> 
+      <th>Role</th>
+      <th>Name</th>
       <th>User Images</th>
       <th>Action</th>
     </tr>
   </thead>
- <tbody>
-  <tr *ngFor="let user of users">
-    <td>{{ user.email }}</td>
-    <td>{{ user.phone }}</td>
-    <td>{{ user.role}}</td> 
-    <td>
-  <div class="avatar" *ngIf="user?.avatar_url">
-    <img
-      [src]="user.avatar_url"
-      alt="User Avatar"
-      class="avatar-image"
-    />
-  </div>
-</td>
-    <td>
-      <button 
-        *ngIf="user.is_blocked === 'false'" 
-        (click)="blockUser(user._id)">
-        Block
-      </button>
-      <button 
-        *ngIf="user.is_blocked === 'true'" 
-        (click)="unblockUser(user._id)">
-        Unblock
-      </button>
-    </td>
-  </tr>
-</tbody>
+  <tbody>
+    <tr *ngFor="let user of users">
+      <td>{{ user.email }}</td>
+      <td>{{ user.phone }}</td>
+      <td>{{ user.role }}</td>
+      <td>{{ user.name }}</td>
+      <td>
+        <div class="avatar" *ngIf="user?.avatar_url">
+          <img [src]="user.avatar_url" alt="User Avatar" class="avatar-image" />
+        </div>
+      </td>
+      <td>
+        <button *ngIf="user.is_blocked === 'false'" (click)="blockUser(user._id)">
+          Block
+        </button>
+        <button *ngIf="user.is_blocked === 'true'" (click)="unblockUser(user._id)">
+          Unblock
+        </button>
+      </td>
+    </tr>
+  </tbody>
 </table>
