@@ -10,7 +10,7 @@ import { ChangeDetectorRef } from '@angular/core';
   styleUrl: './buyerstatus.css'
 })
 export class Buyerstatus {
- products: any[] = [];
+  products: any[] = [];
   buyerStatuses: any[] = [];
   isLoading = true;
 
@@ -93,13 +93,6 @@ export class Buyerstatus {
 
 contactBuyer(buyer: any): void {
   this.markStatus(buyer._id, 'contacted');
-  if (buyer.contact_phone) {
-    setTimeout(() => {
-      window.open(`tel:${buyer.contact_phone}`, '_self');
-    }, 300);
-  } else {
-    alert('No phone number available for this buyer.');
-  }
+  alert('Buyer has been contacted, You will get a call soon!!!');
 }
-
 }

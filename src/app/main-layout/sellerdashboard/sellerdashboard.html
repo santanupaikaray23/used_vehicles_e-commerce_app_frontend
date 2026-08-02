@@ -3,7 +3,7 @@
 </div>
 <div class="container">
     <form #vehicleForm="ngForm" (ngSubmit)="saveVehicle(vehicleForm)" novalidate>
-    <p>Add your vehicle information below.</p>
+    <p>Add your Vehicle information below.</p>
     <mat-form-field appearance="outline" class="form-field">
         <mat-label>Title</mat-label>
         <input matInput [(ngModel)]="title" name="title" required #titleCtrl="ngModel">

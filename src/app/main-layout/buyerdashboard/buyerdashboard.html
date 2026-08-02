@@ -78,7 +78,7 @@
     </div>
   </div>
 
-  <div class="page-size-control">
+  <!-- <div class="page-size-control">
     <mat-form-field appearance="outline">
       <mat-label>Items per page</mat-label>
       <mat-select [value]="pageSize" (selectionChange)="changePageSize($event.value)">
@@ -87,7 +87,7 @@
         </mat-option>
       </mat-select>
     </mat-form-field>
-  </div>
+  </div> -->
 <div class="results-summary">
   <p>Total Vehicles Found: <strong>{{ total }}</strong></p>
 </div>
@@ -95,31 +95,42 @@
     <div *ngIf="vehicles.length === 0" class="no-results">
       Loading please wait...
     </div>
-    <div *ngFor="let vehicle of vehicles" class="card">
-      <div class="thumb">
-    
-        <div class="image-list" *ngIf="vehicle.images.length > 0">
-          <img
-            *ngFor="let img of vehicle.images.slice(0)"
-            [src]="'data:' + img.mimetype + ';base64,' + img.data"
-            [alt]="img.filename"
-            (click)="vehicle.images[0] = img"
-          />
-        </div>
-      </div>
-      <div class="info">
-        <h3>{{ vehicle.title || (vehicle.make + ' ' + vehicle.model) }}</h3>
-        <p class="meta">
-          {{ vehicle.year }}
-          {{ vehicle.mileage ? (vehicle.mileage + ' km') : '' }}
-        </p>
-        <p class="desc">{{ vehicle.description }}</p>
-        <div class="price">₹{{ vehicle.price | number }}</div>
-    <button mat-raised-button color="primary" [routerLink]="['/buyerdashboard/inquire', vehicle._id]">
-  Inquire Now
-</button>
-      </div>
+    <div 
+  *ngFor="let vehicle of vehicles" 
+  class="card"
+  (click)="goToDetails(vehicle._id)"
+  style="cursor: pointer;"
+>
+  <div class="thumb">
+    <div class="image-list" *ngIf="vehicle.images.length > 0">
+      <img
+        *ngFor="let img of vehicle.images.slice(0)"
+        [src]="'data:' + img.mimetype + ';base64,' + img.data"
+        [alt]="img.filename"
+        (click)="vehicle.images[0] = img; $event.stopPropagation()"
+      />
     </div>
+  </div>
+
+  <div class="info">
+    <h3>{{ vehicle.title || (vehicle.make + ' ' + vehicle.model) }}</h3>
+    <p class="meta">
+      {{ vehicle.year }}
+      {{ vehicle.mileage ? (vehicle.mileage + ' km') : '' }}
+    </p>
+    <p class="desc">{{ vehicle.description }}</p>
+    <div class="price">₹{{ vehicle.price | number }}</div>
+
+    <button 
+      mat-raised-button 
+      color="primary" 
+      [routerLink]="['/buyerdashboard/inquire', vehicle._id]"
+      (click)="$event.stopPropagation()"
+    >
+      Inquire Now
+    </button>
+  </div>
+</div>
   </div>
 
   <ul class="pagination">

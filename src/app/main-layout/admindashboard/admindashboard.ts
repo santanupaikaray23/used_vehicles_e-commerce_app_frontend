@@ -26,7 +26,7 @@ export class Admindashboard{
   }
  
   getProducts() {
-  this.isLoading = true; // ✅ Start loading
+  this.isLoading = true; 
     this.auth.getProducts().subscribe({
       next: (data: any) => {
         const allProducts = Array.isArray(data.data) ? data.data : [];
@@ -34,26 +34,26 @@ export class Admindashboard{
         this.products.forEach((product: any) => {
           if (product._id) this.getBuyerStatusById(product._id);
         });
-        this.isLoading = false; // ✅ Stop loading
+        this.isLoading = false; 
       },
       error: (err) => {
         console.error('Error fetching products:', err);
-        this.isLoading = false; // ✅ Stop loading on error
+        this.isLoading = false; 
       },
     });
 }
 
 getUsers() {
- this.isLoading = true; // ✅ Start loading
+ this.isLoading = true; 
     this.auth.getUsers().subscribe({
       next: (res: any) => {
         const allUsers = Array.isArray(res.data) ? res.data : [];
         this.users = allUsers;
-        this.isLoading = false; // ✅ Stop loading
+        this.isLoading = false; 
       },
       error: (err) => {
         console.error('Error fetching users:', err);
-        this.isLoading = false; // ✅ Stop loading on error
+        this.isLoading = false; 
       },
     });
   
@@ -119,10 +119,8 @@ getBuyerStatusById(id: string) {
     next: (res: any) => {
       console.log('Buyer Status Response:', res);
 
-      // Ensure we have an array response
       const responseArray = Array.isArray(res) ? res : [res];
 
-      // Loop through each returned product detail
       responseArray.forEach((responseData: any) => {
         const productIndex = this.products.findIndex(p => p._id === responseData._id || p._id === id);
 

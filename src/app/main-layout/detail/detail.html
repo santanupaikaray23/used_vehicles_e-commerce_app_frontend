@@ -1,10 +1,8 @@
 <div class="vehicle-container">
-  <!-- Spinner while loading -->
   <div *ngIf="isLoading" class="spinner-container text-center">
     <img src="https://i.ibb.co/X3m7MyL/loader.gif" alt="Loading..." width="60" height="60" />
   </div>
 
-  <!-- Content only when loaded -->
   <div *ngIf="!isLoading" class="panel panel-primary">
     <div class="panel-heading">
       <h3>{{ vehicle.title }}</h3>

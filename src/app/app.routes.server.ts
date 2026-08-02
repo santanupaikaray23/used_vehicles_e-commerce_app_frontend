@@ -39,7 +39,6 @@ export const serverRoutes: ServerRoute[] = [
     },
   },
 
-  // ✅ Keep your default fallback route at the bottom
   {
     path: '**',
     renderMode: RenderMode.Prerender,

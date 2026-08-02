@@ -1,5 +1,7 @@
 .warning-message {
-  margin-left: 26%;
+  color: #28a745;
+   margin-left: 45%;
+   font-size: large;
 }
 .receipt-card {
   max-width: 500px;

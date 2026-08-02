@@ -192,6 +192,7 @@
   font-size: 1.1rem;
   font-weight: 600;
 }
+
 @media (max-width: 768px) {
   .listing-root {
     padding: 0.5rem;

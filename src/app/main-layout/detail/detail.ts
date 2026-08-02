@@ -14,7 +14,7 @@ export class Detail implements OnInit {
   vehicle!: Product;
   enquiryid!: string | null;
   currentIndex = 0;
-  isLoading = true; // ✅ Spinner flag
+  isLoading = true; 
 
   constructor(
     private location: Location,
@@ -31,11 +31,11 @@ export class Detail implements OnInit {
         next: (data) => {
           console.log("Vehicle data:", data);
           this.vehicle = data;
-          this.isLoading = false; // ✅ Stop spinner after loading
+          this.isLoading = false; 
         },
         error: (err) => {
           console.error('Error fetching vehicle:', err);
-          this.isLoading = false; // ✅ Stop spinner on error too
+          this.isLoading = false; 
         }
       });
     } else {

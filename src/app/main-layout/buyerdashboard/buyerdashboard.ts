@@ -4,6 +4,7 @@ import { debounceTime } from 'rxjs/operators';
 import { Observable } from 'rxjs';
 import { Auth } from '../../services/auth';
 import { Product } from '../../models/product.dto';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-buyerdashboard',
@@ -11,6 +12,7 @@ import { Product } from '../../models/product.dto';
   templateUrl: './buyerdashboard.html',
   styleUrl: './buyerdashboard.css'
 })
+
 export class Buyerdashboard {
   vehicles: Product[] = [];
 
@@ -40,7 +42,7 @@ export class Buyerdashboard {
   transmissions: string[] = [];
   locationcity: string[] = [];
 
-  constructor(private svc: Auth) {}
+  constructor(private svc: Auth,private router: Router ) {}
 
   ngOnInit(): void {
     this.loadVehicles();
@@ -88,6 +90,10 @@ export class Buyerdashboard {
       },
       error: (err) => console.error('Buyer Total API error:', err)
     });
+  }
+
+ goToDetails(id: string) {
+    this.router.navigate(['/buyerdashboard/inquire', id]);
   }
 
   getValue() {

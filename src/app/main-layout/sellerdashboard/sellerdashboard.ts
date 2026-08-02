@@ -39,7 +39,7 @@ export class Sellerdashboard {
   maxFileSize = 5 * 1024 * 1024;
   maxFiles = 5;
 
-  photos: (string | null)[] = Array(5).fill(null);
+  photos: (string | null)[] = Array(3).fill(null);
 
   @ViewChildren('fileInput') fileInputs!: QueryList<ElementRef<HTMLInputElement>>;
 
@@ -170,42 +170,9 @@ export class Sellerdashboard {
     formData.append('imageIndexes', JSON.stringify(imageIndexes));
 
     this.isLoading = true;
-
-    // if (this.isEditMode && this.editVehicleId) {
-    //   this.auth.updateVehicles(this.editVehicleId, formData).subscribe({
-    //     next: (data) => {
-    //       console.log('Vehicle updated', data);
-    //       this.isLoading = false;
-    //       this.getSellerVehicles();
-    //       alert('Vehicle updated successfully!');
-    //       this.resetForm();
-    //     },
-    //     error: (err) => {
-    //       console.error('Error updating vehicle:', err);
-    //       this.errorMessage = 'Failed to update vehicle. Please try again.';
-    //       this.isLoading = false;
-    //     },
-    //   });
-    // } else {
-       const request$ = this.isEditMode && this.editVehicleId
+    const request$ = this.isEditMode && this.editVehicleId
     ? this.auth.updateVehicles(this.editVehicleId, formData)
     : this.auth.createVehicles(formData);
-
-      // this.auth.createVehicles(formData).subscribe({
-      //   next: (data) => {
-      //     console.log('Vehicle created', data);
-      //     this.isLoading = false;
-      //     this.getSellerVehicles();
-      //     alert('Vehicle submitted successfully! Please wait for Buyer Respond.');
-      //     this.resetForm();
-      //   },
-      //   error: (err) => {
-      //     console.error('Error creating vehicle:', err);
-      //     this.errorMessage = 'Please fill in the above fields correctly.';
-      //     this.isLoading = false;
-      //   },
-      // });
-    // }
     request$.subscribe({
     next: (data) => {
       this.isLoading = false;
@@ -213,9 +180,7 @@ export class Sellerdashboard {
 
       alert(this.isEditMode
         ? 'Vehicle updated successfully!'
-        : 'Vehicle submitted successfully! Please wait for Buyer Respond.');
-
-      // ✅ Reset form after success
+        : 'Vehicle submitted successfully! Please Check Buyer Status Below.');
       this.resetForm(form);
     },
     error: (err) => {
@@ -243,30 +208,9 @@ export class Sellerdashboard {
     });
   }
 
-  // resetForm() {
-  //   this.isEditMode = false;
-  //   this.editVehicleId = null;
-  //   this.title = '';
-  //   this.make = '';
-  //   this.model = '';
-  //   this.variant = '';
-  //   this.year = undefined;
-  //   this.fueltype = '';
-  //   this.transmission = '';
-  //   this.ownercount = undefined;
-  //   this.registrationstate = '';
-  //   this.price = undefined;
-  //   this.description = '';
-  //   this.locationcity = '';
-  //   this.localpincode = undefined;
-  //   this.mileage_km = undefined;
-  //   this.status = '';
-  //   this.selectedFiles = [];
-  //   this.photos = Array(5).fill(null);
-  // }
   resetForm(form?: any) {
   if (form) {
-    form.resetForm(); // ✅ resets form state (touched, dirty, errors)
+    form.resetForm(); 
   }
 
   this.isEditMode = false;
@@ -289,7 +233,7 @@ export class Sellerdashboard {
   this.mileage_km = undefined;
   this.status = '';
   this.selectedFiles = [];
-  this.photos = Array(5).fill(null);
+  this.photos = Array(3).fill(null);
 }
 
 

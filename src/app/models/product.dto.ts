@@ -19,6 +19,8 @@ export class Product {
     // status!:String;
 imageUrl!:String;
 mileage!:Number;
+created_at!: string;
+mileage_km!:Number;
 
   
 }

@@ -33,11 +33,11 @@ export class Inquire implements OnInit {
         next: (data) => {
           console.log("Vehicle data:", data);
           this.vehicle = data;
-          this.isLoading = false; // Stop spinner once data arrives
+          this.isLoading = false; 
         },
         error: (err) => {
           console.error('Error fetching vehicle:', err);
-          this.isLoading = false; // Also stop spinner on error
+          this.isLoading = false;
         }
       });
     } else {

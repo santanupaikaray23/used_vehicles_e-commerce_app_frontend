@@ -162,7 +162,6 @@
   max-width: 900px;
 }
 
-/* Info section grows to fill space, pushing footer down */
 .info {
   flex: 1;
   padding: 1.2rem;
@@ -171,15 +170,13 @@
   gap: 0.6rem;
 }
 
-/* Price styling */
 .price {
   font-size: 1.5rem;
   font-weight: 700;
   color: #27ae60;
-  margin-top: auto; /* pushes price towards bottom of info */
+  margin-top: auto; 
 }
 
-/* Footer with button */
 .card-footer {
   margin-top: auto;
   border-top: 1px solid #eee;
@@ -187,7 +184,7 @@
 
 .card-footer button {
   width: 100%;
-  border-radius: 0; /* flush edges */
+  border-radius: 0; 
   padding: 1rem;
   font-size: 1.1rem;
   font-weight: 600;

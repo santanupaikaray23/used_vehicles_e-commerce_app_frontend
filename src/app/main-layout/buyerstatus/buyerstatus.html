@@ -16,20 +16,14 @@
                 <tr>
                   <th>Buyer No.</th>&nbsp;
                   <th>Buyer Status</th>&nbsp;
-                  <th>Buyer Message</th>
-                  <th>Buyer Phone number</th>
-                  <th>Contact Time</th>&nbsp; 
                 </tr>
               </thead>
               <tbody>
                 <tr *ngFor="let record of product.buyerStatuses; let i = index">
                   <td><strong>Buyer {{ i + 1 }}</strong></td>&nbsp;
-                  <td>{{ record.status }}</td>&nbsp;
-                  <td>{{ record.message }}</td> 
-                  <td>{{record.contact_phone}}</td>
-                   <td>{{ record.preferred_contact_time || 'N/A' }}</td>
+                  <td>{{ record.status }}</td>
                   <td>
-                    <button mat-raised-button color="primary" (click)="contactBuyer(record)">Call</button>
+                    <button mat-raised-button color="primary" (click)="contactBuyer(record)">Contact Now</button>
                     <button mat-raised-button color="warn" class="ml-2" (click)="markStatus(record._id, 'closed')">
                       Close
                     </button>
@@ -52,5 +46,5 @@
 </div>
 
 <ng-template #noData>
-  <p class="text-center mt-4">No buyer status records available.</p>
+  <p class="text-center mt-4">Please wait for buyer respond.</p>
 </ng-template>
