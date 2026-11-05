@@ -1,7 +1,6 @@
 <div *ngIf="isLoading" class="spinner-container text-center">
   <img src="https://i.ibb.co/X3m7MyL/loader.gif" alt="Loading..." width="60" height="60" />
 </div>
-
 <div *ngIf="!isLoading && products.length > 0; else noData">
   <table mat-table [dataSource]="products" class="mat-elevation-z8 full-width-table">
     <ng-container matColumnDef="buyerStatuses">
